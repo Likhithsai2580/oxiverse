@@ -25,16 +25,22 @@ export const authOptions: NextAuthOptions = {
             email.toLowerCase() === adminEmail.toLowerCase() && 
             password === adminPassword) {
             
-          const user = await prisma.user.findUnique({
+          let user = await prisma.user.findUnique({
             where: { email: adminEmail.toLowerCase() },
           })
           
-          if (user) {
-            return { id: user.id, email: user.email, name: user.name }
+          if (!user) {
+            // Auto-create admin user if they don't exist yet but credentials match
+            user = await prisma.user.create({
+              data: {
+                email: adminEmail.toLowerCase(),
+                name: 'Admin',
+                password: await bcrypt.hash(adminPassword, 10),
+              }
+            })
           }
           
-          // Fallback if not seeded yet
-          return { id: 'admin-fallback', email: adminEmail, name: 'Admin' }
+          return { id: user.id, email: user.email, name: user.name }
         }
 
         // 2. Normal database-based login for other users or if env logout
