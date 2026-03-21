@@ -4,6 +4,7 @@ import React, { useState, useEffect } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
 import { motion, AnimatePresence } from 'framer-motion'
+import { useIsMobile } from '@/lib/hooks/useIsMobile'
 
 const navItems = [
   { name: 'Platform', href: '/#platform' },
@@ -17,6 +18,7 @@ const navItems = [
 ]
 
 export default function Navigation() {
+  const isMobile = useIsMobile(1024)
   const [isScrolled, setIsScrolled] = useState(false)
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
 
@@ -39,14 +41,14 @@ export default function Navigation() {
     >
       <div className={`max-w-7xl mx-auto px-4 sm:px-8 transition-all duration-500 rounded-3xl border ${
         isScrolled 
-          ? 'bg-dark-950/60 backdrop-blur-xl border-white/10 shadow-2xl' 
+          ? `bg-dark-950/60 ${isMobile ? 'backdrop-blur-md' : 'backdrop-blur-xl'} border-white/10 shadow-2xl` 
           : 'bg-transparent border-transparent'
       }`}>
         <div className="flex items-center justify-between h-16 md:h-18">
           {/* Logo */}
           <Link href="/" className="flex items-center space-x-3 group relative z-[60]">
             <motion.div 
-              whileHover={{ rotate: 15, scale: 1.1 }}
+              whileHover={isMobile ? {} : { rotate: 15, scale: 1.1 }}
               className="relative w-10 h-10"
             >
               <Image
