@@ -81,25 +81,15 @@ export default function Hero() {
           transition={{ duration: 1.2, delay: 0.6, type: "spring" }}
           className="flex flex-col sm:flex-row items-center justify-center gap-8 mb-24"
         >
-          <motion.div
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-          >
-            <Button size="lg" href="https://github.com/itxLikhith" target="_blank" className="min-w-[220px] h-16 text-lg shadow-2xl shadow-primary-500/40 relative overflow-hidden group rounded-2xl">
-              <span className="relative z-10">Build the Future</span>
-              <div className="absolute inset-0 bg-gradient-to-r from-primary-600 via-accent-600 to-primary-600 bg-[length:200%_100%] animate-gradient-shift opacity-0 group-hover:opacity-100 transition-opacity" />
-            </Button>
-          </motion.div>
+          <Button size="lg" href="https://github.com/itxLikhith" target="_blank" className="min-w-[220px] h-16 text-lg shadow-2xl shadow-primary-500/40 relative overflow-hidden group rounded-2xl">
+            <span className="relative z-10">Build the Future</span>
+            <div className="absolute inset-0 bg-gradient-to-r from-primary-600 via-accent-600 to-primary-600 bg-[length:200%_100%] animate-gradient-shift opacity-0 group-hover:opacity-100 transition-opacity" />
+          </Button>
           
-          <motion.div
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-          >
-            <Button size="lg" variant="outline" href="#products" className="min-w-[220px] h-16 text-lg glass relative overflow-hidden group rounded-2xl border-white/10 hover:border-white/20">
-              <span className="relative z-10 text-white">Explore Ecosystem</span>
-              <div className="absolute inset-0 bg-white/5 opacity-0 group-hover:opacity-100 transition-opacity" />
-            </Button>
-          </motion.div>
+          <Button size="lg" variant="outline" href="#products" className="min-w-[220px] h-16 text-lg glass relative overflow-hidden group rounded-2xl border-white/10 hover:border-white/20">
+            <span className="relative z-10 text-white">Explore Ecosystem</span>
+            <div className="absolute inset-0 bg-white/5 opacity-0 group-hover:opacity-100 transition-opacity" />
+          </Button>
         </motion.div>
       </div>
 
