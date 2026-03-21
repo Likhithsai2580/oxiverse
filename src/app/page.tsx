@@ -14,7 +14,7 @@ const Newsletter = lazyLoad(() => import('@/app/(sections)/Newsletter'))
 const Contact = lazyLoad(() => import('@/app/(sections)/Contact'))
 import Footer from '@/components/Footer'
 
-export const revalidate = 0
+export const revalidate = 3600 // Revalidate every hour
 
 export default function Home() {
   return (

@@ -119,6 +119,7 @@ export default function Features() {
           fill
           className="object-cover transition-transform duration-1000 group-hover:scale-110 group-hover:rotate-1"
           priority
+          sizes="(max-width: 768px) 100vw, (max-width: 1200px) 80vw, 70vw"
         />
         <div className="absolute inset-0 bg-gradient-to-t from-dark-950/95 via-dark-950/25 to-transparent" />
         

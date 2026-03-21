@@ -25,7 +25,7 @@ export default function Hero() {
                 z: 0
               }}
               transition={{ duration: 25, repeat: Infinity, ease: "easeInOut" }}
-              className="hidden lg:block absolute top-[-15%] left-[-8%] w-[900px] h-[900px] bg-primary-500/15 rounded-full blur-[180px] opacity-40 mix-blend-screen transform-gpu" 
+              className="hidden lg:block absolute top-[-15%] left-[-8%] w-[900px] h-[900px] bg-primary-500/15 rounded-full blur-[100px] opacity-40 mix-blend-screen transform-gpu" 
             />
             <motion.div 
               style={{ willChange: 'transform, opacity' }}
@@ -36,7 +36,7 @@ export default function Hero() {
                 z: 0
               }}
               transition={{ duration: 30, repeat: Infinity, ease: "easeInOut" }}
-              className="hidden lg:block absolute bottom-[-20%] right-[-8%] w-[900px] h-[900px] bg-accent-500/15 rounded-full blur-[180px] opacity-40 mix-blend-screen transform-gpu" 
+              className="hidden lg:block absolute bottom-[-20%] right-[-8%] w-[900px] h-[900px] bg-accent-500/15 rounded-full blur-[100px] opacity-40 mix-blend-screen transform-gpu" 
             />
           </>
         )}
