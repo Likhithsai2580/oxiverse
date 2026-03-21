@@ -7,13 +7,17 @@ async function main() {
   console.log('🌱 Seeding database...')
 
   // Create admin user
-  const hashedPassword = await bcrypt.hash('admin123', 10)
+  const adminEmail = process.env.ADMIN_EMAIL || 'admin@oxiverse.com'
+  const adminPassword = process.env.ADMIN_PASSWORD || 'admin123'
+  const hashedPassword = await bcrypt.hash(adminPassword, 10)
 
   const admin = await prisma.user.upsert({
-    where: { email: 'admin@oxiverse.com' },
-    update: {},
+    where: { email: adminEmail },
+    update: {
+      password: hashedPassword, // Ensure the password matches the .env file if the email is same
+    },
     create: {
-      email: 'admin@oxiverse.com',
+      email: adminEmail,
       password: hashedPassword,
       name: 'Admin',
     },
@@ -70,10 +74,9 @@ async function main() {
   }
 
   console.log('🎉 Seeding completed!')
-  console.log('📝 Login credentials:')
-  console.log('   Email: admin@oxiverse.com')
-  console.log('   Password: admin123')
-  console.log('⚠️  Please change the password after first login!')
+  console.log('📝 Login credentials set from .env:')
+  console.log('   Email:', adminEmail)
+  console.log('   Password:', adminPassword)
 }
 
 main()

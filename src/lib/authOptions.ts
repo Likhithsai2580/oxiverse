@@ -24,7 +24,14 @@ export const authOptions: NextAuthOptions = {
           throw new Error('Invalid email or password')
         }
 
-        const isPasswordValid = await bcrypt.compare(
+        // Check if it's the admin from env
+        const isAdminEnv = 
+          process.env.ADMIN_EMAIL && 
+          credentials.email === process.env.ADMIN_EMAIL && 
+          process.env.ADMIN_PASSWORD &&
+          credentials.password === process.env.ADMIN_PASSWORD
+
+        const isPasswordValid = isAdminEnv || await bcrypt.compare(
           credentials.password,
           user.password
         )
