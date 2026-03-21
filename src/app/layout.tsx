@@ -5,6 +5,7 @@ import { ToastProvider } from '@/lib/providers/ToastProvider'
 import { AuthProvider } from '@/lib/providers/AuthProvider'
 import ScrollProgressBar from '@/components/ui/ScrollProgressBar'
 import { SmoothScrollProvider } from '@/lib/providers/SmoothScrollProvider'
+import { SpeedInsights } from '@vercel/speed-insights/next'
 
 const inter = Inter({
   subsets: ['latin'],
@@ -56,6 +57,7 @@ export default function RootLayout({
             </ToastProvider>
           </AuthProvider>
         </div>
+        <SpeedInsights />
       </body>
     </html>
   )
