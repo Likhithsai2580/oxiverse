@@ -20,6 +20,7 @@
     "@tailwindcss/typography": "^0.5.19",
     "@types/node": "^25.5.0",
     "@types/react": "^19.2.14",
+    "@vercel/speed-insights": "^2.0.0",
     "autoprefixer": "^10.4.27",
     "bcryptjs": "^3.0.3",
     "framer-motion": "^12.38.0",
