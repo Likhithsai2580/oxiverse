@@ -17,33 +17,7 @@ export const authOptions: NextAuthOptions = {
         }
 
         const { email, password } = credentials
-        const adminEmail = process.env.ADMIN_EMAIL
-        const adminPassword = process.env.ADMIN_PASSWORD
 
-        // 1. Try environment variable login as priority
-        if (adminEmail && adminPassword && 
-            email.toLowerCase() === adminEmail.toLowerCase() && 
-            password === adminPassword) {
-            
-          let user = await prisma.user.findUnique({
-            where: { email: adminEmail.toLowerCase() },
-          })
-          
-          if (!user) {
-            // Auto-create admin user if they don't exist yet but credentials match
-            user = await prisma.user.create({
-              data: {
-                email: adminEmail.toLowerCase(),
-                name: 'Admin',
-                password: await bcrypt.hash(adminPassword, 10),
-              }
-            })
-          }
-          
-          return { id: user.id, email: user.email, name: user.name }
-        }
-
-        // 2. Normal database-based login for other users or if env logout
         const user = await prisma.user.findUnique({
           where: { email: email.toLowerCase() },
         })
@@ -62,6 +36,7 @@ export const authOptions: NextAuthOptions = {
           id: user.id,
           email: user.email,
           name: user.name,
+          role: user.role,
         }
       },
     }),
@@ -73,12 +48,14 @@ export const authOptions: NextAuthOptions = {
     async jwt({ token, user }) {
       if (user) {
         token.id = user.id
+        token.role = user.role
       }
       return token
     },
     async session({ session, token }) {
       if (session.user) {
         session.user.id = token.id as string
+        session.user.role = token.role as string
       }
       return session
     },

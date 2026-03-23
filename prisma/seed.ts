@@ -1,4 +1,4 @@
-import { PrismaClient } from '@prisma/client'
+import { PrismaClient, Role } from '@prisma/client'
 import bcrypt from 'bcryptjs'
 
 const prisma = new PrismaClient()
@@ -14,12 +14,14 @@ async function main() {
   const admin = await prisma.user.upsert({
     where: { email: adminEmail },
     update: {
-      password: hashedPassword, // Ensure the password matches the .env file if the email is same
+      password: hashedPassword,
+      role: Role.ADMIN,
     },
     create: {
       email: adminEmail,
       password: hashedPassword,
       name: 'Admin',
+      role: Role.ADMIN,
     },
   })
 

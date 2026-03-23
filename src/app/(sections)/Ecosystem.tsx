@@ -6,9 +6,11 @@ import Badge from '@/components/ui/Badge'
 import Button from '@/components/ui/Button'
 import { prisma } from '@/lib/prisma'
 import Link from 'next/link'
+import Image from 'next/image'
+import { Project } from '@prisma/client'
 
 export default async function Ecosystem() {
-  let projects: any[] = []
+  let projects: Project[] = []
   try {
     projects = await prisma.project.findMany({
       orderBy: { createdAt: 'desc' },
@@ -32,9 +34,14 @@ export default async function Ecosystem() {
             <Card key={project.id} className="group hover:border-primary-500/50 transition-all duration-300 bg-white/[0.02] border-white/5">
               <div className="p-6 flex flex-col h-full">
                 <div className="flex items-center justify-between mb-4">
-                  <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-primary-500/20 to-primary-600/10 flex items-center justify-center text-primary-400 font-bold text-xl overflow-hidden relative">
+                  <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-primary-500/20 to-primary-600/10 flex items-center justify-center text-primary-400 font-bold text-xl overflow-hidden relative border border-white/5">
                     {project.imageUrl ? (
-                      <img src={project.imageUrl} alt={project.title} className={`w-full h-full object-${project.imageDisplay || 'cover'} ${project.imageDisplay === 'contain' ? 'p-1' : ''}`} />
+                      <Image 
+                        src={project.imageUrl} 
+                        alt={project.title} 
+                        fill
+                        className={`object-${project.imageDisplay || 'cover'} ${project.imageDisplay === 'contain' ? 'p-2' : ''}`}
+                      />
                     ) : (
                       project.title.charAt(0)
                     )}

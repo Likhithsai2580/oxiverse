@@ -2,6 +2,7 @@
 
 import { motion, useReducedMotion } from 'framer-motion'
 import Button from '@/components/ui/Button'
+import { siteConfig } from '@/config/site'
 
 export default function Hero() {
   const prefersReducedMotion = useReducedMotion()
@@ -59,7 +60,7 @@ export default function Hero() {
             <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary-400 opacity-75"></span>
             <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-primary-500 shadow-[0_0_10px_rgba(59,130,246,1)]"></span>
           </span>
-          <span className="text-[11px] font-black tracking-[0.2em] uppercase text-primary-200 group-hover:text-white transition-colors">OS System: Public Beta 2.0</span>
+          <span className="text-[11px] font-black tracking-[0.2em] uppercase text-primary-200 group-hover:text-white transition-colors">{siteConfig.hero.badge}</span>
         </motion.div>
 
         {/* Gradient Headline */}
@@ -70,9 +71,9 @@ export default function Hero() {
           transition={{ duration: 0.5, delay: 0.1, type: "spring" }}
           className="text-5xl sm:text-7xl md:text-9xl lg:text-[10rem] font-bold font-display tracking-tighter mb-10 leading-[0.9] transform-gpu"
         >
-          <span className="gradient-text block mb-4">Explore.</span>
-          <span className="text-white block mb-4 text-glow">Connect.</span>
-          <span className="gradient-text block">Create.</span>
+          <span className="gradient-text block mb-4">{siteConfig.hero.headline.gradient1}</span>
+          <span className="text-white block mb-4 text-glow">{siteConfig.hero.headline.white}</span>
+          <span className="gradient-text block">{siteConfig.hero.headline.gradient2}</span>
         </motion.h1>
 
         {/* Subtitle */}
@@ -83,8 +84,7 @@ export default function Hero() {
           transition={{ duration: 0.5, delay: 0.2, type: "spring" }}
           className="text-lg md:text-2xl text-dark-300 max-w-3xl mx-auto mb-16 leading-relaxed font-medium transform-gpu"
         >
-          The next generation of privacy-first infrastructure. 
-          A secure, decentralized ecosystem for pioneers of the open internet.
+          {siteConfig.hero.subtitle}
         </motion.p>
 
         {/* CTAs */}
@@ -95,13 +95,13 @@ export default function Hero() {
           transition={{ duration: 0.5, delay: 0.3, type: "spring" }}
           className="flex flex-col sm:flex-row items-center justify-center gap-8 mb-24 transform-gpu"
         >
-          <Button size="lg" href="https://github.com/itxLikhith" target="_blank" className="min-w-[220px] h-16 text-lg shadow-2xl shadow-primary-500/40 relative overflow-hidden group rounded-2xl">
-            <span className="relative z-10">Build the Future</span>
+          <Button size="lg" href={siteConfig.hero.cta.primary.href} target="_blank" className="min-w-[220px] h-16 text-lg shadow-2xl shadow-primary-500/40 relative overflow-hidden group rounded-2xl">
+            <span className="relative z-10">{siteConfig.hero.cta.primary.text}</span>
             <div className="absolute inset-0 bg-gradient-to-r from-primary-600 via-accent-600 to-primary-600 bg-[length:200%_100%] animate-gradient-shift opacity-0 group-hover:opacity-100 transition-opacity hidden md:block" />
           </Button>
           
-          <Button size="lg" variant="outline" href="#products" className="min-w-[220px] h-16 text-lg glass relative overflow-hidden group rounded-2xl border-white/10 hover:border-white/20">
-            <span className="relative z-10 text-white">Explore Ecosystem</span>
+          <Button size="lg" variant="outline" href={siteConfig.hero.cta.secondary.href} className="min-w-[220px] h-16 text-lg glass relative overflow-hidden group rounded-2xl border-white/10 hover:border-white/20">
+            <span className="relative z-10 text-white">{siteConfig.hero.cta.secondary.text}</span>
             <div className="absolute inset-0 bg-white/5 opacity-0 group-hover:opacity-100 transition-opacity hidden md:block" />
           </Button>
         </motion.div>
@@ -114,7 +114,7 @@ export default function Hero() {
         transition={{ duration: 2.5, repeat: Infinity }}
         className="hidden md:flex absolute bottom-10 left-1/2 transform -translate-x-1/2 flex-col items-center space-y-2 opacity-50 hover:opacity-100 transition-opacity cursor-pointer group transform-gpu"
         onClick={() => {
-          document.getElementById('products')?.scrollIntoView({ behavior: 'smooth' })
+          document.getElementById(siteConfig.hero.cta.secondary.href.replace('#', ''))?.scrollIntoView({ behavior: 'smooth' })
         }}
       >
         <span className="text-[10px] font-bold uppercase tracking-widest text-dark-400 group-hover:text-primary-400 transition-colors">Scroll</span>

@@ -6,10 +6,13 @@ import Card from '@/components/ui/Card'
 import Button from '@/components/ui/Button'
 import { motion } from 'framer-motion'
 import { toast } from 'react-hot-toast'
+import NewsletterSuccessModal from '@/components/NewsletterSuccessModal'
 
 export default function Newsletter() {
   const [email, setEmail] = useState('')
   const [loading, setLoading] = useState(false)
+  const [isModalOpen, setIsModalOpen] = useState(false)
+  const [subscribedEmail, setSubscribedEmail] = useState('')
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
@@ -27,16 +30,9 @@ export default function Newsletter() {
       const data = await response.json();
       
       if (response.ok) {
+        setSubscribedEmail(email)
         setEmail('')
-        toast.success(data.message || 'Welcome to the Oxiverse community!', {
-          icon: '🚀',
-          style: {
-            borderRadius: '16px',
-            background: '#0f172a',
-            color: '#fff',
-            border: '1px solid rgba(255,255,255,0.1)',
-          },
-        })
+        setIsModalOpen(true)
       } else {
         toast.error(data.error || 'Something went wrong. Please try again.', {
           style: {
@@ -122,6 +118,12 @@ export default function Newsletter() {
           </Card>
         </motion.div>
       </div>
+
+      <NewsletterSuccessModal 
+        isOpen={isModalOpen} 
+        onClose={() => setIsModalOpen(false)} 
+        email={subscribedEmail} 
+      />
     </Section>
   )
 }
