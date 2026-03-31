@@ -121,7 +121,7 @@ export default function Features() {
           priority
           sizes="(max-width: 768px) 100vw, (max-width: 1200px) 80vw, 70vw"
         />
-        <div className="absolute inset-0 bg-gradient-to-t from-dark-950/95 via-dark-950/25 to-transparent" />
+        <div className="absolute inset-0 bg-gradient-to-t from-dark-950/60 via-dark-950/20 to-transparent" />
         
         {/* Decorative elements */}
         <div className="absolute top-8 right-8 px-5 py-2.5 glass rounded-full border border-white/15 text-[11px] font-black uppercase tracking-[0.2em] text-primary-300 shadow-2xl">

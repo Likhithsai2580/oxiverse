@@ -3,54 +3,83 @@
 import React, { useState, useEffect } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
-import { motion, AnimatePresence } from 'framer-motion'
+import { motion, AnimatePresence, useScroll, useMotionValueEvent } from 'framer-motion'
 
 const navItems = [
-  { name: 'Platform', href: '/#platform' },
+  { name: 'Platform', href: '/#ecosystem' },
   { name: 'Products', href: '/#products' },
   { name: 'Research', href: '/#research' },
   { name: 'Blog', href: '/#blog' },
   { name: 'Roadmap', href: '/#roadmap' },
   { name: 'Community', href: '/#community' },
   { name: 'Contact', href: '/#contact' },
-  { name: 'Docs', href: '/#docs' },
+  { name: 'Docs', href: 'https://docs.oxiverse.com' },
 ]
 
 export default function Navigation() {
   const [isDesktop, setIsDesktop] = useState(false)
+  const [activeSection, setActiveSection] = useState('home')
   
   useEffect(() => {
     setIsDesktop(window.matchMedia('(pointer: fine)').matches)
+
+    const sections = navItems.map(item => item.href.replace('/#', '')).filter(id => id.startsWith('http') === false)
+    sections.push('home')
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            setActiveSection(entry.target.id)
+          }
+        })
+      },
+      { threshold: 0.2, rootMargin: '-15% 0px -45% 0px' }
+    )
+
+    sections.forEach((id) => {
+      const el = document.getElementById(id)
+      if (el) observer.observe(el)
+    })
+
+    return () => observer.disconnect()
   }, [])
 
+  const { scrollY } = useScroll()
   const [isScrolled, setIsScrolled] = useState(false)
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
 
-  useEffect(() => {
-    const handleScroll = () => {
-      setIsScrolled(window.scrollY > 20)
-    }
-
-    window.addEventListener('scroll', handleScroll)
-    return () => window.removeEventListener('scroll', handleScroll)
-  }, [])
+  useMotionValueEvent(scrollY, "change", (latest) => {
+    setIsScrolled(latest > 20)
+  })
 
   return (
-    <nav
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
-        isScrolled
-          ? 'py-3 sm:py-4 px-4 h-auto'
-          : 'py-6 px-4 h-auto'
-      }`}
+    <motion.nav
+      initial={false}
+      animate={{
+        paddingTop: isScrolled ? "0.75rem" : "1.25rem",
+        paddingBottom: isScrolled ? "0.75rem" : "1.25rem",
+      }}
+      transition={{ type: "spring", stiffness: 300, damping: 30 }}
+      className="fixed top-0 left-0 right-0 z-50 px-4 pointer-events-none"
     >
-      <div className={`max-w-7xl mx-auto px-4 sm:px-8 transition-all duration-500 rounded-3xl border ${
-        isScrolled 
-          ? 'bg-dark-950/60 backdrop-blur-md lg:backdrop-blur-xl border-white/10 shadow-2xl' 
-          : 'bg-transparent border-transparent'
-      }`}>
+      <motion.div 
+        animate={{
+          backgroundColor: isScrolled ? "rgba(2, 6, 23, 0.7)" : "rgba(2, 6, 23, 0)",
+          backdropFilter: isScrolled ? "blur(12px)" : "blur(0px)",
+          borderColor: isScrolled ? "rgba(255, 255, 255, 0.1)" : "rgba(255, 255, 255, 0)",
+          boxShadow: isScrolled ? "0 25px 50px -12px rgba(59, 130, 246, 0.15)" : "none",
+        }}
+        transition={{ duration: 0.4, ease: "easeInOut" }}
+        className="max-w-7xl mx-auto px-4 sm:px-8 rounded-3xl border pointer-events-auto"
+      >
         <div className="flex items-center justify-between h-16 md:h-18">
           {/* Logo */}
-          <Link href="/" className="flex items-center space-x-3 group relative z-[60]">
+          <Link 
+            href="/" 
+            className="flex items-center space-x-3 group relative z-[60]"
+            onClick={() => setActiveSection('home')}
+          >
             <motion.div 
               {...isDesktop ? { whileHover: { rotate: 15, scale: 1.1 } } : {}}
               className="relative w-10 h-10"
@@ -71,24 +100,54 @@ export default function Navigation() {
 
           {/* Desktop Navigation */}
           <div className="hidden lg:flex items-center space-x-1">
-            {navItems.map((item, idx) => (
-              <motion.div
-                key={item.name}
-                initial={{ opacity: 0, y: -10 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.1 + idx * 0.05, duration: 0.5 }}
-              >
-                <Link
-                  href={item.href}
-                  className="relative px-4 py-2 text-xs font-bold uppercase tracking-widest text-dark-300 hover:text-white transition-colors group"
+            {navItems.map((item, idx) => {
+              const id = item.href.replace('/#', '');
+              const isActive = activeSection === id;
+              
+              return (
+                <motion.div
+                  key={item.name}
+                  initial={{ opacity: 0, y: -10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.1 + idx * 0.05, duration: 0.5 }}
+                  whileHover={{ y: -2 }}
+                  whileTap={{ scale: 0.95, y: 0 }}
+                  className="relative"
                 >
-                  {item.name}
-                  <motion.span 
-                    className="absolute bottom-1 left-4 right-4 h-[2px] bg-primary-500 rounded-full scale-x-0 group-hover:scale-x-100 transition-transform origin-left"
-                  />
-                </Link>
-              </motion.div>
-            ))}
+                  <Link
+                    href={item.href}
+                    className={`relative px-4 py-2 text-xs font-bold uppercase tracking-widest transition-all group ${
+                      isActive ? 'text-white' : 'text-dark-300 hover:text-white'
+                    }`}
+                    onClick={(e) => {
+                      if (item.href.startsWith('/#')) {
+                        e.preventDefault();
+                        const targetId = item.href.replace('/#', '');
+                        const element = document.getElementById(targetId);
+                        if (element) {
+                          element.scrollIntoView({ behavior: 'smooth' });
+                          setActiveSection(targetId);
+                        }
+                      }
+                    }}
+                  >
+                    {item.name}
+                    
+                    {isActive ? (
+                      <motion.span 
+                        layoutId="nav-active"
+                        className="absolute bottom-1 left-4 right-4 h-[2px] bg-primary-500 rounded-full"
+                        transition={{ type: "spring", stiffness: 380, damping: 30 }}
+                      />
+                    ) : (
+                      <motion.span 
+                        className="absolute bottom-1 left-4 right-4 h-[2px] bg-primary-500/50 rounded-full scale-x-0 group-hover:scale-x-100 transition-transform origin-left"
+                      />
+                    )}
+                  </Link>
+                </motion.div>
+              );
+            })}
           </div>
 
           {/* CTA Button */}
@@ -146,11 +205,28 @@ export default function Navigation() {
                     initial={{ opacity: 0, x: -20 }}
                     animate={{ opacity: 1, x: 0 }}
                     transition={{ delay: idx * 0.05 }}
+                    whileTap={{ scale: 0.95 }}
                   >
                     <Link
                       href={item.href}
-                      className="block px-6 py-4 text-sm font-bold uppercase tracking-widest text-dark-300 hover:text-white hover:bg-white/5 rounded-2xl transition-all"
-                      onClick={() => setIsMobileMenuOpen(false)}
+                      className={`block px-6 py-4 text-sm font-bold uppercase tracking-widest rounded-2xl transition-all ${
+                        activeSection === item.href.replace('/#', '')
+                          ? 'text-white bg-primary-600/20'
+                          : 'text-dark-300 hover:text-white hover:bg-white/5'
+                      }`}
+                      onClick={(e) => {
+                        setIsMobileMenuOpen(false);
+                        if (item.href.startsWith('/#')) {
+                          e.preventDefault();
+                          const id = item.href.replace('/#', '');
+                          const element = document.getElementById(id);
+                          if (element) {
+                            setTimeout(() => {
+                              element.scrollIntoView({ behavior: 'smooth' });
+                            }, 300); // Wait for menu close animation
+                          }
+                        }
+                      }}
                     >
                       {item.name}
                     </Link>
@@ -175,7 +251,7 @@ export default function Navigation() {
             </motion.div>
           )}
         </AnimatePresence>
-      </div>
-    </nav>
+      </motion.div>
+    </motion.nav>
   )
 }

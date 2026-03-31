@@ -32,7 +32,7 @@ export default async function ResearchPage() {
   })
 
   return (
-    <main className="min-h-screen bg-dark-950 pt-20">
+    <main className="min-h-screen bg-transparent pt-20">
       <Navigation />
       <Section id="research">
         <motion.div
@@ -70,6 +70,7 @@ export default async function ResearchPage() {
                             fill
                             sizes="(max-width: 768px) 100vw, 256px"
                             className="object-cover transition-transform duration-500 group-hover:scale-110"
+                            priority={index < 2}
                           />
                         </div>
                       ) : (

@@ -5,24 +5,17 @@ import Button from '@/components/ui/Button'
 import { siteConfig } from '@/config/site'
 import dynamic from 'next/dynamic'
 
-// Dynamically import the heavy 3D scene, no SSR
-const OxiverseScene = dynamic(() => import('@/components/3d/OxiverseCore'), {
-  ssr: false,
-})
-
 export default function Hero() {
   const prefersReducedMotion = useReducedMotion()
 
   return (
-    <section id="platform" className="relative min-h-[95vh] flex items-center justify-center pt-28 overflow-hidden bg-transparent">
+    <section id="home" className="relative min-h-[95vh] flex items-center justify-center pt-28 overflow-hidden bg-transparent">
       {/* Background Layers */}
-      <div className="absolute inset-0 z-0 bg-dark-950">
+      <div className="absolute inset-0 z-0 bg-transparent">
         <div className="absolute inset-0 bg-grid-white bg-[size:60px_60px] opacity-[0.02]" />
         
-        {/* 3D Scene - Hidden on mobile and reduced motion for performance/accessibility */}
-        <div className="hidden lg:block absolute inset-0 opacity-80">
-          {!prefersReducedMotion && <OxiverseScene />}
-        </div>
+        {/* 3D Scene moved to GlobalBackground in layout.tsx */}
+
 
         {/* Static Glow Fallbacks - Mobile & Reduced Motion */}
         <div className="lg:hidden absolute top-[-10%] left-[-10%] w-[400px] h-[400px] bg-primary-500/15 rounded-full blur-[80px] opacity-40 mix-blend-screen" />
@@ -60,7 +53,20 @@ export default function Hero() {
           className="text-5xl sm:text-7xl md:text-8xl lg:text-[7rem] font-bold font-display tracking-tighter mb-8 leading-[1.1] transform-gpu mx-auto max-w-[1000px] pointer-events-auto"
         >
           <span className="text-white block">Privacy-first infrastructure</span>
-          <span className="gradient-text block mt-2">for the open internet</span>
+          <span className="gradient-text block mt-2 relative overflow-hidden group">
+            for the open internet
+            <motion.span 
+              initial={{ x: '-100%' }}
+              animate={{ x: '100%' }}
+              transition={{ 
+                repeat: Infinity, 
+                duration: 3, 
+                ease: "linear",
+                repeatDelay: 2
+              }}
+              className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent skew-x-12 pointer-events-none"
+            />
+          </span>
         </motion.h1>
 
         {/* Subtitle */}
@@ -101,7 +107,7 @@ export default function Hero() {
         transition={{ duration: 2.5, repeat: Infinity }}
         className="hidden md:flex absolute bottom-8 left-1/2 transform -translate-x-1/2 flex-col items-center space-y-2 opacity-60 hover:opacity-100 transition-opacity cursor-pointer group transform-gpu z-20 pointer-events-auto"
         onClick={() => {
-          document.getElementById('features')?.scrollIntoView({ behavior: 'smooth' })
+          document.getElementById('products')?.scrollIntoView({ behavior: 'smooth' })
         }}
       >
         <span className="text-[10px] font-bold uppercase tracking-widest text-dark-300 group-hover:text-primary-400 transition-colors">Scroll</span>

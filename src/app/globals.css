@@ -28,6 +28,8 @@ html,
 body {
   max-width: 100vw;
   overflow-x: hidden;
+  scroll-behavior: smooth;
+  scroll-padding-top: 100px;
 }
 
 body {
@@ -268,9 +270,10 @@ a {
   touch-action: none;
 }
 
-/* Ensure content is readable over 3D background */
-.relative.z-10 {
+/* Ensure content is readable over 3D background without affecting small children */
+.content-overlay {
   background: radial-gradient(ellipse at center, transparent 0%, rgba(2, 6, 23, 0.4) 100%);
+  pointer-events: none;
 }
 
 /* Cursor interaction hint */

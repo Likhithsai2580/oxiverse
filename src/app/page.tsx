@@ -18,7 +18,7 @@ export const revalidate = 3600 // Revalidate every hour
 
 export default function Home() {
   return (
-    <main className="min-h-screen bg-dark-950">
+    <main className="min-h-screen bg-transparent">
       <Navigation />
       <Hero />
       <Features />

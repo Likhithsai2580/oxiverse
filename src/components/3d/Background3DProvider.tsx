@@ -1,10 +1,12 @@
 'use client'
 
-import { createContext, useContext, useEffect, useState, useRef } from 'react'
-import { ScrollReactiveScene } from './ScrollReactiveScene'
+import React, { createContext, useContext, useEffect, useState } from 'react'
+import { useScroll, MotionValue } from 'framer-motion'
+import dynamic from 'next/dynamic'
 
 interface Background3DContextType {
-  scrollProgress: number
+  scrollProgress: MotionValue<number>
+  isReady: boolean
 }
 
 const Background3DContext = createContext<Background3DContextType | null>(null)
@@ -17,58 +19,25 @@ export const useBackground3D = () => {
   return context
 }
 
+const GlobalBackground = dynamic(() => import('@/components/layout/GlobalBackground'), { ssr: false })
+
 export const Background3DProvider = ({ children }: { children: React.ReactNode }) => {
-  const [scrollProgress, setScrollProgress] = useState(0)
-  const [isLoaded, setIsLoaded] = useState(false)
+  const { scrollYProgress } = useScroll()
+  const [isReady, setIsReady] = useState(false)
 
   useEffect(() => {
-    const updateScrollProgress = () => {
-      const scrollTop = window.scrollY
-      const docHeight = document.documentElement.scrollHeight - window.innerHeight
-      const progress = docHeight > 0 ? scrollTop / docHeight : 0
-      setScrollProgress(progress)
-    }
-
-    // Initial update
-    updateScrollProgress()
-
-    // Listen to scroll events with rAF for performance
-    let ticking = false
-    const handleScroll = () => {
-      if (!ticking) {
-        window.requestAnimationFrame(() => {
-          updateScrollProgress()
-          ticking = false
-        })
-        ticking = true
-      }
-    }
-
-    window.addEventListener('scroll', handleScroll, { passive: true })
-    
-    // Mark as loaded after a short delay to avoid jank
-    setTimeout(() => setIsLoaded(true), 100)
-
-    return () => {
-      window.removeEventListener('scroll', handleScroll)
-    }
+    // Initial delay to avoid hydration jank
+    const timer = setTimeout(() => setIsReady(true), 200)
+    return () => clearTimeout(timer)
   }, [])
 
   return (
-    <Background3DContext.Provider value={{ scrollProgress }}>
-      {/* Fixed 3D Background */}
-      <div 
-        className="fixed inset-0 z-0 pointer-events-none"
-        style={{ 
-          opacity: isLoaded ? 1 : 0,
-          transition: 'opacity 1s ease-out'
-        }}
-      >
-        <ScrollReactiveScene scrollProgress={scrollProgress} />
-      </div>
+    <Background3DContext.Provider value={{ scrollProgress: scrollYProgress, isReady }}>
+      {/* Global Immersion Layer - Persistent & Fixed */}
+      <GlobalBackground />
       
-      {/* Content */}
-      <div className="relative z-10">
+      {/* Content Overlay */}
+      <div className="relative z-10 w-full min-h-screen">
         {children}
       </div>
     </Background3DContext.Provider>

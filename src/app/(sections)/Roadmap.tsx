@@ -1,10 +1,10 @@
 'use client'
 
-import React, { useState } from 'react'
+import React, { useState, useRef } from 'react'
 import Section from '@/components/ui/Section'
 import SectionHeader from '@/components/ui/SectionHeader'
 import Badge from '@/components/ui/Badge'
-import { motion, AnimatePresence } from 'framer-motion'
+import { motion, AnimatePresence, useScroll, useSpring, useTransform } from 'framer-motion'
 
 const roadmapPhases = [
   {
@@ -55,6 +55,18 @@ const roadmapPhases = [
 
 export default function Roadmap() {
   const [expandedPhase, setExpandedPhase] = useState<number | null>(0)
+  const containerRef = useRef<HTMLDivElement>(null)
+
+  const { scrollYProgress } = useScroll({
+    target: containerRef,
+    offset: ["start end", "end center"]
+  })
+
+  const scaleY = useSpring(scrollYProgress, {
+    stiffness: 100,
+    damping: 30,
+    restDelta: 0.001
+  })
 
   const togglePhase = (index: number) => {
     if (index === 2) return // Phase 3 stays collapsed
@@ -69,24 +81,27 @@ export default function Roadmap() {
         subtitle="Our journey to create a complete privacy-first ecosystem."
       />
       
-      <div className="space-y-6 max-w-4xl mx-auto">
+      <div ref={containerRef} className="space-y-6 max-w-4xl mx-auto relative">
+        
+        {/* Global Continuous Animated Connecting Line */}
+        <div className="absolute left-[34px] sm:left-[38px] top-[40px] bottom-[40px] w-[2px] z-0 hidden sm:block">
+          <div className="absolute inset-0 bg-dark-800 rounded-full" />
+          <motion.div 
+            style={{ scaleY, originY: 0 }}
+            className="absolute inset-0 w-full bg-gradient-to-b from-primary-500 via-accent-500 to-primary-400 rounded-full shadow-[0_0_15px_rgba(59,130,246,0.6)]" 
+          />
+          {/* Animated Glow Bead */}
+          <motion.div
+            style={{ 
+              top: useTransform(scaleY, [0, 1], ["0%", "100%"]),
+              y: "-50%"
+            }}
+            className="absolute left-1/2 -translate-x-1/2 w-3 h-3 bg-white rounded-full shadow-[0_0_20px_#fff,0_0_40px_#3b82f6] z-10"
+          />
+        </div>
+
         {roadmapPhases.map((phaseData, index) => (
           <div key={phaseData.phase} className="relative group">
-            
-            {/* Animated Connecting Line */}
-            {index !== roadmapPhases.length - 1 && (
-              <div className="absolute left-[34px] sm:left-[38px] top-[74px] w-[2px] h-[calc(100%-16px)] z-0 hidden sm:block">
-                <div className="absolute inset-0 bg-dark-800 rounded-full" />
-                <motion.div 
-                  initial={{ height: 0 }}
-                  whileInView={{ height: phaseData.status === 'current' ? '50%' : '0%' }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 1.5, ease: "easeInOut" }}
-                  className="absolute top-0 left-0 w-full bg-gradient-to-b from-primary-500 to-transparent rounded-full shadow-[0_0_10px_rgba(59,130,246,0.5)]" 
-                />
-              </div>
-            )}
-
             {/* Phase Header */}
             <motion.button
               whileHover={{ scale: index === 2 ? 1 : 1.01 }}
