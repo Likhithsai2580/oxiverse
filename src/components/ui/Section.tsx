@@ -9,9 +9,9 @@ interface SectionProps {
 
 export default function Section({ id, children, className = '', dark = false }: SectionProps) {
   return (
-    <section 
-      id={id} 
-      className={`py-20 px-4 ${dark ? 'bg-dark-900/50' : ''} ${className}`}
+    <section
+      id={id}
+      className={`py-20 px-4 ${dark ? 'bg-dark-900/30' : 'bg-transparent'} ${className}`}
     >
       <div className="max-w-7xl mx-auto">
         {children}

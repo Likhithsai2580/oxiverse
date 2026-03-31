@@ -1,3 +1,5 @@
+import { ClassValue } from 'clsx'
+
 /**
  * Convert a string to a URL-friendly slug
  */
@@ -34,7 +36,7 @@ export function formatRelativeTime(date: Date | string): string {
   if (diffInSeconds < 3600) return `${Math.floor(diffInSeconds / 60)} minutes ago`
   if (diffInSeconds < 86400) return `${Math.floor(diffInSeconds / 3600)} hours ago`
   if (diffInSeconds < 604800) return `${Math.floor(diffInSeconds / 86400)} days ago`
-  
+
   return formatDate(date)
 }
 
@@ -44,4 +46,11 @@ export function formatRelativeTime(date: Date | string): string {
 export function truncate(text: string, length: number): string {
   if (text.length <= length) return text
   return text.slice(0, length).trim() + '...'
+}
+
+/**
+ * Combine class names conditionally
+ */
+export function cn(...inputs: ClassValue[]) {
+  return inputs.filter(Boolean).join(' ')
 }

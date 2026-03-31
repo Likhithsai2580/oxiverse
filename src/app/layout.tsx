@@ -5,6 +5,7 @@ import { ToastProvider } from '@/lib/providers/ToastProvider'
 import { AuthProvider } from '@/lib/providers/AuthProvider'
 import ScrollProgressBar from '@/components/ui/ScrollProgressBar'
 import { SmoothScrollProvider } from '@/lib/providers/SmoothScrollProvider'
+import { Background3DProvider } from '@/components/3d/Background3DProvider'
 import { SpeedInsights } from '@vercel/speed-insights/next'
 
 const inter = Inter({
@@ -52,7 +53,9 @@ export default function RootLayout({
           <AuthProvider>
             <ToastProvider>
               <SmoothScrollProvider>
-                {children}
+                <Background3DProvider>
+                  {children}
+                </Background3DProvider>
               </SmoothScrollProvider>
             </ToastProvider>
           </AuthProvider>

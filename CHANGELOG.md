@@ -4,6 +4,12 @@ All notable changes to the Oxiverse project will be documented in this file.
 
 ## [Unreleased]
 ### Added
+- Added immersive 3D `OxiverseCore` component using Three.js and React Three Fiber to the Hero section.
+- Added animated Framer Motion path connectors to the Roadmap section.
+
+### Changed
+- Rebranded and redesigned the Hero section copy and CTAs to reflect "Privacy-first infrastructure for the open internet" with full reduced-motion and mobile fallbacks.
+- Upgraded the Roadmap phase indicators to feature dynamic glowing node styling.
 - Added `Newsletter` model to Prisma schema for storing subscriber emails.
 - Created API endpoint `/api/newsletter` for processing subscriptions.
 - Implemented `Contact` section with social links for Instagram, GitHub, X, Reddit, and Telegram.
