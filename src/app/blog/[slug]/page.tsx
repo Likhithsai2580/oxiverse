@@ -84,6 +84,23 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
       <Navigation />
       <article className="max-w-4xl mx-auto px-4 py-12">
         {/* Header */}
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              '@context': 'https://schema.org',
+              '@type': 'BlogPosting',
+              headline: blog.title,
+              description: blog.excerpt,
+              image: blog.imageUrl,
+              datePublished: blog.publishedAt || blog.createdAt,
+              author: {
+                '@type': 'Person',
+                name: (blog.author as any).name || (blog.author as any).email,
+              },
+            }),
+          }}
+        />
         <motion.header 
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}

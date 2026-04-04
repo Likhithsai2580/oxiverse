@@ -13,7 +13,7 @@ const navItems = [
   { name: 'Roadmap', href: '/#roadmap' },
   { name: 'Community', href: '/#community' },
   { name: 'Contact', href: '/#contact' },
-  { name: 'Docs', href: 'https://docs.oxiverse.com' },
+  { name: 'Docs', href: '/docs' },
 ]
 
 export default function Navigation() {

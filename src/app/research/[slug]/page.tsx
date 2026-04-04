@@ -84,6 +84,23 @@ export default async function ResearchPaperPage({ params }: ResearchPaperPagePro
       <Navigation />
       <article className="max-w-4xl mx-auto px-4 py-12">
         {/* Header */}
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              '@context': 'https://schema.org',
+              '@type': 'ScholarlyArticle',
+              headline: paper.title,
+              description: paper.abstract,
+              image: paper.imageUrl,
+              datePublished: paper.publishedAt || paper.createdAt,
+              author: {
+                '@type': 'Person',
+                name: (paper.author as any).name || (paper.author as any).email,
+              },
+            }),
+          }}
+        />
         <motion.header 
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}

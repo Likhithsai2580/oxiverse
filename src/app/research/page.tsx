@@ -8,7 +8,7 @@ import Navigation from '@/components/Navigation'
 import Footer from '@/components/Footer'
 import * as motion from 'framer-motion/client'
 
-export const dynamic = 'force-dynamic'
+export const revalidate = 60
 
 export const metadata: Metadata = {
   title: 'Research - Oxiverse',

@@ -19,7 +19,7 @@ const spaceGrotesk = Space_Grotesk({
 })
 
 export const metadata: Metadata = {
-  metadataBase: new URL('https://oxiverse.io'),
+  metadataBase: new URL('https://oxiverse.com'),
   title: {
     default: 'Oxiverse - Explore • Connect • Create',
     template: '%s | Oxiverse',
@@ -32,14 +32,14 @@ export const metadata: Metadata = {
     description: 'A privacy-first ecosystem with search, browser, download manager, productivity suite, and more.',
     type: 'website',
     locale: 'en_US',
-    url: 'https://oxiverse.io',
+    url: 'https://oxiverse.com',
     siteName: 'Oxiverse',
   },
   twitter: {
     card: 'summary_large_image',
     title: 'Oxiverse - Explore • Connect • Create',
     description: 'A privacy-first ecosystem with search, browser, download manager, productivity suite, and more.',
-    creator: '@oxiverse',
+    creator: '@itxLikhith',
   },
   robots: {
     index: true,
@@ -61,6 +61,17 @@ export const metadata: Metadata = {
       { url: '/apple-touch-icon.png', sizes: '180x180', type: 'image/png' },
     ],
   },
+  verification: {
+    google: 'google-site-verification-placeholder',
+    yandex: 'yandex-verification-placeholder',
+  },
+  alternates: {
+    canonical: 'https://oxiverse.com',
+    languages: {
+      'en-US': 'https://oxiverse.com',
+    },
+  },
+  category: 'technology',
 }
 
 export default function RootLayout({
@@ -68,18 +79,29 @@ export default function RootLayout({
 }: {
   children: React.ReactNode
 }) {
-  const jsonLd = {
-    '@context': 'https://schema.org',
-    '@type': 'Organization',
-    name: 'Oxiverse',
-    url: 'https://oxiverse.io',
-    description: 'The next generation of privacy-first infrastructure. A secure, decentralized ecosystem for pioneers of the open internet.',
-    logo: 'https://oxiverse.io/apple-touch-icon.png',
-    sameAs: [
-      'https://github.com/oxiverse-labs',
-      'https://twitter.com/oxiverse'
-    ]
-  }
+  const jsonLd = [
+    {
+      '@context': 'https://schema.org',
+      '@type': 'Person',
+      name: 'Likhith',
+      url: 'https://oxiverse.com',
+      jobTitle: 'Developer & Researcher',
+      description: 'Portfolio of open-source repositories, technical blogs, and research papers on privacy-first infrastructure.',
+      image: 'https://github.com/itxLikhith.png',
+      sameAs: [
+        'https://github.com/itxLikhith',
+        'https://github.com/oxiverse-labs',
+        'https://twitter.com/itxLikhith'
+      ]
+    },
+    {
+      '@context': 'https://schema.org',
+      '@type': 'WebSite',
+      name: 'Oxiverse',
+      url: 'https://oxiverse.com',
+      description: 'An ecosystem of open-source products, developer documentation, and research publications.'
+    }
+  ]
 
   return (
     <html lang="en" className={`${inter.variable} ${spaceGrotesk.variable}`}>

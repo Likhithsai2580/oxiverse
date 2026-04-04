@@ -1,11 +1,11 @@
 export const siteConfig = {
   name: "Oxiverse",
   description: "The next generation of privacy-first infrastructure. A secure, decentralized ecosystem for pioneers of the open internet.",
-  url: "https://oxiverse.io",
-  ogImage: "https://oxiverse.io/og.jpg",
+  url: "https://oxiverse.com",
+  ogImage: "https://oxiverse.com/og.jpg",
   links: {
     github: "https://github.com/itxLikhith",
-    twitter: "https://twitter.com/oxiverse",
+    twitter: "https://twitter.com/itxLikhith",
   },
   mainNav: [
     {

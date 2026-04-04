@@ -64,11 +64,10 @@ export default async function Ecosystem() {
                 {project.link && (
                   <div className="mt-auto">
                     <Link 
-                      href={project.link} 
-                      target="_blank" 
+                      href={`/docs/${project.slug}`}
                       className="text-xs font-bold text-primary-400 uppercase tracking-widest flex items-center gap-2 group-hover:gap-3 transition-all"
                     >
-                      View Project
+                      View Documentation
                       <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
                       </svg>
@@ -100,8 +99,8 @@ export default async function Ecosystem() {
       )}
 
       <div className="text-center mt-12">
-        <Button href="/ecosystem" variant="outline" className="glass">
-          Explore Full Ecosystem
+        <Button href="/docs" variant="outline" className="glass">
+          Explore Full Ecosystem Docs
         </Button>
       </div>
     </Section>

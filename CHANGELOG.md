@@ -10,7 +10,14 @@ All notable changes to the Oxiverse project will be documented in this file.
 - Added immersive 3D `OxiverseCore` component using Three.js and React Three Fiber to the Hero section.
 - Added animated Framer Motion path connectors to the Roadmap section.
 
+### Added
+- Added `[slug]/page.tsx` dynamics route inside the `docs/` folder to fetch `README.md` and `docs/README.md` files from external GitHub repositories using GitHub's raw API, rendering them with `react-markdown` and `remark-gfm`.
+
 ### Changed
+- Replaced `force-dynamic` with `revalidate = 60` in Blog and Research pages to drastically improve read latency (from full SSR to ISR) while keeping data fresh.
+- Updated `sitemap.ts` to dynamically record Blog and Research papers from the database to improve SEO indexability.
+- Updated Layout `metadata` to include `verification` tokens, `alternates.canonical`, and `category` properties for advanced SEO optimization.
+- Modified Ecosystem project links to route to our internal dynamically generated documentation pages rather than redirecting to GitHub directly.
 - Rebranded and redesigned the Hero section copy and CTAs to reflect "Privacy-first infrastructure for the open internet" with full reduced-motion and mobile fallbacks.
 - Upgraded the Roadmap phase indicators to feature dynamic glowing node styling.
 - Added `Newsletter` model to Prisma schema for storing subscriber emails.
