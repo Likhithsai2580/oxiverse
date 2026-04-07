@@ -1,90 +1,76 @@
 import React from 'react'
 import Section from '@/components/ui/Section'
-import SectionHeader from '@/components/ui/SectionHeader'
-import Card from '@/components/ui/Card'
 import Button from '@/components/ui/Button'
 import Image from 'next/image'
 
 export default function About() {
   return (
-    <Section id="about">
-      <SectionHeader
-        badge="About"
-        title="Behind Oxiverse"
-        subtitle="A one-person mission to build a privacy-first alternative to big tech."
-      />
-      
-      <div className="max-w-4xl mx-auto">
-        <Card className="mb-8">
-          <div className="flex flex-col md:flex-row items-center gap-8">
-            <div className="flex-shrink-0">
-              <div className="relative w-32 h-32 rounded-full overflow-hidden shadow-2xl shadow-primary-500/30">
-                <Image
-                  src="https://avatars.githubusercontent.com/u/254577690?v=4"
-                  alt="Likhith"
-                  fill
-                  sizes="128px"
-                  className="object-cover"
-                />
+    <Section id="about" className="py-24 bg-primary-800 relative z-10">
+      <div className="max-w-7xl mx-auto px-4 md:px-8">
+
+        <div className="mb-16">
+          <div className="inline-block border-2 border-primary-50 px-3 py-1 mb-6 bg-primary-950">
+            <span className="font-mono text-xs uppercase tracking-widest font-bold text-accent-300">About</span>
+          </div>
+          <h2 className="font-display text-[3rem] md:text-[4.5rem] leading-[0.9] text-primary-50 tracking-tighter font-bold uppercase">
+            Behind <span className="text-accent-300">Oxiverse.</span>
+          </h2>
+        </div>
+
+        {/* Profile */}
+        <div className="retro-box p-0 mb-8">
+          <div className="retro-header-bar">
+            <span>USER_PROFILE.DAT</span>
+          </div>
+          <div className="p-8 md:p-12 bg-primary-800 grid grid-cols-1 md:grid-cols-12 gap-8">
+            <div className="md:col-span-3 flex flex-col items-center md:items-start">
+              <div className="relative w-28 h-28 overflow-hidden border-2 border-primary-50 mb-4">
+                <Image src="https://avatars.githubusercontent.com/u/254577690?v=4" alt="Likhith" fill sizes="112px" className="object-cover" />
+              </div>
+              <h3 className="text-xl font-display text-primary-50 font-bold uppercase">Likhith</h3>
+              <p className="text-xs uppercase tracking-widest text-primary-400 font-mono font-bold mt-1 mb-6">Founder &bull; Developer</p>
+              <div className="flex gap-3">
+                <Button href="https://github.com/oxiverse-labs" target="_blank" size="sm">GitHub</Button>
+                <Button variant="outline" href="https://github.com/itxLikhith/intent-engine" target="_blank" size="sm">Source</Button>
               </div>
             </div>
-            <div className="flex-1 text-center md:text-left">
-              <h3 className="text-2xl font-bold font-display text-white mb-2">
-                Built by Likhith
-              </h3>
-              <p className="text-dark-400 mb-4">
-                Oxiverse is the brainchild of Likhith, a passionate developer committed to 
-                creating privacy-first alternatives to big tech products. What started as a 
-                privacy-focused search engine has evolved into a comprehensive ecosystem 
-                designed to give users control over their digital lives.
-              </p>
-              <p className="text-dark-400 mb-6">
-                Every line of code is written with the belief that technology should serve 
-                users, not exploit their data. Oxiverse is built on open source principles, 
-                transparent practices, and an unwavering commitment to privacy.
-              </p>
-              <div className="flex flex-wrap gap-3 justify-center md:justify-start">
-                <Button href="https://github.com/oxiverse-labs" target="_blank">
-                  <svg className="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 24 24">
-                    <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
-                  </svg>
-                  Oxiverse on GitHub
-                </Button>
-                <Button variant="outline" href="https://github.com/itxLikhith/intent-engine" target="_blank">
-                  <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4" />
-                  </svg>
-                  View Source Code
-                </Button>
+            <div className="md:col-span-9">
+              <div className="border-l-2 border-accent-300 pl-8">
+                <p className="text-primary-200 leading-relaxed text-lg mb-4">
+                  Oxiverse is the brainchild of Likhith, a passionate developer committed to creating privacy-first alternatives to big tech products.
+                </p>
+                <p className="text-primary-300 leading-relaxed">
+                  Every line of code is written with the belief that technology should serve users, not exploit their data. Built on open source principles, transparent practices, and an unwavering commitment to privacy.
+                </p>
               </div>
             </div>
           </div>
-        </Card>
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-6 mb-12">
-          <Card className="text-center group border-beam">
-            <div className="text-4xl font-black font-display gradient-text mb-2 animate-pulse">100%</div>
-            <div className="text-xs font-black uppercase tracking-widest text-dark-400">Source Available</div>
-          </Card>
-          <Card className="text-center group border-beam">
-            <div className="text-4xl font-black font-display gradient-text mb-2 animate-pulse">0</div>
-            <div className="text-xs font-black uppercase tracking-widest text-dark-400">User Tracking</div>
-          </Card>
-          <Card className="text-center group border-beam">
-            <div className="text-4xl font-black font-display gradient-text mb-2 animate-pulse">24/7</div>
-            <div className="text-xs font-black uppercase tracking-widest text-dark-400">Privacy First</div>
-          </Card>
-          <Card className="text-center group border-beam">
-            <div className="text-4xl font-black font-display gradient-text mb-2 animate-pulse">∞</div>
-            <div className="text-xs font-black uppercase tracking-widest text-dark-400">Possibilities</div>
-          </Card>
         </div>
-        <div className="mt-8 text-center">
-          <blockquote className="text-xl md:text-2xl font-light italic text-dark-300 max-w-3xl mx-auto">
-            "Technology should empower users, not exploit them. Every feature in Oxiverse is 
-            built with one question in mind: Does this respect user privacy and autonomy?"
+
+        {/* Stats */}
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-12">
+          {[
+            { value: '100%', label: 'Source Available' },
+            { value: '0', label: 'User Tracking' },
+            { value: '24/7', label: 'Privacy First' },
+            { value: '\u221E', label: 'Possibilities' },
+          ].map((stat) => (
+            <div key={stat.label} className="retro-box p-0 group">
+              <div className="p-6 bg-primary-800 text-center">
+                <div className="text-3xl font-display text-primary-50 font-bold mb-1 group-hover:text-accent-300 transition-colors">{stat.value}</div>
+                <div className="text-[10px] font-bold uppercase tracking-widest text-primary-400 font-mono">{stat.label}</div>
+              </div>
+            </div>
+          ))}
+        </div>
+
+        {/* Quote */}
+        <div className="retro-box-seafoam p-8 md:p-12 max-w-3xl mx-auto text-center">
+          <blockquote className="text-lg md:text-xl font-display italic text-primary-950 leading-relaxed font-medium">
+            &ldquo;Technology should empower users, not exploit them. Every feature in Oxiverse is built with one question in mind: Does this respect user privacy and autonomy?&rdquo;
           </blockquote>
-          <cite className="block mt-4 text-dark-400 not-italic">
-            — Likhith, Founder
+          <cite className="block mt-4 text-primary-800 not-italic text-xs uppercase tracking-widest font-mono font-bold">
+            &mdash; Likhith, Founder
           </cite>
         </div>
       </div>

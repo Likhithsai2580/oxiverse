@@ -3,123 +3,140 @@
 import { motion, useReducedMotion } from 'framer-motion'
 import Button from '@/components/ui/Button'
 import { siteConfig } from '@/config/site'
-import dynamic from 'next/dynamic'
+import { useEffect, useState } from 'react'
 
 export default function Hero() {
   const prefersReducedMotion = useReducedMotion()
+  const [mounted, setMounted] = useState(false)
+
+  useEffect(() => {
+    setMounted(true)
+  }, [])
 
   return (
-    <section id="home" className="relative min-h-[95vh] flex items-center justify-center pt-28 overflow-hidden bg-transparent">
-      {/* Background Layers */}
-      <div className="absolute inset-0 z-0 bg-transparent">
-        <div className="absolute inset-0 bg-grid-white bg-[size:60px_60px] opacity-[0.02]" />
+    <section id="home" className="relative min-h-screen flex items-center justify-center pt-24 overflow-hidden bg-primary-800 retro-bg">
+      
+      <div className="relative z-10 w-full max-w-screen-2xl mx-auto px-4 md:px-12 py-16 flex flex-col justify-center pointer-events-none">
         
-        {/* 3D Scene moved to GlobalBackground in layout.tsx */}
-
-
-        {/* Static Glow Fallbacks - Mobile & Reduced Motion */}
-        <div className="lg:hidden absolute top-[-10%] left-[-10%] w-[400px] h-[400px] bg-primary-500/15 rounded-full blur-[80px] opacity-40 mix-blend-screen" />
-        <div className="lg:hidden absolute bottom-[-15%] right-[-10%] w-[400px] h-[400px] bg-accent-500/15 rounded-full blur-[80px] opacity-40 mix-blend-screen" />
-        
-        {/* Deep fallback for desktop reduced motion */}
-        {prefersReducedMotion && (
-          <div className="hidden lg:block absolute inset-0 bg-gradient-to-br from-dark-950 via-primary-950/20 to-dark-950" />
-        )}
-      </div>
-
-      <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 text-center pointer-events-none">
-        
-        {/* Animated Pulse Badge */}
+        {/* Main Retro Window Box */}
         <motion.div 
-          style={{ willChange: 'transform, opacity' }}
-          initial={{ opacity: 0, y: prefersReducedMotion ? 0 : -20, scale: 0.9 }}
-          animate={{ opacity: 1, y: 0, scale: 1, z: 0 }}
-          transition={{ duration: 0.5, type: "spring", bounce: 0.4 }}
-          className="inline-flex items-center space-x-2 px-6 py-2.5 mb-12 glass rounded-full border border-white/10 shadow-2xl shadow-primary-500/10 group cursor-default transform-gpu pointer-events-auto backdrop-blur-md bg-dark-900/40"
+          initial={{ opacity: 0, scale: 0.98 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 0.4, ease: "easeOut" }}
+          className="retro-box w-full max-w-[1200px] mx-auto pointer-events-auto flex flex-col"
         >
-          <span className="relative flex h-2.5 w-2.5">
-            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary-400 opacity-75"></span>
-            <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-primary-500 shadow-[0_0_10px_rgba(59,130,246,1)]"></span>
-          </span>
-          <span className="text-[11px] font-black tracking-[0.2em] uppercase text-primary-200">{siteConfig.hero.badge}</span>
+          {/* Authentic Retro Header Bar */}
+          <div className="retro-header-bar w-full">
+            <div className="flex items-center gap-4">
+              <div className="w-4 h-4 bg-primary-950 border-2 border-primary-950 opacity-10" />
+              <span>OXI_SYS_SECURE.EXE</span>
+            </div>
+            <div className="flex items-center gap-2">
+              {['—', '□', '✕'].map((icon, i) => (
+                <div key={i} className="w-6 h-6 border-2 border-primary-950 flex items-center justify-center text-xs cursor-pointer hover:bg-primary-950 hover:text-primary-50 transition-colors">
+                  {icon}
+                </div>
+              ))}
+            </div>
+          </div>
+
+          <div className="p-8 md:p-12 lg:p-16 flex flex-col xl:flex-row gap-12 lg:gap-24 relative bg-primary-800">
+            
+            {/* Left Col: Stark Typography */}
+            <div className="flex-1 flex flex-col justify-center">
+              
+              <div className="inline-block border-2 border-primary-50 px-3 py-1 mb-8 self-start bg-primary-950">
+                <span className="font-mono text-xs uppercase tracking-widest font-bold text-accent-300">
+                  STATUS: ENCLAVE ONLINE
+                </span>
+              </div>
+
+              <h1 className="font-display text-[4rem] sm:text-[5rem] md:text-[6rem] lg:text-[7rem] font-bold uppercase leading-[0.9] tracking-tighter mb-8 text-shimmer">
+                <span className="block">Privacy</span>
+                <span className="block text-accent-300 drop-shadow-[2px_2px_0_rgba(0,0,0,1)]">
+                  Infra<span className="text-primary-50">structure_</span>
+                </span>
+              </h1>
+              
+              <p className="font-sans text-lg md:text-xl font-medium text-primary-100 max-w-xl leading-relaxed mt-4 drop-shadow-[1px_1px_0_rgba(0,0,0,1)]">
+                A highly secure, decentralized ecosystem architected for builders. 
+                We engineer a framework devoid of tracking and algorithmic bias.
+              </p>
+
+              {/* Flat Geometric Buttons */}
+              <div className="flex flex-col sm:flex-row gap-8 mt-12">
+                <Button size="lg" href={siteConfig.hero.cta.secondary.href} className="!p-0 !bg-transparent !shadow-none !border-none outline-none">
+                  <div className="retro-btn retro-btn-seafoam w-full">
+                    Deploy Network
+                  </div>
+                </Button>
+
+                <Button size="lg" variant="outline" href={siteConfig.hero.cta.primary.href} target="_blank" className="!p-0 !bg-transparent !shadow-none !border-none outline-none">
+                  <div className="retro-btn w-full">
+                    Dev Access (API)
+                  </div>
+                </Button>
+              </div>
+
+            </div>
+
+            {/* Right Col: CRT Diagnostics Display */}
+            <div className="w-full xl:w-[400px] flex flex-col justify-center">
+              
+              <div className="retro-box-seafoam overflow-hidden relative">
+                
+                <div className="retro-header-bar-dark">
+                  <span>TERMINAL_V1.0</span>
+                  <div className="flex gap-1">
+                    <div className="w-2 h-2 bg-primary-50" />
+                    <div className="w-2 h-2 bg-primary-50" />
+                  </div>
+                </div>
+
+                <div className="p-6 relative bg-primary-950 border-t-2 border-primary-950 min-h-[300px] font-mono text-sm font-bold uppercase tracking-wider">
+                  <div className="crt-scanline" />
+                  
+                  <div className="relative z-10 space-y-4">
+                    <div className="text-primary-50 mb-6">
+                      Oxiverse Mainframe Initialize...
+                      <br/>
+                      Loading Security Protocol... <span className="text-accent-300">OK</span>
+                    </div>
+
+                    <div className="flex justify-between border-b-2 border-primary-800 pb-1">
+                      <span className="text-primary-300">SYS_CORE</span>
+                      <span className="text-accent-300 font-black">STABLE</span>
+                    </div>
+                    <div className="flex justify-between border-b-2 border-primary-800 pb-1">
+                      <span className="text-primary-300">NET_LATENCY</span>
+                      <span className="text-primary-50">12ms</span>
+                    </div>
+                    <div className="flex justify-between border-b-2 border-primary-800 pb-1">
+                      <span className="text-primary-300">DATA_CIPHER</span>
+                      <span className="text-primary-50">AES-256</span>
+                    </div>
+                    <div className="flex justify-between border-b-2 border-primary-800 pb-1">
+                      <span className="text-primary-300">ACTIVE_NODES</span>
+                      <span className="text-primary-50">2,408</span>
+                    </div>
+                    
+                    {/* Blinking Prompt */}
+                    <div className="pt-4 flex items-center gap-2 text-accent-300">
+                      <span>C:\CORE&gt;</span>
+                      <span className="w-3 h-[1em] bg-accent-300 animate-pulse" />
+                    </div>
+                  </div>
+                </div>
+
+              </div>
+
+            </div>
+
+          </div>
         </motion.div>
 
-        {/* Headline */}
-        <motion.h1 
-          style={{ willChange: 'transform, opacity' }}
-          initial={{ opacity: 0, scale: 0.9, y: prefersReducedMotion ? 0 : 30 }}
-          animate={{ opacity: 1, scale: 1, y: 0, z: 0 }}
-          transition={{ duration: 0.5, delay: 0.1, type: "spring" }}
-          className="text-5xl sm:text-7xl md:text-8xl lg:text-[7rem] font-bold font-display tracking-tighter mb-8 leading-[1.1] transform-gpu mx-auto max-w-[1000px] pointer-events-auto"
-        >
-          <span className="text-white block">Privacy-first infrastructure</span>
-          <span className="gradient-text block mt-2 relative overflow-hidden group">
-            for the open internet
-            <motion.span 
-              initial={{ x: '-100%' }}
-              animate={{ x: '100%' }}
-              transition={{ 
-                repeat: Infinity, 
-                duration: 3, 
-                ease: "linear",
-                repeatDelay: 2
-              }}
-              className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent skew-x-12 pointer-events-none"
-            />
-          </span>
-        </motion.h1>
-
-        {/* Subtitle */}
-        <motion.p 
-          style={{ willChange: 'transform, opacity' }}
-          initial={{ opacity: 0, y: prefersReducedMotion ? 0 : 20 }}
-          animate={{ opacity: 1, y: 0, z: 0 }}
-          transition={{ duration: 0.5, delay: 0.2, type: "spring" }}
-          className="text-lg md:text-2xl text-dark-300 max-w-3xl mx-auto mb-16 leading-relaxed font-medium transform-gpu pointer-events-auto backdrop-blur-sm z-10"
-        >
-          Oxiverse is a secure, decentralized ecosystem for builders and researchers who want an open internet without tracking or exploitation.
-        </motion.p>
-
-        {/* CTAs */}
-        <motion.div 
-          style={{ willChange: 'transform, opacity' }}
-          initial={{ opacity: 0, y: prefersReducedMotion ? 0 : 20 }}
-          animate={{ opacity: 1, y: 0, z: 0 }}
-          transition={{ duration: 0.5, delay: 0.3, type: "spring" }}
-          className="flex flex-col sm:flex-row items-center justify-center gap-6 mb-24 transform-gpu pointer-events-auto"
-        >
-          <Button size="lg" href={siteConfig.hero.cta.secondary.href} className="min-w-[220px] h-16 text-lg shadow-2xl shadow-primary-500/40 relative overflow-hidden group rounded-2xl">
-            <span className="relative z-10">Explore Ecosystem</span>
-            <div className="absolute inset-0 bg-gradient-to-r from-primary-600 via-accent-600 to-primary-600 bg-[length:200%_100%] animate-gradient-shift opacity-0 group-hover:opacity-100 transition-opacity hidden md:block" />
-          </Button>
-          
-          <Button size="lg" variant="outline" href={siteConfig.hero.cta.primary.href} target="_blank" className="min-w-[220px] h-16 text-lg bg-dark-900/50 backdrop-blur-md relative overflow-hidden group rounded-2xl border-white/10 hover:border-white/20">
-            <span className="relative z-10 text-white">Get Dev Access</span>
-            <div className="absolute inset-0 bg-white/5 opacity-0 group-hover:opacity-100 transition-opacity hidden md:block" />
-          </Button>
-        </motion.div>
       </div>
-
-      {/* Modern Scroll Indicator */}
-      <motion.div 
-        style={{ willChange: 'transform' }}
-        animate={prefersReducedMotion ? {} : { y: [0, 8, 0], z: 0 }}
-        transition={{ duration: 2.5, repeat: Infinity }}
-        className="hidden md:flex absolute bottom-8 left-1/2 transform -translate-x-1/2 flex-col items-center space-y-2 opacity-60 hover:opacity-100 transition-opacity cursor-pointer group transform-gpu z-20 pointer-events-auto"
-        onClick={() => {
-          document.getElementById('products')?.scrollIntoView({ behavior: 'smooth' })
-        }}
-      >
-        <span className="text-[10px] font-bold uppercase tracking-widest text-dark-300 group-hover:text-primary-400 transition-colors">Scroll</span>
-        <div className="w-6 h-10 border-2 border-dark-600 rounded-full flex justify-center group-hover:border-primary-400 transition-colors bg-dark-950/50 backdrop-blur-sm">
-          <motion.div 
-            style={{ willChange: 'transform' }}
-            animate={prefersReducedMotion ? {} : { y: [4, 20, 4], z: 0 }}
-            transition={{ duration: 1.5, repeat: Infinity }}
-            className="w-1 h-2 bg-dark-400 rounded-full mt-1 group-hover:bg-primary-400 transition-colors transform-gpu"
-          />
-        </div>
-      </motion.div>
+      
     </section>
   )
 }

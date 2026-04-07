@@ -32,7 +32,7 @@ export default function SectionHeader({
         <span className="gradient-text">{title}</span>
       </h2>
       {subtitle && (
-        <p className="text-lg text-dark-400 max-w-2xl mx-auto">
+        <p className="text-lg text-primary-400 max-w-2xl mx-auto">
           {subtitle}
         </p>
       )}

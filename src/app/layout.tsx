@@ -1,21 +1,21 @@
 import type { Metadata } from 'next'
-import { Inter, Space_Grotesk } from 'next/font/google'
+import { Archivo, IBM_Plex_Mono } from 'next/font/google'
 import './globals.css'
 import { ToastProvider } from '@/lib/providers/ToastProvider'
 import { AuthProvider } from '@/lib/providers/AuthProvider'
 import ScrollProgressBar from '@/components/ui/ScrollProgressBar'
 import { SmoothScrollProvider } from '@/lib/providers/SmoothScrollProvider'
-import { Background3DProvider } from '@/components/3d/Background3DProvider'
 import { SpeedInsights } from '@vercel/speed-insights/next'
 
-const inter = Inter({
+const archivo = Archivo({
   subsets: ['latin'],
-  variable: '--font-inter',
+  variable: '--font-display',
 })
 
-const spaceGrotesk = Space_Grotesk({
+const plexMono = IBM_Plex_Mono({
   subsets: ['latin'],
-  variable: '--font-space-grotesk',
+  weight: ['400', '500', '600', '700'],
+  variable: '--font-mono',
 })
 
 export const metadata: Metadata = {
@@ -104,16 +104,16 @@ export default function RootLayout({
   ]
 
   return (
-    <html lang="en" className={`${inter.variable} ${spaceGrotesk.variable}`}>
+    <html lang="en" className={`${archivo.variable} ${plexMono.variable}`}>
       <head>
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         />
       </head>
-      <body className="bg-dark-950 antialiased selection:bg-primary-500/30">
+      <body className="bg-primary-800 retro-bg antialiased text-primary-50 selection:bg-accent-300 selection:text-primary-950">
         <noscript>
-          <div id="content-fallback" style={{ padding: '20px', fontFamily: 'sans-serif' }}>
+          <div id="content-fallback" style={{ padding: '20px', fontFamily: 'monospace' }}>
             <h1>Oxiverse</h1>
             <p>IntentForge — An intent-first discovery engine. Autonomous, self-healing search technology.</p>
             <p>A privacy-first ecosystem with search, browser, download manager, productivity suite, and more.</p>
@@ -121,13 +121,11 @@ export default function RootLayout({
           </div>
         </noscript>
         <ScrollProgressBar />
-        <div className={`${inter.className} ${spaceGrotesk.variable}`}>
+        <div className={`${archivo.className} ${plexMono.variable} relative z-10`}>
           <AuthProvider>
             <ToastProvider>
               <SmoothScrollProvider>
-                <Background3DProvider>
-                  {children}
-                </Background3DProvider>
+                {children}
               </SmoothScrollProvider>
             </ToastProvider>
           </AuthProvider>

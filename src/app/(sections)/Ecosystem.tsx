@@ -1,106 +1,102 @@
 import React from 'react'
 import Section from '@/components/ui/Section'
-import SectionHeader from '@/components/ui/SectionHeader'
-import Card from '@/components/ui/Card'
-import Badge from '@/components/ui/Badge'
-import Button from '@/components/ui/Button'
 import { prisma } from '@/lib/prisma'
 import Link from 'next/link'
 import Image from 'next/image'
 import { Project } from '@prisma/client'
+import Button from '@/components/ui/Button'
 
 export default async function Ecosystem() {
   let projects: Project[] = []
   try {
     projects = await prisma.project.findMany({
-      orderBy: { createdAt: 'desc' },
-      take: 6,
+      where: { published: true },
+      orderBy: { order: 'asc' },
     })
   } catch (err) {
     console.error('Ecosystem component fetch fail:', err)
   }
 
   return (
-    <Section id="ecosystem" dark>
-      <SectionHeader
-        badge="Ecosystem"
-        title="The Oxiverse Network"
-        subtitle="Explore the growing ecosystem of products and projects built on our privacy-first infrastructure."
-      />
-      
+    <Section id="ecosystem" className="py-24 bg-primary-800 relative z-10">
+      <div className="max-w-7xl mx-auto px-4 md:px-8 mb-16 text-center">
+        <div className="inline-block border-2 border-primary-50 px-3 py-1 mb-6 bg-primary-950">
+          <span className="font-mono text-xs uppercase tracking-widest font-bold text-accent-300">Network</span>
+        </div>
+        <h2 className="font-display text-[3rem] md:text-[4.5rem] leading-[0.9] text-primary-50 tracking-tighter font-bold uppercase">
+          The Oxiverse <span className="text-accent-300">Ecosystem</span>
+        </h2>
+      </div>
+
       {projects.length > 0 ? (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="max-w-7xl mx-auto px-4 md:px-8 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
           {projects.map((project) => (
-            <Card key={project.id} className="group hover:border-primary-500/50 transition-all duration-300 bg-white/[0.02] border-white/5">
-              <div className="p-6 flex flex-col h-full">
-                <div className="flex items-center justify-between mb-4">
-                  <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-primary-500/20 to-primary-600/10 flex items-center justify-center text-primary-400 font-bold text-xl overflow-hidden relative border border-white/5">
-                    {project.imageUrl ? (
-                      <Image 
-                        src={project.imageUrl} 
-                        alt={project.title} 
-                        fill
-                        className={`object-${project.imageDisplay || 'cover'} ${project.imageDisplay === 'contain' ? 'p-2' : ''}`}
-                      />
-                    ) : (
-                      project.title.charAt(0)
-                    )}
-                  </div>
-                  {project.status && (
-                    <Badge variant={project.status === 'current' ? 'success' : 'default'} size="sm" className="capitalize">
-                      {project.status}
-                    </Badge>
-                  )}
+            <div key={project.id} className="retro-box p-0 group">
+              <div className="retro-header-bar">
+                <div className="flex items-center gap-2">
+                  <div className="w-3 h-3 bg-primary-950 border border-primary-950" />
+                  <span className="truncate">{project.title.toUpperCase()}.EXE</span>
                 </div>
-                
-                <h3 className="text-xl font-bold text-white mb-3 group-hover:text-primary-400 transition-colors">
-                  {project.title}
-                </h3>
-                
-                <p className="text-dark-400 text-sm mb-6 flex-1 leading-relaxed">
-                  {project.description}
-                </p>
-                
-                {project.link && (
-                  <div className="mt-auto">
-                    <Link 
-                      href={`/docs/${project.slug}`}
-                      className="text-xs font-bold text-primary-400 uppercase tracking-widest flex items-center gap-2 group-hover:gap-3 transition-all"
-                    >
-                      View Documentation
-                      <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
-                      </svg>
-                    </Link>
-                  </div>
+                {project.status && (
+                  <span className={`font-mono text-[10px] uppercase font-bold tracking-widest ${project.status === 'current' ? 'text-accent-600' : ''}`}>
+                    [{project.status}]
+                  </span>
                 )}
               </div>
-            </Card>
+              <div className="p-6 bg-primary-800 flex flex-col min-h-[220px]">
+                <div className="w-14 h-14 bg-primary-900 border-2 border-primary-700 flex items-center justify-center text-primary-50 font-display font-bold text-xl overflow-hidden relative mb-4">
+                  {project.imageUrl ? (
+                    <Image
+                      src={project.imageUrl}
+                      alt={project.title}
+                      fill
+                      className={`object-${project.imageDisplay || 'cover'}`}
+                    />
+                  ) : (
+                    project.title.charAt(0)
+                  )}
+                </div>
+
+                <h3 className="text-xl font-display text-primary-50 mb-2 font-bold uppercase group-hover:text-accent-300 transition-colors">
+                  {project.title}
+                </h3>
+                <p className="text-primary-300 text-sm mb-6 flex-1 leading-relaxed">
+                  {project.description}
+                </p>
+
+                {project.link && (
+                  <Link
+                    href={`/docs/${project.slug}`}
+                    className="text-xs font-bold font-mono text-primary-400 uppercase tracking-widest flex items-center gap-2 group-hover:text-accent-300 transition-colors"
+                  >
+                    Documentation
+                    <span className="text-accent-300 transform group-hover:translate-x-2 transition-transform">→</span>
+                  </Link>
+                )}
+              </div>
+            </div>
           ))}
         </div>
       ) : (
-        <div className="max-w-2xl mx-auto">
-          <Card className="text-center py-20 bg-dark-900/40 border-dashed border-white/10 relative overflow-hidden group">
-            <div className="absolute inset-0 bg-gradient-to-br from-primary-500/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
-            <div className="relative z-10">
-              <div className="w-16 h-16 rounded-2xl bg-white/5 flex items-center justify-center mx-auto mb-6 text-dark-500">
-                <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" />
-                </svg>
-              </div>
-              <p className="text-dark-400 text-xl font-medium mb-2">Expansion in Progress</p>
-              <p className="text-dark-500 text-sm mb-8">Our internal projects are being migrated to the public ecosystem. Check back soon for the next wave of privacy tools.</p>
-              <Button href="https://github.com/itxLikhith" target="_blank" variant="outline" size="sm" className="glass">
-                Follow Development 
+        <div className="max-w-3xl mx-auto px-4 md:px-8">
+          <div className="retro-box p-0">
+            <div className="retro-header-bar">
+              <span>SYSTEM_STATUS</span>
+            </div>
+            <div className="p-12 text-center bg-primary-800">
+              <span className="block text-accent-300 font-mono font-bold text-xs tracking-widest mb-4 uppercase">Migration in Progress</span>
+              <p className="text-primary-50 text-xl font-display mb-8 font-bold uppercase">Internal projects are being migrated to the public ecosystem.</p>
+              <Button href="https://github.com/itxLikhith" target="_blank" variant="outline">
+                Follow Development
               </Button>
             </div>
-          </Card>
+          </div>
         </div>
       )}
 
-      <div className="text-center mt-12">
-        <Button href="/docs" variant="outline" className="glass">
-          Explore Full Ecosystem Docs
+      <div className="max-w-7xl mx-auto px-4 md:px-8 mt-12 text-center">
+        <Button href="/docs">
+          Full Directory
         </Button>
       </div>
     </Section>
