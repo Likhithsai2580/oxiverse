@@ -14,7 +14,7 @@ const socialLinks = [
 
 export default function Contact() {
   return (
-    <Section id="contact" className="py-24 bg-primary-900 relative z-10">
+    <Section id="contact" className="pt-32 pb-24 bg-primary-900 relative z-10">
       <div className="max-w-7xl mx-auto px-4 md:px-8">
         <div className="mb-16">
           <div className="inline-block border-2 border-primary-50 px-3 py-1 mb-6 bg-primary-950">

@@ -41,7 +41,7 @@ export default function Newsletter() {
   }
 
   return (
-    <Section id="community" className="py-24 bg-primary-800 relative z-10">
+    <Section id="community" className="pt-32 pb-24 bg-primary-800 relative z-10">
       <div className="max-w-3xl mx-auto px-4 md:px-8">
         <motion.div
           initial={{ opacity: 0, y: 20 }}

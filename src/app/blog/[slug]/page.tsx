@@ -94,10 +94,25 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
               description: blog.excerpt,
               image: blog.imageUrl,
               datePublished: blog.publishedAt || blog.createdAt,
+              dateModified: blog.updatedAt || blog.publishedAt || blog.createdAt,
               author: {
                 '@type': 'Person',
                 name: (blog.author as any).name || (blog.author as any).email,
+                url: `https://oxiverse.com/authors/${(blog.author as any).name?.toLowerCase().replace(/\s+/g, '-') || 'admin'}`
               },
+              publisher: {
+                '@type': 'Organization',
+                name: 'Oxiverse',
+                logo: {
+                  '@type': 'ImageObject',
+                  url: 'https://oxiverse.com/favicon-256x256.png'
+                }
+              },
+              mainEntityOfPage: {
+                '@type': 'WebPage',
+                '@id': `https://oxiverse.com/blog/${params.slug}`
+              },
+              keywords: 'privacy, search engine, decentralized, infrastructure, oxiverse'
             }),
           }}
         />

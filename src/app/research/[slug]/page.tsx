@@ -94,10 +94,25 @@ export default async function ResearchPaperPage({ params }: ResearchPaperPagePro
               description: paper.abstract,
               image: paper.imageUrl,
               datePublished: paper.publishedAt || paper.createdAt,
+              dateModified: paper.updatedAt || paper.publishedAt || paper.createdAt,
               author: {
                 '@type': 'Person',
                 name: (paper.author as any).name || (paper.author as any).email,
+                url: `https://oxiverse.com/authors/${(paper.author as any).name?.toLowerCase().replace(/\s+/g, '-') || 'admin'}`
               },
+              publisher: {
+                '@type': 'Organization',
+                name: 'Oxiverse Research',
+                logo: {
+                  '@type': 'ImageObject',
+                  url: 'https://oxiverse.com/favicon-256x256.png'
+                }
+              },
+              mainEntityOfPage: {
+                '@type': 'WebPage',
+                '@id': `https://oxiverse.com/research/${params.slug}`
+              },
+              keywords: 'privacy, technology research, decentralized search, algorithmic transparency'
             }),
           }}
         />

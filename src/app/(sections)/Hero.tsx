@@ -40,7 +40,7 @@ export default function Hero() {
             </div>
           </div>
 
-          <div className="p-8 md:p-12 lg:p-16 flex flex-col xl:flex-row gap-12 lg:gap-24 relative bg-primary-800">
+          <div className="p-8 md:p-12 lg:p-16 flex flex-col xl:flex-row gap-12 xl:gap-16 2xl:gap-24 relative bg-primary-800">
             
             {/* Left Col: Stark Typography */}
             <div className="flex-1 flex flex-col justify-center">
@@ -51,14 +51,14 @@ export default function Hero() {
                 </span>
               </div>
 
-              <h1 className="font-display text-[4rem] sm:text-[5rem] md:text-[6rem] lg:text-[7rem] font-bold uppercase leading-[0.9] tracking-tighter mb-8 text-shimmer">
+              <h1 className="font-display text-[3.5rem] sm:text-[5rem] md:text-[6rem] xl:text-[6rem] 2xl:text-[7.5rem] font-bold uppercase leading-[0.85] tracking-tighter mb-12 text-shimmer">
                 <span className="block">Privacy</span>
                 <span className="block text-accent-300 drop-shadow-[2px_2px_0_rgba(0,0,0,1)]">
                   Infra<span className="text-primary-50">structure_</span>
                 </span>
               </h1>
               
-              <p className="font-sans text-lg md:text-xl font-medium text-primary-100 max-w-xl leading-relaxed mt-4 drop-shadow-[1px_1px_0_rgba(0,0,0,1)]">
+              <p className="font-sans text-lg md:text-xl font-medium text-primary-100 max-w-xl leading-relaxed mt-6 drop-shadow-[1px_1px_0_rgba(0,0,0,1)]">
                 A highly secure, decentralized ecosystem architected for builders. 
                 We engineer a framework devoid of tracking and algorithmic bias.
               </p>
@@ -81,19 +81,19 @@ export default function Hero() {
             </div>
 
             {/* Right Col: CRT Diagnostics Display */}
-            <div className="w-full xl:w-[400px] flex flex-col justify-center">
+            <div className="w-full xl:w-[380px] flex flex-col justify-center">
               
               <div className="retro-box-seafoam overflow-hidden relative">
                 
-                <div className="retro-header-bar-dark">
-                  <span>TERMINAL_V1.0</span>
-                  <div className="flex gap-1">
-                    <div className="w-2 h-2 bg-primary-50" />
+                <div className="retro-header-bar-dark !py-2 !px-4">
+                  <span className="text-[10px] tracking-[0.2em]">TERMINAL_V1.0</span>
+                  <div className="flex gap-1.5">
+                    <div className="w-2 h-2 bg-primary-50/50" />
                     <div className="w-2 h-2 bg-primary-50" />
                   </div>
                 </div>
 
-                <div className="p-6 relative bg-primary-950 border-t-2 border-primary-950 min-h-[300px] font-mono text-sm font-bold uppercase tracking-wider">
+                <div className="p-8 relative bg-primary-950 border-t-2 border-primary-950 min-h-[320px] font-mono text-xs font-bold uppercase tracking-wider">
                   <div className="crt-scanline" />
                   
                   <div className="relative z-10 space-y-4">
@@ -103,20 +103,20 @@ export default function Hero() {
                       Loading Security Protocol... <span className="text-accent-300">OK</span>
                     </div>
 
-                    <div className="flex justify-between border-b-2 border-primary-800 pb-1">
-                      <span className="text-primary-300">SYS_CORE</span>
+                    <div className="flex justify-between items-center border-b-2 border-primary-800/50 pb-2">
+                      <span className="text-primary-400">SYS_CORE</span>
                       <span className="text-accent-300 font-black">STABLE</span>
                     </div>
-                    <div className="flex justify-between border-b-2 border-primary-800 pb-1">
-                      <span className="text-primary-300">NET_LATENCY</span>
+                    <div className="flex justify-between items-center border-b-2 border-primary-800/50 pb-2">
+                      <span className="text-primary-400">NET_LATENCY</span>
                       <span className="text-primary-50">12ms</span>
                     </div>
-                    <div className="flex justify-between border-b-2 border-primary-800 pb-1">
-                      <span className="text-primary-300">DATA_CIPHER</span>
+                    <div className="flex justify-between items-center border-b-2 border-primary-800/50 pb-2">
+                      <span className="text-primary-400">DATA_CIPHER</span>
                       <span className="text-primary-50">AES-256</span>
                     </div>
-                    <div className="flex justify-between border-b-2 border-primary-800 pb-1">
-                      <span className="text-primary-300">ACTIVE_NODES</span>
+                    <div className="flex justify-between items-center border-b-2 border-primary-800/50 pb-2">
+                      <span className="text-primary-400">ACTIVE_NODES</span>
                       <span className="text-primary-50">2,408</span>
                     </div>
                     

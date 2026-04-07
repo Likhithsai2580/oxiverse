@@ -4,6 +4,7 @@ import React, { useState, useEffect } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
 import { motion, AnimatePresence, useScroll, useMotionValueEvent } from 'framer-motion'
+import { useSmoothScroll } from '@/lib/providers/SmoothScrollProvider'
 
 const navItems = [
   { name: 'Platform', href: '/#ecosystem' },
@@ -19,6 +20,7 @@ const navItems = [
 export default function Navigation() {
   const [isDesktop, setIsDesktop] = useState(false)
   const [activeSection, setActiveSection] = useState('home')
+  const lenis = useSmoothScroll()
 
   useEffect(() => {
     setIsDesktop(window.matchMedia('(pointer: fine)').matches)
@@ -78,8 +80,16 @@ export default function Navigation() {
                   onClick={(e) => {
                     if (item.href.startsWith('/#')) {
                       e.preventDefault()
-                      const el = document.getElementById(item.href.replace('/#', ''))
-                      if (el) { el.scrollIntoView({ behavior: 'smooth' }); setActiveSection(item.href.replace('/#', '')) }
+                      const id = item.href.replace('/#', '')
+                      const el = document.getElementById(id)
+                      if (el) {
+                        if (lenis) {
+                          lenis.scrollTo(el, { offset: -120 })
+                        } else {
+                          el.scrollIntoView({ behavior: 'smooth' })
+                        }
+                        setActiveSection(id)
+                      }
                     }
                   }}
                 >
@@ -121,7 +131,16 @@ export default function Navigation() {
                       setIsMobileMenuOpen(false)
                       if (item.href.startsWith('/#')) {
                         e.preventDefault()
-                        setTimeout(() => { document.getElementById(item.href.replace('/#', ''))?.scrollIntoView({ behavior: 'smooth' }) }, 300)
+                        const id = item.href.replace('/#', '')
+                        const el = document.getElementById(id)
+                        if (el) {
+                          if (lenis) {
+                            lenis.scrollTo(el, { offset: -120 })
+                          } else {
+                            setTimeout(() => { el.scrollIntoView({ behavior: 'smooth' }) }, 300)
+                          }
+                          setActiveSection(id)
+                        }
                       }
                     }}
                   >{item.name}</Link>

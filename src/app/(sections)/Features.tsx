@@ -28,15 +28,15 @@ const features = [
 
 export default function Features() {
   return (
-    <Section id="products" className="py-24 bg-primary-800 relative z-10">
+    <Section id="products" className="pt-32 pb-24 bg-primary-800 relative z-10">
 
       {/* Header */}
-      <div className="max-w-7xl mx-auto px-4 md:px-8 mb-16 grid grid-cols-1 md:grid-cols-2 gap-8 items-end">
+      <div className="max-w-7xl mx-auto px-4 md:px-8 mb-16 grid grid-cols-1 md:grid-cols-2 gap-12 items-start">
         <div>
           <div className="inline-block border-2 border-primary-50 px-3 py-1 mb-6 bg-primary-950">
             <span className="font-mono text-xs uppercase tracking-widest font-bold text-accent-300">The Core</span>
           </div>
-          <h2 className="font-display text-[3rem] md:text-[4.5rem] leading-[0.9] text-primary-50 tracking-tighter font-bold uppercase">
+          <h2 className="font-display text-[3rem] md:text-[4.5rem] leading-[0.85] text-primary-50 tracking-tighter font-bold uppercase">
             An Uncompromising<br />
             <span className="text-accent-300">Ecosystem.</span>
           </h2>

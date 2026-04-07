@@ -58,7 +58,7 @@ export default function Roadmap() {
   }
 
   return (
-    <Section id="roadmap" className="py-24 bg-primary-900 relative z-10">
+    <Section id="roadmap" className="pt-32 pb-24 bg-primary-900 relative z-10">
       <div className="max-w-7xl mx-auto px-4 md:px-8 mb-16">
         <div className="inline-block border-2 border-primary-50 px-3 py-1 mb-6 bg-primary-950">
           <span className="font-mono text-xs uppercase tracking-widest font-bold text-accent-300">Roadmap</span>
