@@ -18,6 +18,7 @@ export default function AdminProjectEditPage() {
     description: '',
     status: 'current',
     link: '',
+    hostedUrl: '',
     imageUrl: '',
     imageDisplay: 'cover',
   });
@@ -42,6 +43,7 @@ export default function AdminProjectEditPage() {
           description: project.description || '',
           status: project.status || 'current',
           link: project.link || '',
+          hostedUrl: project.hostedUrl || '',
           imageUrl: project.imageUrl || '',
           imageDisplay: project.imageDisplay || 'cover',
         });
@@ -125,23 +127,31 @@ export default function AdminProjectEditPage() {
   }
 
   return (
-    <form onSubmit={handleSubmit} className="p-8">
-      <div className="flex items-center justify-between mb-8">
-        <div>
-          <h1 className="text-3xl font-bold text-white mb-2">
-            {isEdit ? 'Edit Project' : 'New Ecosystem Node'}
-          </h1>
-          <p className="text-dark-400">Configure your project details</p>
-        </div>
-        <div className="flex gap-3">
-          <Button type="button" variant="ghost" onClick={() => router.push('/admin/ecosystem')}>
-            Cancel
-          </Button>
-          <Button type="submit" variant="primary" disabled={isLoading}>
-            {isLoading ? <Spinner size="sm" /> : 'Save Node'}
-          </Button>
-        </div>
-      </div>
+    <div className="relative min-h-[calc(100vh-64px)] w-full overflow-hidden bg-dark-950">
+      <div className="absolute top-0 left-1/2 -translateX-1/2 w-[800px] h-[300px] bg-primary-500/20 blur-[120px] rounded-full pointer-events-none" />
+      <div className="max-w-7xl mx-auto">
+        <form onSubmit={handleSubmit} className="relative z-10 p-8 pt-12">
+          <div className="flex items-center justify-between mb-10 pb-6 border-b border-white/5">
+            <div>
+              <h1 className="text-4xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-white to-dark-300 mb-2 tracking-tight">
+                {isEdit ? 'Edit Node' : 'New Ecosystem Node'}
+              </h1>
+              <p className="text-dark-400 font-medium">Configure network project parameters and structural definitions.</p>
+            </div>
+            <div className="flex items-center gap-4">
+              <Button type="button" variant="ghost" onClick={() => router.push('/admin/ecosystem')} className="text-dark-300 hover:text-white transition-colors">
+                Cancel
+              </Button>
+              <Button type="submit" variant="primary" disabled={isLoading} className="shadow-[0_0_20px_rgba(14,165,233,0.3)] hover:shadow-[0_0_25px_rgba(14,165,233,0.5)] transition-all">
+                {isLoading ? <Spinner size="sm" /> : (
+                  <span className="flex items-center gap-2">
+                    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7" /></svg>
+                    Save Node
+                  </span>
+                )}
+              </Button>
+            </div>
+          </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
         <div className="lg:col-span-2 space-y-6">
@@ -203,10 +213,16 @@ export default function AdminProjectEditPage() {
                 </select>
               </div>
               <Input
-                label="Resource Link"
+                label="Resource Link (Repo/Docs)"
                 value={formData.link}
                 onChange={(e) => setFormData({ ...formData, link: e.target.value })}
                 placeholder="https://github.com/..."
+              />
+              <Input
+                label="Hosted Version URL"
+                value={formData.hostedUrl}
+                onChange={(e) => setFormData({ ...formData, hostedUrl: e.target.value })}
+                placeholder="https://app.oxiverse.com"
               />
             </div>
           </Card>
@@ -255,5 +271,7 @@ export default function AdminProjectEditPage() {
         </div>
       </div>
     </form>
+  </div>
+</div>
   );
 }

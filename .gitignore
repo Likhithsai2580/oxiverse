@@ -14,10 +14,10 @@ node_modules/
 /build/
 
 # IDEs
-.vscode/
 .idea/
 *.swp
 *.swo
+.vscode/
 
 # Environment Variables
 .env
@@ -34,13 +34,6 @@ yarn-error.log*
 # Prisma
 /src/generated/prisma/
 
-# Temporary Files
-/tmp/
-*.jpg
-*.png
-*.webp
-!/public/**/*
-
 # Misc
 .DS_Store
-*.pem
+nul

@@ -63,15 +63,27 @@ export default async function Ecosystem() {
                   {project.description}
                 </p>
 
-                {project.link && (
-                  <Link
-                    href={`/docs/${project.slug}`}
-                    className="text-xs font-bold font-mono text-primary-400 uppercase tracking-widest flex items-center gap-2 group-hover:text-accent-300 transition-colors"
-                  >
-                    Documentation
-                    <span className="text-accent-300 transform group-hover:translate-x-2 transition-transform">→</span>
-                  </Link>
-                )}
+                <div className="mt-auto pt-6 flex flex-col gap-3">
+                  {project.link && (
+                    <Link
+                      href={`/docs/${project.slug}`}
+                      className="text-xs font-bold font-mono text-primary-400 uppercase tracking-widest flex items-center gap-2 hover:text-accent-300 transition-colors w-fit"
+                    >
+                      Documentation
+                      <span className="text-accent-300 transform group-hover:translate-x-2 transition-transform">→</span>
+                    </Link>
+                  )}
+                  {project.hostedUrl && (
+                    <Link
+                      href={project.hostedUrl}
+                      target="_blank"
+                      className="text-xs font-bold font-mono text-accent-500 uppercase tracking-widest flex items-center gap-2 hover:text-accent-300 transition-colors w-fit"
+                    >
+                      Hosted Version
+                      <svg className="w-3 h-3 group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path></svg>
+                    </Link>
+                  )}
+                </div>
               </div>
             </div>
           ))}

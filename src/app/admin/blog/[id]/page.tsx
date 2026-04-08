@@ -343,7 +343,7 @@ export default function AdminBlogEditPage() {
                   className="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-10"
                   disabled={isUploading}
                 />
-                <Button variant="outline" className="w-full glass" disabled={isUploading}>
+                <Button type="button" variant="outline" className="w-full glass" disabled={isUploading}>
                   {isUploading ? <Spinner size="sm" /> : 'Set Header Image'}
                 </Button>
               </div>

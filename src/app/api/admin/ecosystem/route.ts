@@ -13,6 +13,7 @@ const ProjectSchema = z.object({
   description: z.string().optional().nullable(),
   status: z.nativeEnum(ProjectStatus).optional().nullable(),
   link: z.string().url('Invalid URL').optional().nullable().or(z.literal('')),
+  hostedUrl: z.string().url('Invalid URL').optional().nullable().or(z.literal('')),
   imageUrl: z.string().optional().nullable(),
   imageDisplay: z.nativeEnum(DisplayMode).default(DisplayMode.cover),
 })
@@ -48,6 +49,7 @@ export async function POST(req: NextRequest) {
         description: data.description,
         status: data.status,
         link: data.link,
+        hostedUrl: data.hostedUrl,
         imageUrl: data.imageUrl,
         imageDisplay: data.imageDisplay,
       }
