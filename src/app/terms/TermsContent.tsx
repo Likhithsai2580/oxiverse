@@ -66,13 +66,20 @@ export default function TermsContent() {
           <section className="mb-12">
             <h2>Network Architecture (Tor-Routing)</h2>
             <p>
-              Oxiverse utilizes <strong>Tor-routing</strong> for its meta-search backend functionalities.
-              This serves as an infrastructure mechanism to <strong>improve query quality</strong> and maintain
-              consistent access to federated data sources by preventing backend IP exhaustion.
+              Oxiverse utilizes <strong>Tor-routing</strong> on the <strong>server side</strong> for its
+              meta-search backend functionalities. Outbound queries to federated data sources are routed
+              through the Tor network to prevent backend IP exhaustion, reduce rate-limiting from upstream
+              providers, and maintain consistent access to a broad range of sources.
             </p>
+            <ul>
+              <li>Tor-routing operates exclusively at the <strong>infrastructure layer</strong> — between our servers and upstream data sources.</li>
+              <li>It is <strong>not</strong> a VPN or anonymity layer for your connection to Oxiverse.</li>
+              <li>Your traffic between your device and Oxiverse is handled under our standard privacy protocol (see Privacy Policy).</li>
+              <li>We do not operate Tor exit nodes, hidden services (.onion), or relay infrastructure on behalf of users.</li>
+            </ul>
             <p className="border-2 border-primary-700 p-4 bg-primary-900/30 text-sm italic">
-              Note: Tor-routing is employed for infrastructure stability and result integrity, not as
-              a provision of anonymity for user-side connections beyond the privacy standards already implemented.
+              In plain terms: Tor is used so our backend can query the web without getting blocked — not to anonymize you.
+              Your anonymity is protected through our zero-logging and zero-persistence architecture, not through Tor.
             </p>
           </section>
 

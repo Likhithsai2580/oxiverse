@@ -66,6 +66,24 @@ export default function PrivacyContent() {
           </section>
 
           <section className="mb-12">
+            <h2>Tor Routing & What It Means For You</h2>
+            <p>
+              Our backend uses <strong>Tor routing</strong> when querying upstream data sources. This is a
+              server-side infrastructure decision — it has no direct effect on your connection to Oxiverse.
+            </p>
+            <ul>
+              <li>Tor is used <strong>between our servers and external sources</strong>, not between you and us.</li>
+              <li>We do not expose your traffic to the Tor network, nor do we route your requests through Tor exit nodes.</li>
+              <li>We do not operate a .onion hidden service at this time.</li>
+              <li>Your privacy is enforced through our zero-logging architecture — Tor is simply a backend tool for source access stability.</li>
+            </ul>
+            <p>
+              If you wish to access Oxiverse over Tor yourself, you are free to do so using the Tor Browser.
+              We do not block or discriminate against Tor exit node traffic.
+            </p>
+          </section>
+
+          <section className="mb-12">
             <h2>Browser Environment & Cookies</h2>
             <p>
               Cookies used by Oxiverse are strictly for <strong>Preferences and Customizations</strong>. This 
