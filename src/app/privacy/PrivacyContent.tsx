@@ -97,6 +97,19 @@ export default function PrivacyContent() {
           </section>
 
           <section className="mb-12">
+            <h2>Third-Party Links & Affiliate Networks</h2>
+            <p>
+              Our search results may link to external e-commerce platforms. Clicking these links directs you
+              to third-party websites governed by their own privacy policies and cookie practices. Oxiverse
+              does not control and is not responsible for the data practices of these third parties.
+            </p>
+            <p>
+              We do not share personal data with affiliate partners. Our zero-logging and zero-persistence
+              architecture applies to all interactions on Oxiverse infrastructure.
+            </p>
+          </section>
+
+          <section className="mb-12">
             <h2>Analytics & Tracking</h2>
             <p>
               Oxiverse is 100% free of third-party analytics (e.g., Google Analytics, Meta Pixel). We do not 

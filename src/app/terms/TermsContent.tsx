@@ -60,6 +60,7 @@ export default function TermsContent() {
               <li>We do not promote, endorse, or host illegal content.</li>
               <li>Users assume full legal responsibility for their interaction with the search results.</li>
               <li>Accessing or searching for prohibited materials is at your own risk and discretion.</li>
+              <li>Attempting to manipulate search rankings through artificial means violates these terms.</li>
             </ul>
           </section>
 
@@ -107,6 +108,28 @@ export default function TermsContent() {
               <li>Likhith: <strong>likhith@oxiverse.com</strong></li>
               <li>Alternative: <strong>anony45.omnipresent@proton.me</strong></li>
             </ul>
+          </section>
+
+          <section className="mb-12">
+            <h2>Advertising & Affiliate Disclosure</h2>
+            <p>
+              Search results may include <strong>affiliate links</strong> to e-commerce products and services.
+              When you purchase or interact through these links, Oxiverse may earn a commission at no additional
+              cost to you. Affiliate links are clearly labeled and do <strong>not</strong> influence search
+              ranking or result prioritization.
+            </p>
+            <p>
+              Sponsored content, if introduced in the future, will be visually distinguished from organic results.
+            </p>
+          </section>
+
+          <section className="mb-12">
+            <h2>API Access</h2>
+            <p>
+              The search interface is and will always remain <strong>free for personal and research use</strong>.
+              Programmatic API access is available via paid subscription, with pricing published on our website.
+              Free-tier functionality will not be removed or degraded without reasonable notice.
+            </p>
           </section>
 
           <section className="mb-12">
