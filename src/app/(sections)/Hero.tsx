@@ -40,7 +40,7 @@ export default function Hero() {
             </div>
           </div>
 
-          <div className="p-8 md:p-12 lg:p-16 flex flex-col xl:flex-row gap-12 xl:gap-16 2xl:gap-24 relative bg-primary-800">
+          <div className="p-5 sm:p-8 md:p-12 lg:p-16 flex flex-col xl:flex-row gap-8 sm:gap-12 xl:gap-16 2xl:gap-24 relative bg-primary-800">
             
             {/* Left Col: Stark Typography */}
             <div className="flex-1 min-w-0 flex flex-col justify-center">
@@ -51,9 +51,9 @@ export default function Hero() {
                 </span>
               </div>
 
-              <h1 className="font-display text-[2.5rem] sm:text-[4rem] md:text-[5.5rem] lg:text-[6rem] xl:text-[4rem] 2xl:text-[4.5rem] font-bold uppercase leading-[0.85] tracking-tighter mb-12 text-shimmer">
+              <h1 className="font-display text-[clamp(1.75rem,8.5vw,2.5rem)] sm:text-[4rem] md:text-[5.5rem] lg:text-[6rem] xl:text-[4rem] 2xl:text-[4.5rem] font-bold uppercase leading-[0.85] tracking-tighter mb-8 sm:mb-12 text-shimmer break-words sm:break-normal">
                 <span className="block">Privacy</span>
-                <span className="block text-accent-300 drop-shadow-[2px_2px_0_rgba(0,0,0,1)]">
+                <span className="block text-accent-300 drop-shadow-[2px_2px_0_rgba(0,0,0,1)] break-all sm:break-normal">
                   Infra<span className="text-primary-50">structure_</span>
                 </span>
               </h1>
@@ -93,11 +93,11 @@ export default function Hero() {
                   </div>
                 </div>
 
-                <div className="p-8 relative bg-primary-950 border-t-2 border-primary-950 min-h-[320px] font-mono text-xs font-bold uppercase tracking-wider">
+                <div className="p-5 sm:p-8 relative bg-primary-950 border-t-2 border-primary-950 min-h-[320px] font-mono text-xs font-bold uppercase tracking-wider">
                   <div className="crt-scanline" />
                   
                   <div className="relative z-10 space-y-4">
-                    <div className="text-primary-50 mb-6">
+                    <div className="text-primary-50 mb-6 break-words">
                       Oxiverse Mainframe Initialize...
                       <br/>
                       Loading Security Protocol... <span className="text-accent-300">OK</span>
