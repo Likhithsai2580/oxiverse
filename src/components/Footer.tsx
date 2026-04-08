@@ -1,3 +1,5 @@
+'use client'
+
 import React from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
@@ -25,9 +27,9 @@ const footerLinks = {
     { name: 'Contribution Guide', href: 'https://github.com/oxiverse-labs/intentforge/blob/master/CONTRIBUTING.md' },
   ],
   legal: [
-    { name: 'Privacy Protocol', href: '/#research' },
-    { name: 'Network Terms', href: 'https://github.com/oxiverse-labs/intentforge/blob/master/README.md' },
-    { name: 'IECL License', href: 'https://github.com/oxiverse-labs/intentforge/blob/master/LICENSE' },
+    { name: 'Privacy Protocol', href: '/privacy' },
+    { name: 'Network Terms', href: '/terms' },
+    { name: 'IECL License', href: '/license' },
   ],
 }
 
@@ -79,11 +81,9 @@ export default function Footer() {
             </a>
           </div>
           <div className="flex space-x-6">
-            {footerLinks.legal.map((link) => (
-              <a key={link.name} href={link.href} target={link.href.startsWith('http') ? '_blank' : undefined} rel={link.href.startsWith('http') ? 'noopener noreferrer' : undefined}
-                className="text-xs text-primary-500 hover:text-primary-300 transition-colors uppercase tracking-wider font-mono"
-              >{link.name}</a>
-            ))}
+            <Link href="/privacy" className="text-xs text-primary-500 hover:text-primary-300 transition-colors uppercase tracking-wider font-mono">Privacy Protocol</Link>
+            <Link href="/terms" className="text-xs text-primary-500 hover:text-primary-300 transition-colors uppercase tracking-wider font-mono">Network Terms</Link>
+            <Link href="/license" className="text-xs text-primary-500 hover:text-primary-300 transition-colors uppercase tracking-wider font-mono">IECL License</Link>
           </div>
         </div>
       </div>
