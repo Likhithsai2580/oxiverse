@@ -13,7 +13,7 @@ export default function TermsContent() {
   return (
     <div className="pt-32 pb-24 px-4 md:px-8">
       <div className="max-w-4xl mx-auto">
-        <motion.div 
+        <motion.div
           initial="initial"
           animate="animate"
           variants={fadeIn}
@@ -24,12 +24,12 @@ export default function TermsContent() {
           </h1>
           <div className="h-2 w-24 bg-accent-300 shadow-retro-sm mb-8" />
           <p className="text-xl text-primary-300 font-mono leading-relaxed max-w-2xl border-l-4 border-primary-700 pl-6">
-            Our operational guidelines for use and participation in the Oxiverse ecosystem. 
+            Our operational guidelines for use and participation in the Oxiverse ecosystem.
             By using these services, you agree to these fundamental tenets.
           </p>
         </motion.div>
 
-        <motion.div 
+        <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 0.3, duration: 0.8 }}
@@ -43,8 +43,8 @@ export default function TermsContent() {
           <section className="mb-12">
             <h2>Nature of the Platform</h2>
             <p>
-              Oxiverse is <strong>Open Source</strong>, <strong>Source Available</strong>, and fully 
-              <strong>Self-Hostable</strong>. We prioritize the decentralization of information tools. 
+              Oxiverse is <strong>Source Available</strong>, and fully
+              <strong>Self-Hostable</strong>. We prioritize the decentralization of information tools.
               Our infrastructure is designed for high-degree anonymity for users in its current state.
             </p>
           </section>
@@ -52,8 +52,8 @@ export default function TermsContent() {
           <section className="mb-12">
             <h2>Acceptable Use & Responsibility</h2>
             <p>
-              As a discovery engine, Oxiverse may surface content of all types, including illegal materials 
-              available on the open web. We strictly expect our users to utilize this platform for 
+              As a discovery engine, Oxiverse may surface content of all types, including illegal materials
+              available on the open web. We strictly expect our users to utilize this platform for
               <strong>Educational and Research Purposes</strong> only.
             </p>
             <ul>
@@ -66,12 +66,12 @@ export default function TermsContent() {
           <section className="mb-12">
             <h2>Network Architecture (Tor-Routing)</h2>
             <p>
-              Oxiverse utilizes <strong>Tor-routing</strong> for its meta-search backend functionalities. 
-              This serves as an infrastructure mechanism to <strong>improve query quality</strong> and maintain 
+              Oxiverse utilizes <strong>Tor-routing</strong> for its meta-search backend functionalities.
+              This serves as an infrastructure mechanism to <strong>improve query quality</strong> and maintain
               consistent access to federated data sources by preventing backend IP exhaustion.
             </p>
             <p className="border-2 border-primary-700 p-4 bg-primary-900/30 text-sm italic">
-              Note: Tor-routing is employed for infrastructure stability and result integrity, not as 
+              Note: Tor-routing is employed for infrastructure stability and result integrity, not as
               a provision of anonymity for user-side connections beyond the privacy standards already implemented.
             </p>
           </section>
@@ -79,8 +79,8 @@ export default function TermsContent() {
           <section className="mb-12">
             <h2>Infrastructure Limits</h2>
             <p>
-              To ensure high availability and stability for every participant, we enforce <strong>Rate Limits</strong>. 
-              Automated traversal or excessive requests that threaten the ecosystem stability may result in 
+              To ensure high availability and stability for every participant, we enforce <strong>Rate Limits</strong>.
+              Automated traversal or excessive requests that threaten the ecosystem stability may result in
               temporary or permanent access restrictions.
             </p>
           </section>
@@ -88,12 +88,12 @@ export default function TermsContent() {
           <section className="mb-12">
             <h2>Licensing & Rights</h2>
             <p>
-              The primary codebase is <strong>Source Available</strong>. We grant <strong>full permission for 
-              non-commercial purposes</strong>, including community development, personal hosting, and academic 
+              The primary codebase is <strong>Source Available</strong>. We grant <strong>full permission for
+                non-commercial purposes</strong>, including community development, personal hosting, and academic
               research.
             </p>
             <p>
-              For any <strong>Commercial Purposes</strong> or integrations, you must obtain explicit permission 
+              For any <strong>Commercial Purposes</strong> or integrations, you must obtain explicit permission
               prior to deployment. Contact the core developer team:
             </p>
             <ul>
@@ -105,15 +105,15 @@ export default function TermsContent() {
           <section className="mb-12">
             <h2>Amendments</h2>
             <p>
-              Oxiverse is a living ecosystem. These terms are subject to change over time to reflect the 
-              evolution of the network and its capabilities. Users are expected and encouraged to view 
+              Oxiverse is a living ecosystem. These terms are subject to change over time to reflect the
+              evolution of the network and its capabilities. Users are expected and encouraged to view
               this page periodically for updates.
             </p>
           </section>
 
           <div className="p-6 border-2 border-accent-300/30 bg-primary-900/50 mt-16 shadow-retro-md text-center">
             <p className="text-sm m-0">
-              &copy; 2026 Oxiverse Infrastructure Group.<br/>
+              &copy; 2026 Oxiverse Infrastructure Group.<br />
               All rights reserved for core branding and commercial use.
             </p>
           </div>
