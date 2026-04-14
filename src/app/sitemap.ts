@@ -13,6 +13,10 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     select: { slug: true, updatedAt: true },
   })
 
+  const projects = await prisma.project.findMany({
+    select: { slug: true, updatedAt: true },
+  })
+
   const blogEntries: MetadataRoute.Sitemap = blogs.map((blog) => ({
     url: `${siteConfig.url}/blog/${blog.slug}`,
     lastModified: blog.updatedAt,
@@ -25,6 +29,13 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     lastModified: paper.updatedAt,
     changeFrequency: 'weekly',
     priority: 0.7,
+  }))
+
+  const docsEntries: MetadataRoute.Sitemap = projects.map((project) => ({
+    url: `${siteConfig.url}/docs/${project.slug}`,
+    lastModified: project.updatedAt,
+    changeFrequency: 'weekly',
+    priority: 0.6,
   }))
 
   return [
@@ -47,7 +58,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       priority: 0.9,
     },
     {
-      url: `${siteConfig.url}/ecosystem`,
+      url: `${siteConfig.url}/docs`,
       lastModified: new Date(),
       changeFrequency: 'weekly',
       priority: 0.8,
@@ -72,5 +83,6 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     },
     ...blogEntries,
     ...researchEntries,
+    ...docsEntries,
   ]
 }

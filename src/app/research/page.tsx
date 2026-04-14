@@ -29,10 +29,14 @@ const jsonLd = {
 export const metadata: Metadata = {
   title: 'Research - Oxiverse',
   description: 'Research papers and publications from the Oxiverse team',
+  alternates: {
+    canonical: '/research',
+  },
   openGraph: {
     title: 'Research - Oxiverse',
     description: 'Research papers and publications from the Oxiverse team',
     type: 'website',
+    url: 'https://oxiverse.com/research',
   },
 }
 

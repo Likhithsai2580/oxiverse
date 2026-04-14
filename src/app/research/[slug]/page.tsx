@@ -38,6 +38,9 @@ export async function generateMetadata({ params }: ResearchPaperPageProps): Prom
   return {
     title: `${paper.title} - Oxiverse`,
     description: paper.abstract || `Read ${paper.title} on Oxiverse`,
+    alternates: {
+      canonical: `/research/${params.slug}`,
+    },
     openGraph: {
       title: paper.title,
       description: paper.abstract || `Read ${paper.title} on Oxiverse`,

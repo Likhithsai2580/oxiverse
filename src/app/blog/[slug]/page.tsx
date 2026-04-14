@@ -38,6 +38,9 @@ export async function generateMetadata({ params }: BlogPostPageProps): Promise<M
   return {
     title: `${blog.title} - Oxiverse`,
     description: blog.excerpt || `Read ${blog.title} on Oxiverse`,
+    alternates: {
+      canonical: `/blog/${params.slug}`,
+    },
     openGraph: {
       title: blog.title,
       description: blog.excerpt || `Read ${blog.title} on Oxiverse`,

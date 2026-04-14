@@ -12,6 +12,9 @@ export const revalidate = 60
 export const metadata: Metadata = {
   title: 'Docs - Oxiverse Ecosystem',
   description: 'Documentation for all Oxiverse ecosystem products and projects.',
+  alternates: {
+    canonical: '/docs',
+  },
 }
 
 export default async function DocsPage() {

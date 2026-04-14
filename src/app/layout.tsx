@@ -62,10 +62,7 @@ export const metadata: Metadata = {
     ],
   },
   alternates: {
-    canonical: 'https://oxiverse.com',
-    languages: {
-      'en-US': 'https://oxiverse.com',
-    },
+    canonical: '/',
   },
   category: 'technology',
 }
