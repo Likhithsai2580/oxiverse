@@ -74,9 +74,8 @@ export default function Navigation() {
                 <Link
                   key={item.name}
                   href={item.href}
-                  className={`px-3 py-2 text-[11px] font-bold uppercase tracking-widest transition-all font-mono border-b-2 ${
-                    isActive ? 'text-accent-300 border-accent-300' : 'text-primary-300 hover:text-primary-50 border-transparent hover:border-primary-50'
-                  }`}
+                  className={`px-3 py-2 text-[11px] font-bold uppercase tracking-widest transition-all font-mono border-b-2 ${isActive ? 'text-accent-300 border-accent-300' : 'text-primary-300 hover:text-primary-50 border-transparent hover:border-primary-50'
+                    }`}
                   onClick={(e) => {
                     if (item.href.startsWith('/#')) {
                       const id = item.href.replace('/#', '')
@@ -100,7 +99,7 @@ export default function Navigation() {
           </div>
 
           <div className="hidden lg:block">
-            <a href="https://github.com/oxiverse-labs/" target="_blank" rel="noopener noreferrer" className="retro-btn retro-btn-seafoam !py-2 !px-5 !text-xs !shadow-retro-sm">
+            <a href="https://codeberg.org/oxiverse/" target="_blank" rel="noopener noreferrer" className="retro-btn retro-btn-seafoam !py-2 !px-5 !text-xs !shadow-retro-sm">
               Dev Access
             </a>
           </div>
@@ -124,9 +123,8 @@ export default function Navigation() {
                 {navItems.map((item, idx) => (
                   <Link
                     key={item.name} href={item.href}
-                    className={`block px-4 py-3 text-sm font-bold uppercase tracking-widest font-mono transition-all ${
-                      activeSection === item.href.replace('/#', '') ? 'text-accent-300 bg-primary-900' : 'text-primary-300 hover:text-primary-50 hover:bg-primary-900'
-                    }`}
+                    className={`block px-4 py-3 text-sm font-bold uppercase tracking-widest font-mono transition-all ${activeSection === item.href.replace('/#', '') ? 'text-accent-300 bg-primary-900' : 'text-primary-300 hover:text-primary-50 hover:bg-primary-900'
+                      }`}
                     onClick={(e) => {
                       setIsMobileMenuOpen(false)
                       if (item.href.startsWith('/#')) {
@@ -145,7 +143,7 @@ export default function Navigation() {
                     }}
                   >{item.name}</Link>
                 ))}
-                <a href="https://github.com/itxLikhith" target="_blank" rel="noopener noreferrer"
+                <a href="https://codeberg.org/itxLikhith" target="_blank" rel="noopener noreferrer"
                   className="retro-btn retro-btn-seafoam mt-4 w-full text-center"
                   onClick={() => setIsMobileMenuOpen(false)}
                 >Access Infrastructure</a>

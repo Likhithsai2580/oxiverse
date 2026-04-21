@@ -33,7 +33,7 @@ export default async function DocsPage() {
         >
           <SectionHeader
             title="Ecosystem Documentation"
-            subtitle="Explore technical guides and READMEs for Oxiverse products"
+            subtitle="Explore technical guides and READMEs for Oxiverse products hosted on Codeberg"
             badge="Docs Hub"
           />
         </motion.div>

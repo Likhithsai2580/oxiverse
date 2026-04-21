@@ -54,13 +54,13 @@ model Tag {
 enum DisplayMode {
   cover
   contain
+  fill
 }
 
 enum ProjectStatus {
-  active
-  completed
-  planned
   current
+  upcoming
+  future
 }
 
 model Blog {

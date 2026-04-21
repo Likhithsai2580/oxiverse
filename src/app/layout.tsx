@@ -26,7 +26,7 @@ export const metadata: Metadata = {
   },
   description: 'A privacy-first ecosystem with search, browser, download manager, productivity suite, and more. Built for developers, researchers, and privacy-conscious users.',
   keywords: ['search engine', 'privacy', 'open source', 'browser', 'productivity', 'developer tools', 'intent engine', 'intentforge'],
-  authors: [{ name: 'Likhith', url: 'https://github.com/itxLikhith' }],
+  authors: [{ name: 'Likhith', url: 'https://codeberg.org/itxLikhith' }],
   openGraph: {
     title: 'Oxiverse - Explore • Connect • Create',
     description: 'A privacy-first ecosystem with search, browser, download manager, productivity suite, and more.',
@@ -80,10 +80,10 @@ export default function RootLayout({
       url: 'https://oxiverse.com',
       jobTitle: 'Developer & Researcher',
       description: 'Portfolio of open-source repositories, technical blogs, and research papers on privacy-first infrastructure.',
-      image: 'https://github.com/itxLikhith.png',
+      image: 'https://codeberg.org/itxLikhith.png',
       sameAs: [
-        'https://github.com/itxLikhith',
-        'https://github.com/oxiverse-labs',
+        'https://codeberg.org/itxLikhith',
+        'https://codeberg.org/oxiverse',
         'https://twitter.com/itxLikhith'
       ]
     },

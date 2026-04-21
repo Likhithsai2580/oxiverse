@@ -30,8 +30,8 @@ export default function About() {
               <h3 className="text-xl font-display text-primary-50 font-bold uppercase">Likhith</h3>
               <p className="text-xs uppercase tracking-widest text-primary-400 font-mono font-bold mt-1 mb-6">Founder &bull; Developer</p>
               <div className="flex gap-3">
-                <Button href="https://github.com/oxiverse-labs" target="_blank" size="sm">GitHub</Button>
-                <Button variant="outline" href="https://github.com/itxLikhith/intent-engine" target="_blank" size="sm">Source</Button>
+                <Button href="https://codeberg.org/oxiverse" target="_blank" size="sm">Codeberg</Button>
+                <Button variant="outline" href="https://codeberg.org/itxLikhith/intent-engine" target="_blank" size="sm">Source</Button>
               </div>
             </div>
             <div className="md:col-span-9">

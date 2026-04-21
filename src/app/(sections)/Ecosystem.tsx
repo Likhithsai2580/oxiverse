@@ -37,7 +37,11 @@ export default async function Ecosystem() {
                   <span className="truncate">{project.title.toUpperCase()}.EXE</span>
                 </div>
                 {project.status && (
-                  <span className={`font-mono text-[10px] uppercase font-bold tracking-widest ${project.status === 'current' ? 'text-accent-600' : ''}`}>
+                  <span className={`font-mono text-[10px] uppercase font-bold tracking-widest ${
+                    project.status === 'current' ? 'text-accent-300' : 
+                    project.status === 'upcoming' ? 'text-yellow-400' : 
+                    'text-primary-400'
+                  }`}>
                     [{project.status}]
                   </span>
                 )}
@@ -97,7 +101,7 @@ export default async function Ecosystem() {
             <div className="p-12 text-center bg-primary-800">
               <span className="block text-accent-300 font-mono font-bold text-xs tracking-widest mb-4 uppercase">Migration in Progress</span>
               <p className="text-primary-50 text-xl font-display mb-8 font-bold uppercase">Internal projects are being migrated to the public ecosystem.</p>
-              <Button href="https://github.com/itxLikhith" target="_blank" variant="outline">
+              <Button href="https://codeberg.org/itxLikhith" target="_blank" variant="outline">
                 Follow Development
               </Button>
             </div>

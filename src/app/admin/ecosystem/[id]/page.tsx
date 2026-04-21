@@ -160,7 +160,15 @@ export default function AdminProjectEditPage() {
               <Input
                 label="Project Title"
                 value={formData.title}
-                onChange={(e) => setFormData({ ...formData, title: e.target.value })}
+                onChange={(e) => {
+                  const newTitle = e.target.value;
+                  const newSlug = newTitle.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
+                  setFormData(prev => ({ 
+                    ...prev, 
+                    title: newTitle,
+                    slug: prev.slug === '' || prev.slug === prev.title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '') ? newSlug : prev.slug
+                  }));
+                }}
                 placeholder="e.g. AdMatcher Service"
                 required
               />
@@ -216,7 +224,7 @@ export default function AdminProjectEditPage() {
                 label="Resource Link (Repo/Docs)"
                 value={formData.link}
                 onChange={(e) => setFormData({ ...formData, link: e.target.value })}
-                placeholder="https://github.com/..."
+                placeholder="https://codeberg.org/..."
               />
               <Input
                 label="Hosted Version URL"

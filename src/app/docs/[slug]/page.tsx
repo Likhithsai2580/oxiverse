@@ -27,40 +27,58 @@ export async function generateMetadata({ params }: { params: { slug: string } })
   }
 }
 
-async function fetchGithubContent(repoUrl: string, path: string = 'README.md') {
-  if (!repoUrl?.startsWith('https://github.com/')) return null
-  const repoPath = repoUrl.replace('https://github.com/', '').replace(/\/$/, '')
+async function fetchCodebergContent(repoUrl: string, path: string = 'README.md') {
+  if (!repoUrl) return null
   
-  // Try to get file content (raw)
+  // Normalize URL to Codeberg if it's still GitHub (fallback)
+  let normalizedUrl = repoUrl.replace('github.com', 'codeberg.org')
+  if (!normalizedUrl.startsWith('https://codeberg.org/')) return null
+  
+  const repoPath = normalizedUrl.replace('https://codeberg.org/', '').replace(/\/$/, '')
+  
   const branches = ['main', 'master']
+  const fileVariants = path === 'README.md' ? ['README.md', 'readme.md', 'README.markdown', 'readme.markdown'] : [path]
+
   for (const branch of branches) {
-    const rawUrl = `https://raw.githubusercontent.com/${repoPath}/${branch}/${path}`
-    try {
-      const res = await fetch(rawUrl, { next: { revalidate: 3600 } })
-      if (res.ok) return { type: 'file', content: await res.text() }
-    } catch (e) {}
+    for (const variant of fileVariants) {
+      const rawUrl = `https://codeberg.org/${repoPath}/raw/branch/${branch}/${variant}`
+      try {
+        const res = await fetch(rawUrl, { next: { revalidate: 3600 } })
+        if (res.ok) {
+          const content = await res.text()
+          if (content.length > 0) return { type: 'file', content }
+        }
+      } catch (e) {
+        console.error(`Error fetching from ${rawUrl}:`, e)
+      }
+    }
   }
 
-  // If not a file, try to get directory listing via GitHub API (optional/fallback)
-  // For simplicity and user request of "show files in docs", we'll check common names
   return null
 }
 
-async function getRepoFiles(repoUrl: string, dir: string = 'docs') {
-    if (!repoUrl?.startsWith('https://github.com/')) return []
-    const repoPath = repoUrl.replace('https://github.com/', '').replace(/\/$/, '')
+async function getCodebergFiles(repoUrl: string, dir: string = 'docs') {
+    if (!repoUrl) return []
     
-    // Use GitHub API to list files in a directory
+    // Normalize URL to Codeberg if it's still GitHub (fallback)
+    let normalizedUrl = repoUrl.replace('github.com', 'codeberg.org')
+    if (!normalizedUrl.startsWith('https://codeberg.org/')) return []
+    
+    const repoPath = normalizedUrl.replace('https://codeberg.org/', '').replace(/\/$/, '')
+    
+    // Use Codeberg API to list files in a directory
     try {
-        const res = await fetch(`https://api.github.com/repos/${repoPath}/contents/${dir}`, {
-            headers: { 'Accept': 'application/vnd.github.v3+json' },
+        const res = await fetch(`https://codeberg.org/api/v1/repos/${repoPath}/contents/${dir}`, {
+            headers: { 'Accept': 'application/json' },
             next: { revalidate: 3600 }
         })
         if (res.ok) {
             const data = await res.json()
             return Array.isArray(data) ? data : []
         }
-    } catch (e) {}
+    } catch (e) {
+        console.error(`Error fetching files for ${repoPath}:`, e)
+    }
     return []
 }
 
@@ -69,8 +87,8 @@ export default async function ProjectDocsPage({ params, searchParams }: PageProp
   if (!project) notFound()
 
   const currentPath = searchParams.path || 'README.md'
-  const fileData = await fetchGithubContent(project.link || '', currentPath)
-  const docsFiles = await getRepoFiles(project.link || '', 'docs')
+  const fileData = await fetchCodebergContent(project.link || '', currentPath)
+  const docsFiles = await getCodebergFiles(project.link || '', 'docs')
 
   return (
     <main className="min-h-screen bg-transparent pt-20">
@@ -106,6 +124,20 @@ export default async function ProjectDocsPage({ params, searchParams }: PageProp
                     </Link>
                   ))}
                 </nav>
+
+                {project.link && (
+                  <div className="mt-8 pt-6 border-t border-white/5">
+                    <a 
+                      href={project.link} 
+                      target="_blank" 
+                      rel="noopener noreferrer"
+                      className="flex items-center gap-2 text-xs font-bold text-primary-400 hover:text-primary-300 transition-colors uppercase tracking-widest"
+                    >
+                      <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M11.996 0c-6.627 0-12 5.373-12 12s5.373 12 12 12 12-5.373 12-12-5.373-12-12-12zm-3.084 18.257l2.124-7.854 2.124 7.854h-4.248zm6.541 0l-2.022-7.464 2.022-3.829 4.341 11.293h-4.341z" /></svg>
+                      View on Codeberg
+                    </a>
+                  </div>
+                )}
               </div>
             </div>
           </aside>

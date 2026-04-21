@@ -15,11 +15,11 @@ export default async function AdminDashboardPage() {
   }
 
   const [
-    blogCount, 
-    researchCount, 
+    blogCount,
+    researchCount,
     projectCount,
     posterCount,
-    publishedBlogs, 
+    publishedBlogs,
     publishedResearch
   ] = await Promise.all([
     prisma.blog.count(),
@@ -91,7 +91,7 @@ export default async function AdminDashboardPage() {
             <div>
               <p className="text-[10px] font-black uppercase tracking-widest text-dark-500 mb-2">Research Index</p>
               <p className="text-3xl font-bold text-white mb-1">{researchCount}</p>
-               <div className="flex items-center text-xs text-accent-400 font-bold">
+              <div className="flex items-center text-xs text-accent-400 font-bold">
                 <span className="mr-1">{publishedResearch}</span>
                 <span className="text-dark-500 font-normal">published</span>
               </div>
@@ -175,9 +175,8 @@ export default async function AdminDashboardPage() {
                       </div>
                     </div>
                     <div className="flex-shrink-0">
-                      <span className={`px-2 py-0.5 rounded-full text-[10px] font-black uppercase tracking-widest ${
-                        blog.published ? 'bg-green-500/10 text-green-400' : 'bg-yellow-500/10 text-yellow-500'
-                      }`}>
+                      <span className={`px-2 py-0.5 rounded-full text-[10px] font-black uppercase tracking-widest ${blog.published ? 'bg-green-500/10 text-green-400' : 'bg-yellow-500/10 text-yellow-500'
+                        }`}>
                         {blog.published ? 'Live' : 'Draft'}
                       </span>
                     </div>
@@ -223,9 +222,8 @@ export default async function AdminDashboardPage() {
                       </div>
                     </div>
                     <div className="flex-shrink-0">
-                      <span className={`px-2 py-0.5 rounded-full text-[10px] font-black uppercase tracking-widest ${
-                        paper.published ? 'bg-green-500/10 text-green-400' : 'bg-yellow-500/10 text-yellow-500'
-                      }`}>
+                      <span className={`px-2 py-0.5 rounded-full text-[10px] font-black uppercase tracking-widest ${paper.published ? 'bg-green-500/10 text-green-400' : 'bg-yellow-500/10 text-yellow-500'
+                        }`}>
                         {paper.published ? 'Live' : 'Draft'}
                       </span>
                     </div>
@@ -236,7 +234,7 @@ export default async function AdminDashboardPage() {
           </div>
         </Card>
       </div>
-      
+
       {/* Quick Tips */}
       <div className="mt-12 p-6 glass rounded-2xl border border-white/5 flex flex-col md:flex-row items-center gap-6">
         <div className="w-12 h-12 rounded-full bg-primary-500/20 flex items-center justify-center flex-shrink-0">
@@ -247,14 +245,14 @@ export default async function AdminDashboardPage() {
         <div className="flex-1">
           <h4 className="text-lg font-bold text-white mb-1">Professional Management</h4>
           <p className="text-sm text-dark-400">
-            Use the PDF upload feature in the Blog Manager to automatically convert documentation into rich Markdown content. 
+            Use the PDF upload feature in the Blog Manager to automatically convert documentation into rich Markdown content.
             All media is now stored securely on the local server.
           </p>
         </div>
         <div className="flex items-center gap-2">
-           <Link href="https://github.com/itxLikhith/intent-engine" target="_blank">
+          <Link href="https://codeberg.org/itxLikhith/intent-engine" target="_blank">
             <Button size="sm" variant="ghost" className="text-xs">Documentation</Button>
-           </Link>
+          </Link>
         </div>
       </div>
     </div>

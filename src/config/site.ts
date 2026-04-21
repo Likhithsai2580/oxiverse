@@ -4,7 +4,7 @@ export const siteConfig = {
   url: "https://oxiverse.com",
   ogImage: "https://oxiverse.com/og.jpg",
   links: {
-    github: "https://github.com/itxLikhith",
+    codeberg: "https://codeberg.org/itxLikhith",
     twitter: "https://twitter.com/itxLikhith",
   },
   mainNav: [
@@ -36,7 +36,7 @@ export const siteConfig = {
     cta: {
       primary: {
         text: "Build the Future",
-        href: "https://github.com/itxLikhith",
+        href: "https://codeberg.org/itxLikhith",
       },
       secondary: {
         text: "Explore Ecosystem",

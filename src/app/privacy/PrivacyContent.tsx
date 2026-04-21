@@ -13,7 +13,7 @@ export default function PrivacyContent() {
   return (
     <div className="pt-32 pb-24 px-4 md:px-8">
       <div className="max-w-4xl mx-auto">
-        <motion.div 
+        <motion.div
           initial="initial"
           animate="animate"
           variants={fadeIn}
@@ -24,12 +24,12 @@ export default function PrivacyContent() {
           </h1>
           <div className="h-2 w-24 bg-accent-300 shadow-retro-sm mb-8" />
           <p className="text-xl text-primary-300 font-mono leading-relaxed max-w-2xl border-l-4 border-primary-700 pl-6">
-            Our commitment to radical transparency and zero-knowledge architecture. 
+            Our commitment to radical transparency and zero-knowledge architecture.
             Oxiverse is built on the principle that your data belongs to you, and only you.
           </p>
         </motion.div>
 
-        <motion.div 
+        <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 0.3, duration: 0.8 }}
@@ -43,8 +43,8 @@ export default function PrivacyContent() {
           <section className="mb-12">
             <h2>Data Retention</h2>
             <p>
-              We operate under a strict <strong>Zero-Persistence Policy</strong>. We never store, cache, or archive the data 
-              you send to us. When you interact with our services, your data exists only in volatile memory for the 
+              We operate under a strict <strong>Zero-Persistence Policy</strong>. We never store, cache, or archive the data
+              you send to us. When you interact with our services, your data exists only in volatile memory for the
               duration of the request and is immediately purged upon completion.
             </p>
           </section>
@@ -52,7 +52,7 @@ export default function PrivacyContent() {
           <section className="mb-12">
             <h2>Search & Discovery</h2>
             <p>
-              Oxiverse does not log search queries. We do not maintain a history of your activity, nor do we 
+              Oxiverse does not log search queries. We do not maintain a history of your activity, nor do we
               link search patterns to specific users. Your intent remains private, even from us.
             </p>
           </section>
@@ -60,7 +60,7 @@ export default function PrivacyContent() {
           <section className="mb-12">
             <h2>IP Logging & Networking</h2>
             <p>
-              We do not log visitor IP addresses. Our infrastructure is designed to facilitate anonymous 
+              We do not log visitor IP addresses. Our infrastructure is designed to facilitate anonymous
               interaction by default. We have no way of identifying who you are based on your network signature.
             </p>
           </section>
@@ -86,7 +86,7 @@ export default function PrivacyContent() {
           <section className="mb-12">
             <h2>Browser Environment & Cookies</h2>
             <p>
-              Cookies used by Oxiverse are strictly for <strong>Preferences and Customizations</strong>. This 
+              Cookies used by Oxiverse are strictly for <strong>Preferences and Customizations</strong>. This
               includes settings like display themes (Light/Dark mode) and age-filtering preferences.
             </p>
             <ul>
@@ -112,8 +112,8 @@ export default function PrivacyContent() {
           <section className="mb-12">
             <h2>Analytics & Tracking</h2>
             <p>
-              Oxiverse is 100% free of third-party analytics (e.g., Google Analytics, Meta Pixel). We do not 
-              track your movements across the web or build behavioral profiles. Our success is measured by 
+              Oxiverse is 100% free of third-party analytics (e.g., Google Analytics, Meta Pixel). We do not
+              track your movements across the web or build behavioral profiles. Our success is measured by
               utility, not by harvesting user metrics.
             </p>
           </section>
@@ -121,16 +121,16 @@ export default function PrivacyContent() {
           <section className="mb-12">
             <h2>Information Security</h2>
             <p>
-              We only use our own results and direct federated data sources. By eliminating middle-man 
+              We only use our own results and direct federated data sources. By eliminating middle-man
               data aggregators, we reduce the surface area for potential data leaks or unauthorized access.
             </p>
           </section>
 
           <div className="p-6 border-2 border-accent-300/30 bg-primary-900/50 mt-16 shadow-retro-md">
             <p className="text-sm m-0">
-              Last Updated: April 2026<br/>
-              For infrastructure-specific privacy inquiries, please refer to our 
-              <a href="https://github.com/oxiverse-labs" className="text-accent-300 hover:text-primary-50 ml-1">GitHub documentation</a>.
+              Last Updated: April 2026<br />
+              For infrastructure-specific privacy inquiries, please refer to our
+              <a href="https://codeberg.org/oxiverse" className="text-accent-300 hover:text-primary-50 ml-1">Codeberg documentation</a>.
             </p>
           </div>
         </motion.div>
