@@ -2,8 +2,9 @@
 
 import { useEffect, useState } from 'react';
 import { useRouter, useParams } from 'next/navigation';
-import { Button, Input, Textarea, Card, Spinner } from '@/components/ui';
+import { Button, Input, Textarea, Card, Spinner, Modal } from '@/components/ui';
 import { useToastContext } from '@/lib/providers/ToastProvider';
+import AssetBrowser from '../../components/AssetBrowser';
 
 export default function AdminProjectEditPage() {
   const router = useRouter();
@@ -12,6 +13,7 @@ export default function AdminProjectEditPage() {
   const [isLoading, setIsLoading] = useState(false);
   const [isFetching, setIsFetching] = useState(false);
   const [isUploading, setIsUploading] = useState(false);
+  const [showAssetBrowser, setShowAssetBrowser] = useState(false);
   const [formData, setFormData] = useState({
     title: '',
     slug: '',
@@ -249,16 +251,26 @@ export default function AdminProjectEditPage() {
                 </button>
               </div>
             ) : (
-              <div className="relative group">
-                <input
-                  type="file"
-                  accept="image/*"
-                  onChange={handleImageUpload}
-                  className="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-10"
-                  disabled={isUploading}
-                />
-                <Button variant="outline" className="w-full glass" disabled={isUploading}>
-                  {isUploading ? <Spinner size="sm" /> : 'Upload Icon'}
+              <div className="flex gap-2">
+                <div className="relative group flex-1">
+                  <input
+                    type="file"
+                    accept="image/*"
+                    onChange={handleImageUpload}
+                    className="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-10"
+                    disabled={isUploading}
+                  />
+                  <Button variant="outline" className="w-full glass" disabled={isUploading}>
+                    {isUploading ? <Spinner size="sm" /> : 'Upload'}
+                  </Button>
+                </div>
+                <Button 
+                    type="button" 
+                    variant="outline" 
+                    className="glass flex-1"
+                    onClick={() => setShowAssetBrowser(true)}
+                  >
+                    Library
                 </Button>
               </div>
             )}
@@ -278,6 +290,19 @@ export default function AdminProjectEditPage() {
           </Card>
         </div>
       </div>
+      </div>
+
+      <Modal 
+        isOpen={showAssetBrowser} 
+        onClose={() => setShowAssetBrowser(false)}
+        title="Eco Assets"
+        size="lg"
+      >
+        <AssetBrowser onSelect={(url) => {
+            setFormData(prev => ({ ...prev, imageUrl: url }));
+            setShowAssetBrowser(false);
+        }} category="ecosystem" />
+      </Modal>
     </form>
   </div>
 </div>

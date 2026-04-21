@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server'
 import { getServerSession } from 'next-auth'
 import { authOptions } from '@/lib/authOptions'
 import { saveFile } from '@/lib/storage'
+import { prisma } from '@/lib/prisma'
 
 export async function POST(req: NextRequest) {
   try {
@@ -20,6 +21,17 @@ export async function POST(req: NextRequest) {
 
     // Save locally and backup to Supabase
     const result = await saveFile(file, type)
+
+    // Log the asset in the database
+    await prisma.mediaAsset.create({
+      data: {
+        fileName: file.name,
+        url: result.url,
+        type: file.type,
+        category: type,
+        size: file.size,
+      }
+    })
 
     return NextResponse.json(result)
   } catch (err) {

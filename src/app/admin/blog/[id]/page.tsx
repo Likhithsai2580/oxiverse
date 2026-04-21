@@ -2,10 +2,11 @@
 
 import { useEffect, useState } from 'react'
 import { useRouter, useParams } from 'next/navigation'
-import { Button, Input, Textarea, Card, Spinner } from '@/components/ui'
+import { Button, Input, Textarea, Card, Spinner, Modal } from '@/components/ui'
 import { useToastContext } from '@/lib/providers/ToastProvider'
 import ReactMarkdown from 'react-markdown'
 import remarkGfm from 'remark-gfm'
+import AssetBrowser from '../../components/AssetBrowser'
 
 export default function AdminBlogEditPage() {
   const router = useRouter()
@@ -16,6 +17,8 @@ export default function AdminBlogEditPage() {
   const [previewMode, setPreviewMode] = useState(false)
   const [isParsing, setIsParsing] = useState(false)
   const [isUploading, setIsUploading] = useState(false)
+  const [showAssetBrowser, setShowAssetBrowser] = useState(false)
+  const [assetTarget, setAssetTarget] = useState<'image' | 'content'>('image')
   
   const [categories, setCategories] = useState<any[]>([])
   const [tags, setTags] = useState<any[]>([])
@@ -146,8 +149,28 @@ export default function AdminBlogEditPage() {
     }
   }
 
+  const handleAssetSelect = (url: string) => {
+    if (assetTarget === 'image') {
+      setFormData(prev => ({ ...prev, imageUrl: url }))
+    } else {
+      setFormData(prev => ({ ...prev, content: (prev.content || '') + `\n\n![Image](${url})` }))
+    }
+    setShowAssetBrowser(false)
+  }
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
+    
+    if (!formData.title.trim()) {
+      error('Headline is required')
+      return
+    }
+
+    if (!formData.content.trim()) {
+      error('Content is required')
+      return
+    }
+
     setIsLoading(true)
 
     try {
@@ -222,6 +245,18 @@ export default function AdminBlogEditPage() {
           <Card className="bg-dark-900/40 border-white/5">
             <div className="flex items-center justify-between mb-4">
                <label className="text-sm font-black uppercase tracking-widest text-dark-500">Editorial Content</label>
+               <Button 
+                type="button" 
+                size="sm" 
+                variant="ghost" 
+                className="text-[10px] uppercase tracking-widest text-primary-400"
+                onClick={() => {
+                  setAssetTarget('content')
+                  setShowAssetBrowser(true)
+                }}
+               >
+                 Insert Image
+               </Button>
             </div>
 
             {previewMode ? (
@@ -335,18 +370,31 @@ export default function AdminBlogEditPage() {
                 </button>
               </div>
             ) : (
-              <div className="relative group">
-                <input
-                  type="file"
-                  accept="image/*"
-                  onChange={handleImageUpload}
-                  className="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-10"
-                  disabled={isUploading}
-                />
-                <Button type="button" variant="outline" className="w-full glass" disabled={isUploading}>
-                  {isUploading ? <Spinner size="sm" /> : 'Set Header Image'}
+            <div className="flex gap-2">
+                <div className="relative group flex-1">
+                  <input
+                    type="file"
+                    accept="image/*"
+                    onChange={handleImageUpload}
+                    className="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-10"
+                    disabled={isUploading}
+                  />
+                  <Button type="button" variant="outline" className="w-full glass" disabled={isUploading}>
+                    {isUploading ? <Spinner size="sm" /> : 'Upload'}
+                  </Button>
+                </div>
+                <Button 
+                  type="button" 
+                  variant="outline" 
+                  className="glass flex-1"
+                  onClick={() => {
+                    setAssetTarget('image')
+                    setShowAssetBrowser(true)
+                  }}
+                >
+                  Library
                 </Button>
-              </div>
+            </div>
             )}
             
             <div className="mt-4">
@@ -364,6 +412,15 @@ export default function AdminBlogEditPage() {
           </Card>
         </div>
       </div>
+      
+      <Modal 
+        isOpen={showAssetBrowser} 
+        onClose={() => setShowAssetBrowser(false)}
+        title="Asset Library"
+        size="xl"
+      >
+        <AssetBrowser onSelect={handleAssetSelect} category="blog" />
+      </Modal>
     </form>
   )
 }

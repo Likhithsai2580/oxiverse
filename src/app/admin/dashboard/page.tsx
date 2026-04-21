@@ -14,32 +14,45 @@ export default async function AdminDashboardPage() {
     redirect('/admin/login')
   }
 
+  const adminId = session.user.id
+
   const [
-    blogCount,
-    researchCount,
-    projectCount,
-    posterCount,
-    publishedBlogs,
-    publishedResearch
+    counts,
+    recentBlogs,
+    recentResearch
   ] = await Promise.all([
-    prisma.blog.count(),
-    prisma.researchPaper.count(),
-    prisma.project.count(),
-    prisma.poster.count(),
-    prisma.blog.count({ where: { published: true } }),
-    prisma.researchPaper.count({ where: { published: true } }),
+    prisma.$transaction([
+      prisma.blog.count(),
+      prisma.researchPaper.count(),
+      prisma.project.count(),
+      prisma.poster.count(),
+      prisma.blog.count({ where: { published: true } }),
+      prisma.researchPaper.count({ where: { published: true } }),
+    ]),
+    prisma.blog.findMany({
+      take: 5,
+      orderBy: { createdAt: 'desc' },
+      select: {
+        id: true,
+        title: true,
+        published: true,
+        createdAt: true,
+        author: { select: { name: true, email: true } }
+      }
+    }),
+    prisma.researchPaper.findMany({
+      take: 5,
+      orderBy: { createdAt: 'desc' },
+      select: {
+        id: true,
+        title: true,
+        published: true,
+        createdAt: true
+      }
+    })
   ])
 
-  const recentBlogs = await prisma.blog.findMany({
-    take: 5,
-    orderBy: { createdAt: 'desc' },
-    include: { author: { select: { name: true, email: true } } },
-  })
-
-  const recentResearch = await prisma.researchPaper.findMany({
-    take: 5,
-    orderBy: { createdAt: 'desc' },
-  })
+  const [blogCount, researchCount, projectCount, posterCount, publishedBlogs, publishedResearch] = counts
 
   return (
     <div className="p-8 pb-12 overflow-y-auto max-h-[calc(100vh-64px)]">

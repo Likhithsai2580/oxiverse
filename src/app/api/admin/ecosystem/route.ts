@@ -19,11 +19,24 @@ const ProjectSchema = z.object({
 })
 
 export async function GET() {
+  const start = Date.now()
   try {
     const projects = await prisma.project.findMany({
-      orderBy: { createdAt: 'desc' }
+      orderBy: { createdAt: 'desc' },
+      select: {
+        id: true,
+        title: true,
+        slug: true,
+        description: true,
+        status: true,
+        link: true,
+        createdAt: true,
+      }
     })
-    return NextResponse.json(projects)
+    const duration = Date.now() - start
+    return NextResponse.json(projects, {
+      headers: { 'X-Response-Time': `${duration}ms` }
+    })
   } catch (err) {
     return NextResponse.json({ error: 'Failed to fetch projects' }, { status: 500 })
   }

@@ -7,6 +7,7 @@ import { useToastContext } from '@/lib/providers/ToastProvider'
 import ReactMarkdown from 'react-markdown'
 import remarkGfm from 'remark-gfm'
 import Link from 'next/link'
+import AssetBrowser from '../../components/AssetBrowser'
 
 interface ResearchPaper {
   id: string
@@ -30,6 +31,8 @@ export default function AdminResearchEditPage() {
   const [pdfUrl, setPdfUrl] = useState('')
   const [isParsing, setIsParsing] = useState(false)
   const [isUploading, setIsUploading] = useState(false)
+  const [showAssetBrowser, setShowAssetBrowser] = useState(false)
+  const [assetTarget, setAssetTarget] = useState<'image' | 'content'>('image')
   const [categories, setCategories] = useState<any[]>([])
   const [tags, setTags] = useState<any[]>([])
   const [formData, setFormData] = useState({
@@ -157,6 +160,15 @@ export default function AdminResearchEditPage() {
     }
   }
 
+  const handleAssetSelect = (url: string) => {
+    if (assetTarget === 'image') {
+      setFormData(prev => ({ ...prev, imageUrl: url }))
+    } else {
+      setFormData(prev => ({ ...prev, content: (prev.content || '') + `\n\n![Image](${url})` }))
+    }
+    setShowAssetBrowser(false)
+  }
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     setIsLoading(true)
@@ -230,9 +242,21 @@ export default function AdminResearchEditPage() {
             />
           </Card>
 
-          <Card className="bg-dark-900/40 border-white/5">
+           <Card className="bg-dark-900/40 border-white/5">
             <div className="flex items-center justify-between mb-4">
               <label className="text-sm font-black uppercase tracking-widest text-dark-500">Technical Content</label>
+              <Button 
+                type="button" 
+                size="sm" 
+                variant="ghost" 
+                className="text-[10px] uppercase tracking-widest text-accent-400"
+                onClick={() => {
+                  setAssetTarget('content')
+                  setShowAssetBrowser(true)
+                }}
+               >
+                 Insert Media
+               </Button>
             </div>
 
             {previewMode ? (
@@ -358,14 +382,27 @@ export default function AdminResearchEditPage() {
                 </button>
               </div>
             ) : (
-              <div className="relative group">
-                <input
-                  type="file"
-                  accept="image/*"
-                  onChange={handleImageUpload}
-                  className="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-10"
-                />
-                <Button variant="outline" className="w-full glass">Set Image</Button>
+              <div className="flex gap-2">
+                <div className="relative group flex-1">
+                  <input
+                    type="file"
+                    accept="image/*"
+                    onChange={handleImageUpload}
+                    className="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-10"
+                  />
+                  <Button variant="outline" className="w-full glass">Upload</Button>
+                </div>
+                <Button 
+                  type="button" 
+                  variant="outline" 
+                  className="glass flex-1"
+                  onClick={() => {
+                    setAssetTarget('image')
+                    setShowAssetBrowser(true)
+                  }}
+                >
+                  Library
+                </Button>
               </div>
             )}
             
@@ -384,6 +421,17 @@ export default function AdminResearchEditPage() {
           </Card>
         </div>
       </div>
+
+      <Modal 
+        isOpen={showAssetBrowser} 
+        onClose={() => setShowAssetBrowser(false)}
+        title="Technical Assets"
+        size="xl"
+      >
+        <AssetBrowser onSelect={handleAssetSelect} category="research" />
+      </Modal>
     </form>
+  </div>
+</div>
   )
 }

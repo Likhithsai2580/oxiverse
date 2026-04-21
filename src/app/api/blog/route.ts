@@ -11,8 +11,8 @@ export async function GET(request: NextRequest) {
   try {
     const { searchParams } = new URL(request.url)
     const published = searchParams.get('published')
-    const limit = parseInt(searchParams.get('limit') || '10')
-    const page = parseInt(searchParams.get('page') || '1')
+    const limit = Math.max(1, Math.min(100, parseInt(searchParams.get('limit') || '10') || 10))
+    const page = Math.max(1, parseInt(searchParams.get('page') || '1') || 1)
 
     const where = published !== null ? { published: published === 'true' } : {}
 
@@ -56,6 +56,15 @@ export async function POST(request: NextRequest) {
     if (!session?.user) {
       return NextResponse.json(
         { error: 'Unauthorized' },
+        { status: 401 }
+      )
+    }
+
+    // Double check user exists in DB (to handle session-DB mismatch after resets)
+    const user = await prisma.user.findUnique({ where: { id: session.user.id } })
+    if (!user) {
+      return NextResponse.json(
+        { error: 'Session invalid or user deleted. Please log out and log in again.' },
         { status: 401 }
       )
     }
