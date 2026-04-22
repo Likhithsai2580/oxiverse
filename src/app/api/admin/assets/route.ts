@@ -44,7 +44,7 @@ export async function GET(req: NextRequest) {
             // Avoid duplicates with DB entries
             if (!dbAssets.find(a => a.url === publicUrl)) {
               supabaseAssets.push({
-                id: file.id || file.name,
+                id: `${dir}/${file.name}`,
                 fileName: file.name,
                 url: publicUrl,
                 type: 'image/unknown',
@@ -79,12 +79,41 @@ export async function DELETE(req: NextRequest) {
 
     if (!id) return NextResponse.json({ error: 'ID required' }, { status: 400 })
 
-    await prisma.mediaAsset.delete({
+    // 1. Try to find in DB
+    const dbAsset = await prisma.mediaAsset.findUnique({
       where: { id }
     })
 
+    let storagePath: string | null = null
+
+    if (dbAsset) {
+      // Extract path from Supabase URL
+      if (dbAsset.url.includes('supabase.co/storage/v1/object/public/images/')) {
+        storagePath = dbAsset.url.split('/public/images/')[1]
+      }
+      
+      // Delete from DB
+      await prisma.mediaAsset.delete({
+        where: { id }
+      })
+    } else {
+      // If not in DB, the ID itself might be the storage path (dir/name)
+      if (id.includes('/')) {
+        storagePath = id
+      }
+    }
+
+    // 2. Delete from Supabase Storage
+    if (storagePath) {
+      const { data, error } = await supabaseAdmin.storage.from('images').remove([storagePath])
+      if (error) console.error('Storage deletion error:', error)
+    }
+
     return NextResponse.json({ success: true })
   } catch (err) {
-     return NextResponse.json({ error: 'Failed to delete asset' }, { status: 500 })
+    console.error('Assets DELETE Error:', err)
+    return NextResponse.json({ error: 'Failed to delete asset' }, { status: 500 })
   }
 }
+
+
