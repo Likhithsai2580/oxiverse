@@ -431,7 +431,5 @@ export default function AdminResearchEditPage() {
         <AssetBrowser onSelect={handleAssetSelect} category="research" />
       </Modal>
     </form>
-  </div>
-</div>
   )
 }

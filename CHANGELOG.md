@@ -3,7 +3,20 @@
 All notable changes to the Oxiverse project will be documented in this file.
 
 ## [Unreleased]
+### Fixed
+- Resolved build failure in admin research edit page caused by redundant closing div tags.
+- Fixed "Alternative page with proper canonical tag" SEO issue by removing global canonical override in root layout.
+- Corrected hero button labels and links to dynamically pull from central site configuration.
+
+### Changed
+- Updated official Search Engine links to `search.oxiverse.com` across the ecosystem.
+- Migrated primary developer links from individual handles to the Oxiverse Codeberg organization.
+- Enhanced dynamic sitemap generation to include all published blog posts and research papers.
+- Refined Footer behavior: Products still in development now trigger a "Coming Soon" notification instead of navigating away.
+- Rebranded Newsletter as a Project Status & Release Update portal.
+
 ### Added
+- Implemented `robots.ts` and automated `sitemap.ts` for improved search engine crawling and indexability.
 - Added comprehensive SEO optimization including `sitemap.ts`, `robots.ts`, and structured data (JSON-LD) in the root layout.
 - Implemented `<noscript>` fallback content semantic markup to ensure high visibility for search engine crawlers regardless of 3D scene load states.
 - Enhanced Next.js `metadata` object dynamically supporting OpenGraph and Twitter cards properties across the application.

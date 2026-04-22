@@ -20,10 +20,10 @@ const item = {
 }
 
 const features = [
-  { id: '01', name: 'Privacy Search', description: 'Intent-driven search engine devoid of tracking, targeting, or profiling.', linkText: 'Discover Search' },
-  { id: '02', name: 'Ethical Ads', description: 'Context-based advertising relying on query intent, not personal exploitation.', linkText: 'View Ad Ethics' },
-  { id: '03', name: 'Data Autonomy', description: 'Total consent management with zero-retention policies. Your data remains yours.', linkText: 'Our Privacy Policy' },
-  { id: '04', name: 'Open Stack', description: 'Built on Next.js, FastAPI, & Qdrant. Fully transparent and community-auditable.', linkText: 'Audit Source Code' }
+  { id: '01', name: 'Privacy Search', description: 'Intent-driven search engine devoid of tracking, targeting, or profiling.', linkText: 'Discover Search', href: 'https://search.oxiverse.com' },
+  { id: '02', name: 'Ethical Ads', description: 'Context-based advertising relying on query intent, not personal exploitation.', linkText: 'View Ad Ethics', href: '#' },
+  { id: '03', name: 'Data Autonomy', description: 'Total consent management with zero-retention policies. Your data remains yours.', linkText: 'Our Privacy Policy', href: '/privacy' },
+  { id: '04', name: 'Open Stack', description: 'Built on Next.js, FastAPI, & Qdrant. Fully transparent and community-auditable.', linkText: 'Audit Source Code', href: 'https://codeberg.org/oxiverse' }
 ]
 
 export default function Features() {
@@ -99,7 +99,7 @@ export default function Features() {
               <h4 className="font-display text-xl font-bold text-primary-50 mb-3 uppercase">{features[0].name}</h4>
               <p className="text-primary-300 leading-relaxed text-sm">{features[0].description}</p>
             </div>
-            <Link href="#" className="mt-8 text-xs text-primary-400 font-bold uppercase tracking-widest group-hover:text-accent-300 flex items-center gap-2 font-mono">
+            <Link href={features[0].href || '#'} target={features[0].href?.startsWith('http') ? '_blank' : undefined} className="mt-8 text-xs text-primary-400 font-bold uppercase tracking-widest group-hover:text-accent-300 flex items-center gap-2 font-mono">
               {features[0].linkText} <span className="text-accent-300 transform group-hover:translate-x-2 transition-transform">→</span>
             </Link>
           </div>
@@ -126,7 +126,7 @@ export default function Features() {
                   <h4 className="font-display text-xl font-bold text-primary-50 mb-3 uppercase">{feature.name}</h4>
                   <p className="text-primary-300 leading-relaxed text-sm">{feature.description}</p>
                 </div>
-                <Link href="#" className="mt-8 text-xs text-primary-400 font-bold uppercase tracking-widest group-hover:text-accent-300 flex items-center gap-2 font-mono">
+                <Link href={feature.href || '#'} target={feature.href?.startsWith('http') ? '_blank' : undefined} className="mt-8 text-xs text-primary-400 font-bold uppercase tracking-widest group-hover:text-accent-300 flex items-center gap-2 font-mono">
                   {feature.linkText} <span className="text-accent-300 transform group-hover:translate-x-2 transition-transform">→</span>
                 </Link>
               </div>

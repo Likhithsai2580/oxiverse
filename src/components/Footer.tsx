@@ -3,29 +3,8 @@
 import React from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
+import { useToastContext } from '@/lib/providers/ToastProvider'
 
-const footerLinks = {
-  products: [
-    { name: 'Search Engine', href: 'https://codeberg.org/oxiverse/intentforge' },
-    { name: 'Modern Browser (Soon)', href: '#' },
-    { name: 'Secure Mail (Soon)', href: '#' },
-    { name: 'GSuite Alt (Soon)', href: '#' },
-    { name: 'Productivity Docs (Soon)', href: '#' },
-    { name: 'Download Manager (Soon)', href: '#' },
-  ],
-  resources: [
-    { name: 'Documentation', href: 'https://codeberg.org/oxiverse/intentforge/src/branch/main/docs' },
-    { name: 'API Reference', href: 'https://codeberg.org/oxiverse/intentforge' },
-    { name: 'Research Portal', href: '/research' },
-    { name: 'Developer Blog', href: '/blog' },
-    { name: 'Project Roadmap', href: '/#roadmap' },
-  ],
-  community: [
-    { name: 'Codeberg Org', href: 'https://codeberg.org/oxiverse' },
-    { name: 'Dev Discussions', href: 'https://codeberg.org/oxiverse/intentforge/discussions' },
-    { name: 'Open Issues', href: 'https://codeberg.org/oxiverse/intentforge/issues/new' },
-    { name: 'Contribution Guide', href: 'https://codeberg.org/oxiverse/intentforge/src/branch/main/CONTRIBUTING.md' },
-  ],
   legal: [
     { name: 'Privacy Protocol', href: '/privacy' },
     { name: 'Network Terms', href: '/terms' },
@@ -33,8 +12,38 @@ const footerLinks = {
   ],
 }
 
+interface FooterLink {
+  name: string
+  href: string
+  status?: 'live' | 'dev'
+}
+
+const products: FooterLink[] = [
+  { name: 'IntentForge Search', href: 'https://search.oxiverse.com', status: 'live' },
+  { name: 'Oxiverse Browser', href: '#', status: 'dev' },
+  { name: 'Secure Mail', href: '#', status: 'dev' },
+  { name: 'Download Manager', href: '#', status: 'dev' },
+  { name: 'Productivity Docs', href: '#', status: 'dev' },
+]
+
+const resources: FooterLink[] = [
+  { name: 'Documentation', href: 'https://codeberg.org/oxiverse/intentforge/src/branch/main/docs' },
+  { name: 'API Reference', href: 'https://codeberg.org/oxiverse/intentforge' },
+  { name: 'Research Portal', href: '/research' },
+  { name: 'Developer Blog', href: '/blog' },
+  { name: 'Project Roadmap', href: '/#roadmap' },
+]
+
+const community: FooterLink[] = [
+  { name: 'Codeberg Org', href: 'https://codeberg.org/oxiverse' },
+  { name: 'Dev Discussions', href: 'https://codeberg.org/oxiverse/intentforge/discussions' },
+  { name: 'Open Issues', href: 'https://codeberg.org/oxiverse/intentforge/issues/new' },
+  { name: 'Contribution Guide', href: 'https://codeberg.org/oxiverse/intentforge/src/branch/main/CONTRIBUTING.md' },
+]
+
 export default function Footer() {
   const currentYear = new Date().getFullYear()
+  const { info } = useToastContext()
 
   return (
     <footer className="bg-primary-950 border-t-2 border-primary-50 relative z-10">
@@ -56,20 +65,54 @@ export default function Footer() {
             </a>
           </div>
 
-          {(['products', 'resources', 'community'] as const).map((section) => (
-            <div key={section}>
-              <h4 className="text-xs font-bold font-mono text-primary-50 uppercase tracking-widest mb-4">{section}</h4>
-              <ul className="space-y-2">
-                {footerLinks[section].map((link) => (
-                  <li key={link.name}>
-                    <a href={link.href} target={link.href.startsWith('http') ? '_blank' : undefined} rel={link.href.startsWith('http') ? 'noopener noreferrer' : undefined}
-                      className="text-sm text-primary-400 hover:text-accent-300 transition-colors"
-                    >{link.name}</a>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          ))}
+          <div>
+            <h4 className="text-xs font-bold font-mono text-primary-50 uppercase tracking-widest mb-4">Products</h4>
+            <ul className="space-y-2">
+              {products.map((link) => (
+                <li key={link.name}>
+                  <button
+                    onClick={() => {
+                      if (link.status === 'dev') {
+                        info(`${link.name} is currently in active development. Stay tuned for release updates!`)
+                      } else {
+                        window.open(link.href, '_blank', 'noopener,noreferrer')
+                      }
+                    }}
+                    className="text-sm text-primary-400 hover:text-accent-300 transition-colors text-left"
+                  >
+                    {link.name}
+                    {link.status === 'dev' && <span className="ml-2 text-[8px] border border-primary-700 px-1 py-0.5 rounded text-primary-500 uppercase tracking-tighter">Dev</span>}
+                  </button>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          <div>
+            <h4 className="text-xs font-bold font-mono text-primary-50 uppercase tracking-widest mb-4">Resources</h4>
+            <ul className="space-y-2">
+              {resources.map((link) => (
+                <li key={link.name}>
+                  <a href={link.href} target={link.href.startsWith('http') ? '_blank' : undefined} rel={link.href.startsWith('http') ? 'noopener noreferrer' : undefined}
+                    className="text-sm text-primary-400 hover:text-accent-300 transition-colors"
+                  >{link.name}</a>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          <div>
+            <h4 className="text-xs font-bold font-mono text-primary-50 uppercase tracking-widest mb-4">Community</h4>
+            <ul className="space-y-2">
+              {community.map((link) => (
+                <li key={link.name}>
+                  <a href={link.href} target={link.href.startsWith('http') ? '_blank' : undefined} rel={link.href.startsWith('http') ? 'noopener noreferrer' : undefined}
+                    className="text-sm text-primary-400 hover:text-accent-300 transition-colors"
+                  >{link.name}</a>
+                </li>
+              ))}
+            </ul>
+          </div>
         </div>
 
         <div className="border-t-2 border-primary-700 mt-12 pt-8 flex flex-col md:flex-row items-center justify-between gap-4">

@@ -65,15 +65,15 @@ export default function Hero() {
 
               {/* Flat Geometric Buttons */}
               <div className="flex flex-col sm:flex-row gap-8 mt-12">
-                <Button size="lg" href={siteConfig.hero.cta.secondary.href} className="!p-0 !bg-transparent !shadow-none !border-none outline-none">
+                <Button size="lg" href={siteConfig.hero.cta.primary.href} className="!p-0 !bg-transparent !shadow-none !border-none outline-none">
                   <div className="retro-btn retro-btn-seafoam w-full">
-                    Deploy Network
+                    {siteConfig.hero.cta.primary.text}
                   </div>
                 </Button>
 
-                <Button size="lg" variant="outline" href={siteConfig.hero.cta.primary.href} target="_blank" className="!p-0 !bg-transparent !shadow-none !border-none outline-none">
+                <Button size="lg" variant="outline" href={siteConfig.hero.cta.secondary.href} target="_blank" className="!p-0 !bg-transparent !shadow-none !border-none outline-none">
                   <div className="retro-btn w-full">
-                    Dev Access (API)
+                    {siteConfig.hero.cta.secondary.text}
                   </div>
                 </Button>
               </div>

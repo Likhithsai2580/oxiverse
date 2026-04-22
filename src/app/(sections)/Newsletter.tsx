@@ -51,7 +51,7 @@ export default function Newsletter() {
         >
           <div className="retro-box p-0">
             <div className="retro-header-bar">
-              <span>NEWSLETTER_SUBSCRIBE.EXE</span>
+              <span>STATUS_UPDATES.EXE</span>
               <div className="flex gap-1">
                 <div className="w-2 h-2 bg-primary-950" />
                 <div className="w-2 h-2 bg-primary-950" />
@@ -59,10 +59,10 @@ export default function Newsletter() {
             </div>
             <div className="p-10 md:p-14 bg-primary-800 text-center">
               <h2 className="font-display text-3xl md:text-4xl text-primary-50 mb-4 font-bold uppercase tracking-tight">
-                Join the Oxiverse <span className="text-accent-300">Network.</span>
+                Get the <span className="text-accent-300">Status.</span>
               </h2>
               <p className="text-primary-300 text-base mb-10 max-w-md mx-auto leading-relaxed">
-                Stay updated with the latest privacy-first tools, research, and platform updates.
+                Stay updated with project milestones, release dates, and upcoming infrastructure deployments.
               </p>
 
               <form onSubmit={handleSubmit} className="flex flex-col sm:flex-row gap-0 max-w-lg mx-auto">
@@ -88,7 +88,7 @@ export default function Newsletter() {
               </form>
 
               <div className="mt-10 flex flex-wrap justify-center gap-8 text-primary-400">
-                {['No Spam, Ever', 'Privacy Protected', 'Weekly Insights'].map((item) => (
+                {['Milestones', 'No Spam', 'Weekly Updates'].map((item) => (
                   <div key={item} className="flex items-center gap-2">
                     <span className="w-2 h-2 bg-accent-300" />
                     <span className="text-[10px] font-bold uppercase tracking-widest font-mono">{item}</span>

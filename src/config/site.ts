@@ -4,7 +4,8 @@ export const siteConfig = {
   url: "https://oxiverse.com",
   ogImage: "https://oxiverse.com/og.jpg",
   links: {
-    codeberg: "https://codeberg.org/itxLikhith",
+    codeberg: "https://codeberg.org/oxiverse",
+    search: "https://search.oxiverse.com",
     twitter: "https://twitter.com/itxLikhith",
   },
   mainNav: [
@@ -35,12 +36,12 @@ export const siteConfig = {
     subtitle: "The next generation of privacy-first infrastructure. A secure, decentralized ecosystem for pioneers of the open internet.",
     cta: {
       primary: {
-        text: "Build the Future",
-        href: "https://codeberg.org/itxLikhith",
+        text: "Launch Search",
+        href: "https://search.oxiverse.com",
       },
       secondary: {
-        text: "Explore Ecosystem",
-        href: "#ecosystem",
+        text: "Access Source",
+        href: "https://codeberg.org/oxiverse",
       },
     },
   },
