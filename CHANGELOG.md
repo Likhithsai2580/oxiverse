@@ -4,6 +4,7 @@ All notable changes to the Oxiverse project will be documented in this file.
 
 ## [Unreleased]
 ### Fixed
+- Resolved build failure in `Footer.tsx` caused by dangling syntax from a previous partial refactor.
 - Resolved build failure in admin research edit page caused by redundant closing div tags.
 - Fixed "Alternative page with proper canonical tag" SEO issue by removing global canonical override in root layout.
 - Corrected hero button labels and links to dynamically pull from central site configuration.

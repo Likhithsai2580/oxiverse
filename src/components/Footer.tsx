@@ -5,12 +5,6 @@ import Link from 'next/link'
 import Image from 'next/image'
 import { useToastContext } from '@/lib/providers/ToastProvider'
 
-  legal: [
-    { name: 'Privacy Protocol', href: '/privacy' },
-    { name: 'Network Terms', href: '/terms' },
-    { name: 'IECL License', href: '/license' },
-  ],
-}
 
 interface FooterLink {
   name: string
