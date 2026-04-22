@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { Card, Button, Spinner, Input } from '@/components/ui';
+import { Card, Button, Spinner, Input, Skeleton } from '@/components/ui';
 import { useToastContext } from '@/lib/providers/ToastProvider';
 
 interface Asset {
@@ -101,7 +101,7 @@ export default function AssetBrowser({ onSelect, category, allowUpload = true }:
             placeholder="Search assets..." 
             value={search} 
             onChange={(e) => setSearch(e.target.value)}
-            className="pl-10"
+            className="pl-10 h-10"
           />
           <svg className="absolute left-3 top-3 w-4 h-4 text-dark-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
@@ -117,52 +117,63 @@ export default function AssetBrowser({ onSelect, category, allowUpload = true }:
               onChange={handleUpload}
               disabled={isUploading}
             />
-            <Button variant="outline" className="glass" disabled={isUploading}>
-              {isUploading ? <Spinner size="sm" /> : 'Upload New'}
+            <Button variant="outline" className="glass h-10 px-6" disabled={isUploading}>
+              {isUploading ? <Spinner size="sm" /> : (
+                <span className="flex items-center gap-2">
+                  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12" />
+                  </svg>
+                  Upload New
+                </span>
+              )}
             </Button>
           </div>
         )}
       </div>
 
-      {isLoading ? (
-        <div className="py-20 flex justify-center"><Spinner size="lg" /></div>
-      ) : filteredAssets.length === 0 ? (
-        <div className="py-20 text-center text-dark-500 italic">No assets found matching your search.</div>
-      ) : (
-        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
-          {filteredAssets.map(asset => (
+      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
+        {isLoading ? (
+          Array.from({ length: 10 }).map((_, i) => (
+            <div key={i} className="aspect-square rounded-xl overflow-hidden border border-white/5 bg-dark-900/40 p-2">
+                <Skeleton className="w-full h-full rounded-lg" />
+            </div>
+          ))
+        ) : filteredAssets.length === 0 ? (
+          <div className="col-span-full py-20 text-center text-dark-500 italic font-medium">No assets found matching your search.</div>
+        ) : (
+          filteredAssets.map(asset => (
             <div 
               key={asset.id} 
               onClick={() => onSelect?.(asset.url)}
-              className={`group relative aspect-square rounded-xl overflow-hidden bg-dark-900 border border-white/5 transition-all cursor-pointer ${
-                onSelect ? 'hover:border-primary-500 hover:scale-[1.02]' : ''
+              className={`group relative aspect-square rounded-xl overflow-hidden bg-dark-900/60 border border-white/5 transition-all duration-300 cursor-pointer shadow-lg hover:shadow-primary-500/10 ${
+                onSelect ? 'hover:border-primary-500/50 hover:scale-[1.02]' : ''
               }`}
             >
               <img 
                 src={asset.url} 
                 alt={asset.fileName} 
-                className="w-full h-full object-cover"
+                className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
                 loading="lazy"
               />
               
-              <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity flex flex-col justify-end p-2">
-                <p className="text-[10px] text-white truncate font-medium mb-1">{asset.fileName}</p>
+              <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-all duration-300 flex flex-col justify-end p-3">
+                <p className="text-[10px] text-white truncate font-bold mb-1">{asset.fileName}</p>
                 <div className="flex justify-between items-center">
-                   <span className="text-[8px] text-dark-400">{(asset.size / 1024).toFixed(1)} KB</span>
+                   <span className="text-[8px] text-dark-400 font-bold uppercase tracking-wider">{(asset.size / 1024).toFixed(1)} KB</span>
                    <button 
                     onClick={(e) => handleDelete(asset.id, e)}
-                    className="p-1 text-red-400 hover:text-red-300 transition-colors"
+                    className="p-1.5 bg-red-500/10 rounded-lg text-red-400 hover:text-red-300 hover:bg-red-500/20 transition-all"
                    >
-                     <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                     <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
                      </svg>
                    </button>
                 </div>
               </div>
             </div>
-          ))}
-        </div>
-      )}
+          ))
+        )}
+      </div>
     </div>
   );
 }

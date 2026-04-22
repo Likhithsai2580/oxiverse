@@ -26,6 +26,9 @@ export async function GET(request: NextRequest) {
           author: {
             select: { id: true, name: true, email: true },
           },
+          category: {
+            select: { name: true }
+          }
         },
       }),
       prisma.blog.count({ where }),

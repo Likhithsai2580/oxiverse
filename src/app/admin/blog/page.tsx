@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from 'react'
 import Link from 'next/link'
-import { Card, Button, Spinner } from '@/components/ui'
+import { Card, Button, Skeleton } from '@/components/ui'
 import { useToastContext } from '@/lib/providers/ToastProvider'
 
 interface Blog {
@@ -58,19 +58,11 @@ export default function AdminBlogPage() {
     }
   }
 
-  if (isLoading) {
-    return (
-      <div className="p-8 flex items-center justify-center min-h-[400px]">
-        <Spinner size="lg" />
-      </div>
-    )
-  }
-
   return (
     <div className="p-8 pb-20">
       <div className="flex items-center justify-between mb-12">
         <div>
-          <h1 className="text-4xl font-bold text-white mb-2 tracking-tight">Public Journals</h1>
+          <h1 className="text-4xl font-bold text-white mb-2 tracking-tight font-display">Public Journals</h1>
           <p className="text-dark-400">Chronicles of our engineering journey</p>
         </div>
         <Link href="/admin/blog/new">
@@ -83,8 +75,33 @@ export default function AdminBlogPage() {
         </Link>
       </div>
 
-      {blogs.length === 0 ? (
-        <Card className="bg-dark-900/40 border-white/5 py-16 text-center">
+      {isLoading ? (
+        <div className="grid grid-cols-1 gap-4">
+          {Array.from({ length: 5 }).map((_, i) => (
+            <Card key={i} className="bg-dark-900/40 border-white/5 p-0 overflow-hidden">
+                <div className="flex flex-col md:flex-row items-stretch">
+                    <div className="p-6 flex-1 space-y-4">
+                        <div className="flex gap-2">
+                            <Skeleton className="h-4 w-12" />
+                            <Skeleton className="h-4 w-20" />
+                        </div>
+                        <Skeleton className="h-8 w-3/4" />
+                        <Skeleton className="h-4 w-full" />
+                        <div className="flex gap-4">
+                            <Skeleton className="h-4 w-24" />
+                            <Skeleton className="h-4 w-24" />
+                        </div>
+                    </div>
+                    <div className="p-6 md:border-l border-white/5 flex items-center gap-3 bg-dark-950/20">
+                        <Skeleton className="h-9 w-20" />
+                        <Skeleton className="h-9 w-9" />
+                    </div>
+                </div>
+            </Card>
+          ))}
+        </div>
+      ) : blogs.length === 0 ? (
+        <Card variant="glass" className="bg-dark-900/40 border-white/5 py-16 text-center">
             <div className="w-20 h-20 bg-dark-800 rounded-2xl flex items-center justify-center mx-auto mb-6">
                 <svg className="w-10 h-10 text-dark-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
@@ -99,7 +116,7 @@ export default function AdminBlogPage() {
       ) : (
         <div className="grid grid-cols-1 gap-4">
           {blogs.map((blog) => (
-            <Card key={blog.id} className="bg-dark-900/40 border-white/5 hover:border-primary-500/20 transition-all p-0 overflow-hidden group">
+            <Card key={blog.id} variant="glass" className="bg-dark-900/40 border-white/5 hover:border-primary-500/20 transition-all p-0 overflow-hidden group">
               <div className="flex flex-col md:flex-row items-stretch">
                 <div className="p-6 flex-1">
                   <div className="flex items-center gap-3 mb-3">

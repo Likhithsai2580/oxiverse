@@ -77,14 +77,24 @@ export default function AdminSidebar() {
   const pathname = usePathname()
 
   return (
-    <div className="flex flex-col w-64 h-screen bg-dark-950 border-r border-dark-800 fixed left-0 top-0 overflow-y-auto">
-      <div className="flex items-center justify-center h-16 border-b border-dark-800">
-        <Link href="/" className="text-xl font-bold text-white">
-          Oxiverse <span className="text-primary-500 font-medium">Admin</span>
+    <div className="flex flex-col w-64 h-screen bg-dark-950/80 backdrop-blur-xl border-r border-white/5 fixed left-0 top-0 overflow-y-auto z-50">
+      <div className="flex items-center px-6 h-20 border-b border-white/5">
+        <Link href="/" className="flex items-center gap-3 group">
+          <div className="w-8 h-8 bg-gradient-to-br from-primary-400 to-primary-600 rounded-lg flex items-center justify-center shadow-lg shadow-primary-500/20 group-hover:scale-110 transition-transform">
+            <svg className="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
+            </svg>
+          </div>
+          <span className="text-xl font-black text-white tracking-tighter uppercase italic">
+            Oxi<span className="text-primary-500 not-italic">verse</span>
+          </span>
         </Link>
       </div>
 
-      <nav className="flex-1 px-4 py-6 space-y-1">
+      <nav className="flex-1 px-4 py-8 space-y-2">
+        <div className="px-4 mb-4">
+            <p className="text-[10px] font-black text-dark-500 uppercase tracking-[0.2em]">Management</p>
+        </div>
         {navItems.map((item) => {
           const isActive = pathname.startsWith(item.href)
           return (
@@ -92,25 +102,28 @@ export default function AdminSidebar() {
               key={item.name}
               href={item.href}
               prefetch={false}
-              className={`flex items-center px-4 py-3 text-sm font-medium rounded-lg transition-all duration-200 ${
+              className={`flex items-center px-4 py-3 text-sm font-bold rounded-xl transition-all duration-300 group ${
                 isActive
-                  ? 'bg-primary-500/10 text-primary-400 border border-primary-500/20 shadow-[0_0_15px_-5px_rgba(var(--primary-500),0.1)]'
-                  : 'text-dark-400 hover:bg-dark-900 hover:text-white border border-transparent'
+                  ? 'bg-primary-500/10 text-primary-400 border border-primary-500/20 shadow-[0_0_20px_-5px_rgba(var(--primary-500),0.1)]'
+                  : 'text-dark-400 hover:bg-white/[0.03] hover:text-white border border-transparent'
               }`}
             >
-              <div className={`${isActive ? 'text-primary-400' : 'text-dark-500'} mr-3`}>
+              <div className={`${isActive ? 'text-primary-400' : 'text-dark-500 group-hover:text-white'} mr-3 transition-colors`}>
                 {item.icon}
               </div>
               {item.name}
+              {isActive && (
+                <div className="ml-auto w-1.5 h-1.5 rounded-full bg-primary-400 shadow-[0_0_8px_rgba(var(--primary-400),0.5)]" />
+              )}
             </Link>
           )
         })}
       </nav>
 
-      <div className="p-4 border-t border-dark-800 bg-dark-950">
+      <div className="p-4 border-t border-white/5 bg-dark-950/40">
         <button
           onClick={() => signOut({ callbackUrl: '/' })}
-          className="flex items-center w-full px-4 py-3 text-sm font-medium text-dark-400 rounded-lg hover:bg-dark-900 hover:text-white transition-all duration-200 group"
+          className="flex items-center w-full px-4 py-3 text-sm font-bold text-dark-400 rounded-xl hover:bg-red-500/5 hover:text-red-400 transition-all duration-300 group"
         >
           <svg className="w-5 h-5 mr-3 text-dark-500 group-hover:text-red-400 transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
