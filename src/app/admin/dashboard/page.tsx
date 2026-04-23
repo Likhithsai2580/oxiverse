@@ -53,11 +53,11 @@ export default async function AdminDashboardPage() {
   const [blogCount, researchCount, projectCount, posterCount, publishedBlogs, publishedResearch] = counts
 
   return (
-    <div className="p-8 pb-12 overflow-y-auto max-h-[calc(100vh-64px)] scrollbar-hide">
-      <div className="flex flex-col md:flex-row md:items-center justify-between mb-10">
+    <div className="p-4 md:p-8 pb-12 overflow-y-auto max-h-[calc(100vh-64px)] scrollbar-hide">
+      <div className="flex flex-col md:flex-row md:items-center justify-between mb-8 md:mb-10">
         <div>
-          <h1 className="text-4xl font-black font-display text-white mb-2 tracking-tight">Workspace</h1>
-          <p className="text-dark-400 font-medium">Welcome back, <span className="text-primary-400">{session.user.name || session.user.email}</span></p>
+          <h1 className="text-2xl md:text-4xl font-black font-display text-white mb-1 md:mb-2 tracking-tight">Workspace</h1>
+          <p className="text-xs md:text-sm text-dark-400 font-medium">Welcome back, <span className="text-primary-400">{session.user.name || session.user.email}</span></p>
         </div>
         <div className="flex gap-4 mt-6 md:mt-0">
           <Link href="/admin/blog/new">
@@ -247,15 +247,15 @@ export default async function AdminDashboardPage() {
       </div>
 
       {/* Quick Tips */}
-      <Card variant="glass" className="mt-12 p-6 bg-primary-500/5 border-white/5 flex flex-col md:flex-row items-center gap-6">
-        <div className="w-12 h-12 rounded-full bg-primary-500/20 flex items-center justify-center flex-shrink-0 border border-primary-500/20 shadow-glow">
-          <svg className="w-6 h-6 text-primary-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <Card variant="glass" className="mt-8 md:mt-12 p-4 md:p-6 bg-primary-500/5 border-white/5 flex flex-col md:flex-row items-center gap-4 md:gap-6">
+        <div className="w-10 h-10 md:w-12 md:h-12 rounded-full bg-primary-500/20 flex items-center justify-center flex-shrink-0 border border-primary-500/20 shadow-glow">
+          <svg className="w-5 h-5 md:w-6 md:h-6 text-primary-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
           </svg>
         </div>
-        <div className="flex-1">
-          <h4 className="text-lg font-bold text-white mb-1">Professional Management</h4>
-          <p className="text-sm text-dark-400 leading-relaxed">
+        <div className="flex-1 text-center md:text-left">
+          <h4 className="text-base md:text-lg font-bold text-white mb-1">Professional Management</h4>
+          <p className="text-xs md:text-sm text-dark-400 leading-relaxed">
             Use the PDF upload feature in the Blog Manager to automatically convert documentation into rich Markdown content.
             All media is now stored securely on the local server.
           </p>

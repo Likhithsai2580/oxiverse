@@ -3,6 +3,7 @@
 import { useState } from 'react'
 import { signIn } from 'next-auth/react'
 import { useRouter } from 'next/navigation'
+import Image from 'next/image'
 import { Button, Input, Card } from '@/components/ui'
 import { useToastContext } from '@/lib/providers/ToastProvider'
 import Spinner from '@/components/ui/Spinner'
@@ -44,6 +45,14 @@ export default function AdminLoginPage() {
     <div className="min-h-screen flex items-center justify-center px-4 bg-dark-950">
       <Card className="w-full max-w-md">
         <div className="text-center mb-8">
+          <div className="relative w-16 h-16 mx-auto mb-4">
+            <Image 
+              src="/favicon-256x256.png" 
+              alt="Oxiverse Logo" 
+              fill 
+              className="object-contain"
+            />
+          </div>
           <h1 className="text-3xl font-bold gradient-text mb-2">Oxiverse Admin</h1>
           <p className="text-dark-400">Sign in to manage your content</p>
         </div>

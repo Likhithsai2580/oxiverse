@@ -1,6 +1,7 @@
 'use client'
 
 import Link from 'next/link'
+import Image from 'next/image'
 import { usePathname } from 'next/navigation'
 import { signOut } from 'next-auth/react'
 
@@ -73,22 +74,35 @@ const navItems = [
   },
 ]
 
-export default function AdminSidebar() {
+export default function AdminSidebar({ onClose }: { onClose?: () => void }) {
   const pathname = usePathname()
 
   return (
-    <div className="flex flex-col w-64 h-screen bg-dark-950/80 backdrop-blur-xl border-r border-white/5 fixed left-0 top-0 overflow-y-auto z-50">
+    <div className="flex flex-col w-64 h-screen bg-dark-950/95 backdrop-blur-2xl border-r border-white/5 overflow-y-auto">
       <div className="flex items-center px-6 h-20 border-b border-white/5">
         <Link href="/" className="flex items-center gap-3 group">
-          <div className="w-8 h-8 bg-gradient-to-br from-primary-400 to-primary-600 rounded-lg flex items-center justify-center shadow-lg shadow-primary-500/20 group-hover:scale-110 transition-transform">
-            <svg className="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
-            </svg>
+          <div className="relative w-8 h-8 group-hover:scale-110 transition-transform">
+            <Image 
+              src="/favicon-256x256.png" 
+              alt="Oxiverse Logo" 
+              fill 
+              className="object-contain"
+            />
           </div>
           <span className="text-xl font-black text-white tracking-tighter uppercase italic">
             Oxi<span className="text-primary-500 not-italic">verse</span>
           </span>
         </Link>
+        {onClose && (
+          <button 
+            onClick={onClose}
+            className="lg:hidden ml-auto p-2 text-dark-400 hover:text-white"
+          >
+            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+            </svg>
+          </button>
+        )}
       </div>
 
       <nav className="flex-1 px-4 py-8 space-y-2">
@@ -102,6 +116,7 @@ export default function AdminSidebar() {
               key={item.name}
               href={item.href}
               prefetch={false}
+              onClick={() => onClose?.()}
               className={`flex items-center px-4 py-3 text-sm font-bold rounded-xl transition-all duration-300 group ${
                 isActive
                   ? 'bg-primary-500/10 text-primary-400 border border-primary-500/20 shadow-[0_0_20px_-5px_rgba(var(--primary-500),0.1)]'
