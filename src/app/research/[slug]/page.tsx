@@ -114,19 +114,19 @@ export default async function ResearchPaperPage({ params }: ResearchPaperPagePro
         '@type': 'ListItem',
         position: 1,
         name: 'Home',
-        item: 'https://oxiverse.com'
+        item: 'https://www.oxiverse.com'
       },
       {
         '@type': 'ListItem',
         position: 2,
         name: 'Research',
-        item: 'https://oxiverse.com/research'
+        item: 'https://www.oxiverse.com/research'
       },
       {
         '@type': 'ListItem',
         position: 3,
         name: paper.title,
-        item: `https://oxiverse.com/research/${params.slug}`
+        item: `https://www.oxiverse.com/research/${params.slug}`
       }
     ]
   }
@@ -144,20 +144,20 @@ export default async function ResearchPaperPage({ params }: ResearchPaperPagePro
     author: {
       '@type': 'Person',
       name: (paper.author as any).name || (paper.author as any).email,
-      url: `https://oxiverse.com/authors/${(paper.author as any).name?.toLowerCase().replace(/\s+/g, '-') || 'admin'}`
+      url: `https://www.oxiverse.com/authors/${(paper.author as any).name?.toLowerCase().replace(/\s+/g, '-') || 'admin'}`
     },
     publisher: {
       '@type': 'Organization',
       name: 'Oxiverse',
       logo: {
         '@type': 'ImageObject',
-        url: 'https://oxiverse.com/favicon-256x256.png'
+        url: 'https://www.oxiverse.com/favicon-256x256.png'
       },
-      url: 'https://oxiverse.com'
+      url: 'https://www.oxiverse.com'
     },
     mainEntityOfPage: {
       '@type': 'WebPage',
-      '@id': `https://oxiverse.com/research/${params.slug}`
+      '@id': `https://www.oxiverse.com/research/${params.slug}`
     },
     keywords: 'privacy, technology research, decentralized search, algorithmic transparency'
   }

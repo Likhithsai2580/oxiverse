@@ -1,8 +1,8 @@
 export const siteConfig = {
   name: "Oxiverse",
   description: "The next generation of privacy-first infrastructure. A secure, decentralized ecosystem for pioneers of the open internet.",
-  url: "https://oxiverse.com",
-  ogImage: "https://oxiverse.com/og.jpg",
+  url: "https://www.oxiverse.com",
+  ogImage: "https://www.oxiverse.com/og.jpg",
   links: {
     codeberg: "https://codeberg.org/oxiverse",
     search: "https://search.oxiverse.com",

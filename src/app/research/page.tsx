@@ -20,7 +20,7 @@ const jsonLd = {
     name: 'Oxiverse',
     logo: {
       '@type': 'ImageObject',
-      url: 'https://oxiverse.com/favicon-256x256.png'
+      url: 'https://www.oxiverse.com/favicon-256x256.png'
     }
   }
 }
@@ -36,7 +36,7 @@ export const metadata: Metadata = {
     title: 'Research - Oxiverse',
     description: 'Research papers and publications from the Oxiverse team',
     type: 'website',
-    url: 'https://oxiverse.com/research',
+    url: 'https://www.oxiverse.com/research',
   },
 }
 

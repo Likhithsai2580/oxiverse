@@ -20,7 +20,7 @@ const jsonLd = {
     name: 'Oxiverse',
     logo: {
       '@type': 'ImageObject',
-      url: 'https://oxiverse.com/favicon-256x256.png'
+      url: 'https://www.oxiverse.com/favicon-256x256.png'
     }
   }
 }
@@ -36,7 +36,7 @@ export const metadata: Metadata = {
     title: 'Blog - Oxiverse',
     description: 'Latest updates, tutorials, and insights from the Oxiverse team',
     type: 'website',
-    url: 'https://oxiverse.com/blog',
+    url: 'https://www.oxiverse.com/blog',
   },
 }
 

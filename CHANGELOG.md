@@ -8,7 +8,7 @@ All notable changes to the Oxiverse project will be documented in this file.
 - Fixed syntax error in admin ecosystem edit page due to mismatched div tags.
 - Fixed invalid default import for Prisma Client in `sitemap.ts`.
 - Resolved build failure in admin research edit page caused by redundant closing div tags.
-- Fixed "Alternative page with proper canonical tag" SEO issue by removing global canonical override in root layout.
+- Resolved "Page with redirect" SEO indexing issue by unifying primary domain to `https://www.oxiverse.com` across all metadata, sitemaps, and canonical tags, aligning the codebase with hosting-level redirects.
 - Corrected hero button labels and links to dynamically pull from central site configuration.
 
 ### Changed
