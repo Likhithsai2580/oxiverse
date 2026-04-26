@@ -4,56 +4,45 @@ import React, { useState, useRef } from 'react'
 import Section from '@/components/ui/Section'
 import { motion, AnimatePresence, useScroll, useSpring, useTransform } from 'framer-motion'
 
-const roadmapPhases = [
-  {
-    phase: 'Phase 1', title: 'Foundation & Core Search', status: 'current',
-    items: [
-      { text: 'Privacy-first search engine', status: 'done' },
-      { text: 'Intent extraction system', status: 'done' },
-      { text: 'Go crawler with BadgerDB', status: 'done' },
-      { text: 'Qdrant vector search integration', status: 'done' },
-      { text: 'Redis caching layer (11x faster)', status: 'done' },
-      { text: 'SearXNG integration', status: 'done' },
-      { text: 'Basic analytics dashboard', status: 'done' },
-      { text: 'Fraud detection system', status: 'done' },
-      { text: 'A/B testing framework', status: 'pending' },
-      { text: 'Advanced consent management', status: 'pending' },
-      { text: 'Real-time WebSocket metrics', status: 'pending' },
-    ],
-  },
-  {
-    phase: 'Phase 2', title: 'Ecosystem Expansion', status: 'upcoming',
-    items: [
-      { text: 'Oxiverse Browser (Chromium-based)', status: 'pending' },
-      { text: 'Download Manager with cloud sync', status: 'pending' },
-      { text: 'GSuite alternative (Docs, Sheets, Slides)', status: 'pending' },
-      { text: 'Encrypted Mail service', status: 'pending' },
-      { text: 'Cross-platform mobile apps', status: 'pending' },
-      { text: 'Browser extension suite', status: 'pending' },
-      { text: 'API marketplace for developers', status: 'pending' },
-    ],
-  },
-  {
-    phase: 'Phase 3', title: 'Future Vision', status: 'future',
-    items: [
-      { text: 'Decentralized identity system', status: 'pending' },
-      { text: 'AI-powered research assistant', status: 'pending' },
-      { text: 'Collaborative workspace platform', status: 'pending' },
-      { text: 'Open source app store', status: 'pending' },
-      { text: 'Blockchain-based rewards', status: 'pending' },
-    ],
-  },
-]
+// Data is now fetched from /api/roadmap
+interface RoadmapItem {
+  text: string
+  status: 'done' | 'pending'
+}
+
+interface RoadmapPhase {
+  phase: string
+  title: string
+  status: 'current' | 'upcoming' | 'future'
+  isLocked: boolean
+  blurIntensity: number
+  items: RoadmapItem[]
+}
 
 export default function Roadmap() {
+  const [phases, setPhases] = React.useState<RoadmapPhase[]>([])
   const [expandedPhase, setExpandedPhase] = useState<number | null>(0)
+  const [loading, setLoading] = React.useState(true)
+
+  React.useEffect(() => {
+    fetch('/api/roadmap')
+      .then(res => res.json())
+      .then(data => {
+        setPhases(data)
+        setLoading(false)
+      })
+      .catch(err => {
+        console.error('Failed to fetch roadmap:', err)
+        setLoading(false)
+      })
+  }, [])
   const containerRef = useRef<HTMLDivElement>(null)
 
   const { scrollYProgress } = useScroll({ target: containerRef, offset: ["start end", "end center"] })
   const scaleY = useSpring(scrollYProgress, { stiffness: 100, damping: 30, restDelta: 0.001 })
 
   const togglePhase = (index: number) => {
-    if (index === 2) return
+    if (phases[index]?.isLocked) return
     setExpandedPhase(expandedPhase === index ? null : index)
   }
 
@@ -70,11 +59,16 @@ export default function Roadmap() {
       </div>
 
       <div ref={containerRef} className="space-y-4 max-w-4xl mx-auto px-4 md:px-8 relative">
-        {roadmapPhases.map((phaseData, index) => (
+        {loading ? (
+          <div className="text-center py-12">
+            <div className="inline-block w-8 h-8 border-4 border-accent-300 border-t-transparent rounded-full animate-spin"></div>
+            <p className="mt-4 font-mono text-xs text-primary-400 uppercase tracking-widest">Loading Roadmap Data...</p>
+          </div>
+        ) : phases.map((phaseData, index) => (
           <div key={phaseData.phase} className="relative group">
             <button
               onClick={() => togglePhase(index)}
-              className={`w-full text-left retro-box p-0 overflow-hidden ${index === 2 ? 'opacity-60 cursor-not-allowed' : 'cursor-pointer'}`}
+              className={`w-full text-left retro-box p-0 overflow-hidden ${phaseData.isLocked ? 'opacity-60 cursor-not-allowed' : 'cursor-pointer'}`}
             >
               <div className={`retro-header-bar ${phaseData.status === 'current' ? '!bg-accent-300 !text-primary-950' : ''}`}>
                 <span>{phaseData.phase.toUpperCase()}: {phaseData.title.toUpperCase()}</span>
@@ -82,7 +76,7 @@ export default function Roadmap() {
                   <span className="font-mono text-[10px]">
                     {phaseData.items.filter(i => i.status === 'done').length}/{phaseData.items.length}
                   </span>
-                  {index !== 2 && (
+                  {!phaseData.isLocked && (
                     <motion.span
                       animate={{ rotate: expandedPhase === index ? 180 : 0 }}
                       className="inline-block"
@@ -110,7 +104,7 @@ export default function Roadmap() {
             </button>
 
             <AnimatePresence>
-              {expandedPhase === index && index !== 2 && (
+              {expandedPhase === index && !phaseData.isLocked && (
                 <motion.div
                   initial={{ height: 0, opacity: 0 }}
                   animate={{ height: 'auto', opacity: 1 }}
@@ -146,9 +140,12 @@ export default function Roadmap() {
               )}
             </AnimatePresence>
 
-            {index === 2 && (
+            {phaseData.isLocked && (
               <div className="relative">
-                <div className="blur-[4px] select-none pointer-events-none opacity-30">
+                <div 
+                  className="select-none pointer-events-none opacity-30 transition-all"
+                  style={{ filter: `blur(${phaseData.blurIntensity || 4}px)` }}
+                >
                   <div className="border-2 border-t-0 border-primary-50 bg-primary-900 p-6">
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
                       {phaseData.items.map((_, i) => (

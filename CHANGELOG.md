@@ -3,6 +3,15 @@
 All notable changes to the Oxiverse project will be documented in this file.
 
 ## [Unreleased]
+### Added
+- Integrated Roadmap Manager into the Admin Portal, allowing real-time customization of project milestones.
+- Implemented file-based persistent storage for the Roadmap system to ensure data integrity and bypass Supabase dependency for this critical metadata.
+- Created `/api/roadmap` endpoint for managing roadmap state via the admin dashboard.
+
+### Changed
+- Redefined Phase 1 Roadmap objectives to focus on: Meta Search Engines, Intent Extraction, Brand Persistence, Caching, Local Indexing, and Affiliates.
+- Migrated hardcoded Roadmap data to a dynamic, API-driven architecture.
+
 ### Fixed
 - Resolved build failure in `Footer.tsx` caused by dangling syntax from a previous partial refactor.
 - Fixed syntax error in admin ecosystem edit page due to mismatched div tags.

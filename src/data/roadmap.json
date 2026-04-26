@@ -1,0 +1,118 @@
+[
+  {
+    "phase": "Phase 1",
+    "title": "Core Engine & Intelligence",
+    "status": "current",
+    "isLocked": false,
+    "blurIntensity": 0,
+    "items": [
+      {
+        "text": "Meta Search Engines",
+        "status": "done"
+      },
+      {
+        "text": "Intent Extraction",
+        "status": "done"
+      },
+      {
+        "text": "Brand Persistence",
+        "status": "pending"
+      },
+      {
+        "text": "Caching",
+        "status": "done"
+      },
+      {
+        "text": "Local Indexing",
+        "status": "pending"
+      },
+      {
+        "text": "Affiliates",
+        "status": "pending"
+      }
+    ]
+  },
+  {
+    "phase": "Phase 2",
+    "title": "Ecosystem Expansion",
+    "status": "upcoming",
+    "isLocked": false,
+    "blurIntensity": 0,
+    "items": [
+      {
+        "text": "Oxiverse Browser (Chromium-based)",
+        "status": "pending"
+      },
+      {
+        "text": "Download Manager with cloud sync",
+        "status": "pending"
+      },
+      {
+        "text": "GSuite alternative (Docs, Sheets, Slides)",
+        "status": "pending"
+      },
+      {
+        "text": "Encrypted Mail service",
+        "status": "pending"
+      },
+      {
+        "text": "Cross-platform mobile apps",
+        "status": "pending"
+      },
+      {
+        "text": "Browser extension suite",
+        "status": "pending"
+      },
+      {
+        "text": "API marketplace for developers",
+        "status": "pending"
+      }
+    ]
+  },
+  {
+    "phase": "Phase 3",
+    "title": "Future Vision",
+    "status": "future",
+    "isLocked": false,
+    "blurIntensity": 1,
+    "items": [
+      {
+        "text": "Decentralized identity system",
+        "status": "pending"
+      },
+      {
+        "text": "AI-powered research assistant",
+        "status": "pending"
+      },
+      {
+        "text": "Collaborative workspace platform",
+        "status": "pending"
+      },
+      {
+        "text": "Open source app store",
+        "status": "pending"
+      },
+      {
+        "text": "Blockchain-based rewards",
+        "status": "pending"
+      }
+    ]
+  },
+  {
+    "phase": "Phase 4",
+    "title": "Global Domination",
+    "status": "future",
+    "isLocked": true,
+    "blurIntensity": 8,
+    "items": [
+      {
+        "text": "Launch global nodes",
+        "status": "pending"
+      },
+      {
+        "text": "Expand to international markets",
+        "status": "pending"
+      }
+    ]
+  }
+]
