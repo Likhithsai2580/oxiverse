@@ -120,7 +120,7 @@ export default function Footer() {
           <div className="flex space-x-6">
             <Link href="/privacy" className="text-xs text-primary-500 hover:text-primary-300 transition-colors uppercase tracking-wider font-mono">Privacy Protocol</Link>
             <Link href="/terms" className="text-xs text-primary-500 hover:text-primary-300 transition-colors uppercase tracking-wider font-mono">Network Terms</Link>
-            <Link href="/license" className="text-xs text-primary-500 hover:text-primary-300 transition-colors uppercase tracking-wider font-mono">IECL License</Link>
+            <Link href="/license" className="text-xs text-primary-500 hover:text-primary-300 transition-colors uppercase tracking-wider font-mono">OCL License</Link>
           </div>
         </div>
       </div>

@@ -5,8 +5,8 @@ import Footer from '@/components/Footer'
 import LicenseContent from './LicenseContent'
 
 export const metadata: Metadata = {
-  title: 'IECL License | Oxiverse',
-  description: 'Intent Engine Community License (IECL) v1.0. Non-commercial open research and commercial licensing terms.',
+  title: 'OCL License | Oxiverse',
+  description: 'Oxiverse Community License (OCL) v1.0. Source-available, non-commercial use, and privacy-by-design requirements.',
 }
 
 export default function LicensePage() {

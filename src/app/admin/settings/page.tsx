@@ -1,7 +1,7 @@
 'use client';
 
-import { useEffect, useState } from 'react';
-import { Card, Button, Input, Spinner, Textarea } from '@/components/ui';
+import { useEffect, useState, useCallback } from 'react';
+import { Card, Button, Input, Textarea, Skeleton } from '@/components/ui';
 import { useToastContext } from '@/lib/providers/ToastProvider';
 
 interface Category {
@@ -32,13 +32,16 @@ export default function AdminSettingsPage() {
   }, []);
 
   const fetchData = async () => {
+    setIsLoading(true);
     try {
       const [catRes, tagRes] = await Promise.all([
         fetch('/api/admin/categories'),
         fetch('/api/admin/tags'),
       ]);
-      setCategories(await catRes.json());
-      setTags(await tagRes.json());
+      if (catRes.ok && tagRes.ok) {
+        setCategories(await catRes.json());
+        setTags(await tagRes.json());
+      }
     } catch (err) {
       error('Failed to load settings data');
     } finally {
@@ -56,7 +59,8 @@ export default function AdminSettingsPage() {
       });
       if (res.ok) {
         success('Category added');
-        setCategories([...categories, await res.json()]);
+        const data = await res.json();
+        setCategories(prev => [...prev, data]);
         setNewCat({ name: '', slug: '', description: '' });
       }
     } catch (err) {
@@ -74,7 +78,8 @@ export default function AdminSettingsPage() {
       });
       if (res.ok) {
         success('Tag added');
-        setTags([...tags, await res.json()]);
+        const data = await res.json();
+        setTags(prev => [...prev, data]);
         setNewTag({ name: '', slug: '' });
       }
     } catch (err) {
@@ -82,118 +87,160 @@ export default function AdminSettingsPage() {
     }
   };
 
-  if (isLoading) return <div className="p-8"><Spinner /></div>;
+  const handleDeleteCategory = async (id: string) => {
+    if (!confirm('Delete this category?')) return;
+    try {
+      const res = await fetch(`/api/admin/categories?id=${id}`, { method: 'DELETE' });
+      if (res.ok) {
+        success('Category deleted');
+        setCategories(prev => prev.filter(c => c.id !== id));
+      }
+    } catch (err) {
+      error('Delete failed');
+    }
+  };
+
+  const handleDeleteTag = async (id: string) => {
+    if (!confirm('Delete this tag?')) return;
+    try {
+      const res = await fetch(`/api/admin/tags?id=${id}`, { method: 'DELETE' });
+      if (res.ok) {
+        success('Tag deleted');
+        setTags(prev => prev.filter(t => t.id !== id));
+      }
+    } catch (err) {
+      error('Delete failed');
+    }
+  };
 
   return (
-    <div className="p-8">
-      <h1 className="text-3xl font-bold text-white mb-8">System Settings</h1>
+    <div className="p-8 pb-20 max-w-7xl mx-auto">
+      <div className="mb-10">
+        <h1 className="text-4xl font-black text-white mb-2 font-display tracking-tight">System Core</h1>
+        <p className="text-dark-400">Configure taxonomy and global ecosystem parameters.</p>
+      </div>
 
-      <div className="flex gap-4 mb-8 border-b border-dark-800 pb-px">
+      <div className="flex gap-2 mb-10 p-1 bg-dark-900/60 backdrop-blur-xl border border-white/5 rounded-2xl w-fit">
         <button
           onClick={() => setActiveTab('categories')}
-          className={`px-4 py-2 text-sm font-medium transition-colors border-b-2 ${
-            activeTab === 'categories' ? 'text-primary-400 border-primary-500' : 'text-dark-500 border-transparent hover:text-dark-300'
+          className={`px-6 py-2.5 text-xs font-black uppercase tracking-[0.2em] transition-all rounded-xl ${
+            activeTab === 'categories' 
+              ? 'bg-primary-500 text-white shadow-[0_0_20px_rgba(14,165,233,0.4)]' 
+              : 'text-dark-500 hover:text-white'
           }`}
         >
           Categories
         </button>
         <button
           onClick={() => setActiveTab('tags')}
-          className={`px-4 py-2 text-sm font-medium transition-colors border-b-2 ${
-            activeTab === 'tags' ? 'text-primary-400 border-primary-500' : 'text-dark-500 border-transparent hover:text-dark-300'
+          className={`px-6 py-2.5 text-xs font-black uppercase tracking-[0.2em] transition-all rounded-xl ${
+            activeTab === 'tags' 
+              ? 'bg-primary-500 text-white shadow-[0_0_20px_rgba(14,165,233,0.4)]' 
+              : 'text-dark-500 hover:text-white'
           }`}
         >
           Tags
         </button>
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-10">
         {/* Management Form */}
-        <div className="lg:col-span-1">
-          {activeTab === 'categories' ? (
-            <Card>
-              <h3 className="text-lg font-bold text-white mb-6">Add Category</h3>
-              <form onSubmit={handleAddCategory} className="space-y-4">
+        <div className="lg:col-span-4">
+          <Card variant="glass" className="bg-dark-900/40 border-white/5 p-8 sticky top-8">
+            <h3 className="text-xl font-bold text-white mb-6 flex items-center gap-2">
+                <span className="w-1.5 h-6 bg-primary-500 rounded-full" />
+                Initialize {activeTab === 'categories' ? 'Category' : 'Tag'}
+            </h3>
+            {activeTab === 'categories' ? (
+              <form onSubmit={handleAddCategory} className="space-y-6">
                 <Input
-                  label="Name"
+                  label="Display Name"
                   value={newCat.name}
                   onChange={(e) => setNewCat({ ...newCat, name: e.target.value })}
-                  placeholder="e.g. Technology"
+                  placeholder="e.g. Quantum Computing"
                   required
                 />
                 <Input
-                  label="Slug"
+                  label="URL Slug"
                   value={newCat.slug}
                   onChange={(e) => setNewCat({ ...newCat, slug: e.target.value })}
-                  placeholder="technology"
+                  placeholder="quantum-computing"
                   required
                 />
                 <Textarea
-                  label="Description"
+                  label="System Description"
                   value={newCat.description}
                   onChange={(e) => setNewCat({ ...newCat, description: e.target.value })}
-                  placeholder="General technology news..."
+                  placeholder="Technical papers regarding quantum state..."
+                  rows={4}
                 />
-                <Button type="submit" variant="primary" className="w-full">Create Category</Button>
+                <Button type="submit" variant="primary" className="w-full shadow-lg shadow-primary-500/20">Commit Category</Button>
               </form>
-            </Card>
-          ) : (
-            <Card>
-              <h3 className="text-lg font-bold text-white mb-6">Add Tag</h3>
-              <form onSubmit={handleAddTag} className="space-y-4">
+            ) : (
+              <form onSubmit={handleAddTag} className="space-y-6">
                 <Input
-                  label="Name"
+                  label="Identifier"
                   value={newTag.name}
                   onChange={(e) => setNewTag({ ...newTag, name: e.target.value })}
                   placeholder="e.g. artificial-intelligence"
                   required
                 />
                 <Input
-                  label="Slug"
+                  label="Index Slug"
                   value={newTag.slug}
                   onChange={(e) => setNewTag({ ...newTag, slug: e.target.value })}
                   placeholder="ai"
                   required
                 />
-                <Button type="submit" variant="primary" className="w-full">Create Tag</Button>
+                <Button type="submit" variant="primary" className="w-full shadow-lg shadow-primary-500/20">Register Tag</Button>
               </form>
-            </Card>
-          )}
+            )}
+          </Card>
         </div>
 
         {/* Display Table */}
-        <div className="lg:col-span-2">
-          <Card className="overflow-hidden p-0">
-            <div className="p-6 border-b border-dark-800">
-               <h3 className="text-lg font-bold text-white">Existing {activeTab === 'categories' ? 'Categories' : 'Tags'}</h3>
+        <div className="lg:col-span-8">
+          <Card variant="glass" className="overflow-hidden p-0 border-white/5 bg-dark-900/40">
+            <div className="p-8 border-b border-white/5 flex justify-between items-center bg-white/[0.02]">
+               <h3 className="text-xl font-bold text-white">Active {activeTab === 'categories' ? 'Taxonomy' : 'Index'}</h3>
+               <span className="text-[10px] font-black text-primary-400 bg-primary-500/10 px-2 py-1 rounded uppercase tracking-widest border border-primary-500/20">
+                {activeTab === 'categories' ? categories.length : tags.length} Nodes
+               </span>
             </div>
             <div className="overflow-x-auto">
               <table className="w-full text-left">
-                <thead className="bg-dark-950 text-[10px] font-black uppercase tracking-widest text-dark-500 border-b border-dark-800">
+                <thead className="bg-dark-950/40 text-[10px] font-black uppercase tracking-[0.2em] text-dark-500 border-b border-white/5">
                   <tr>
-                    <th className="px-6 py-4">Name</th>
-                    <th className="px-6 py-4">Slug</th>
-                    <th className="px-6 py-4">Actions</th>
+                    <th className="px-8 py-5">System Name</th>
+                    <th className="px-8 py-5">Routing Identifier</th>
+                    <th className="px-8 py-5 text-right">Operations</th>
                   </tr>
                 </thead>
-                <tbody className="divide-y divide-dark-800 text-sm">
-                  {activeTab === 'categories' ? categories.map(cat => (
-                    <tr key={cat.id} className="hover:bg-white/[0.02]">
-                      <td className="px-6 py-4 text-white font-medium">{cat.name}</td>
-                      <td className="px-6 py-4 text-dark-400 font-mono">{cat.slug}</td>
-                      <td className="px-6 py-4">
-                        <button className="text-red-400 hover:text-red-300 transition-colors">Delete</button>
-                      </td>
-                    </tr>
-                  )) : tags.map(tag => (
-                    <tr key={tag.id} className="hover:bg-white/[0.02]">
-                      <td className="px-6 py-4 text-white font-medium">{tag.name}</td>
-                      <td className="px-6 py-4 text-dark-400 font-mono">{tag.slug}</td>
-                      <td className="px-6 py-4">
-                         <button className="text-red-400 hover:text-red-300 transition-colors">Delete</button>
-                      </td>
-                    </tr>
-                  ))}
+                <tbody className="divide-y divide-white/5 text-sm">
+                  {isLoading ? (
+                    Array.from({ length: 5 }).map((_, i) => (
+                      <tr key={i}>
+                        <td className="px-8 py-6"><Skeleton className="h-5 w-32" /></td>
+                        <td className="px-8 py-6"><Skeleton className="h-5 w-24" /></td>
+                        <td className="px-8 py-6 text-right"><Skeleton className="h-8 w-16 ml-auto" /></td>
+                      </tr>
+                    ))
+                  ) : (
+                    (activeTab === 'categories' ? categories : tags).map((item: any) => (
+                      <tr key={item.id} className="hover:bg-white/[0.03] transition-colors group">
+                        <td className="px-8 py-6 text-white font-bold">{item.name}</td>
+                        <td className="px-8 py-6 text-dark-400 font-mono text-xs">{item.slug}</td>
+                        <td className="px-8 py-6 text-right">
+                          <button 
+                            onClick={() => activeTab === 'categories' ? handleDeleteCategory(item.id) : handleDeleteTag(item.id)}
+                            className="text-[10px] font-black uppercase tracking-widest text-dark-500 hover:text-red-400 transition-all opacity-0 group-hover:opacity-100"
+                          >
+                            Purge
+                          </button>
+                        </td>
+                      </tr>
+                    ))
+                  )}
                 </tbody>
               </table>
             </div>
@@ -203,3 +250,4 @@ export default function AdminSettingsPage() {
     </div>
   );
 }
+

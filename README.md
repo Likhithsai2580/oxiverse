@@ -291,7 +291,7 @@ This is a personal project, but feel free to open issues or submit PRs!
 
 ## 📄 License
 
-Intent Engine Community License (IECL) v1.0 - see [LICENSE](https://codeberg.org/itxLikhith/intent-engine/blob/master/LICENSE) for details
+Oxiverse Community License (OCL) v1.0 - see [LICENSE](LICENSE) for details
 
 ---
 

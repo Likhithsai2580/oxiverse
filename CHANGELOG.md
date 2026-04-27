@@ -7,6 +7,15 @@ All notable changes to the Oxiverse project will be documented in this file.
 - Integrated Roadmap Manager into the Admin Portal, allowing real-time customization of project milestones.
 - Implemented file-based persistent storage for the Roadmap system to ensure data integrity and bypass Supabase dependency for this critical metadata.
 - Created `/api/roadmap` endpoint for managing roadmap state via the admin dashboard.
+- Migrated project license from IECL v1.0 to **Oxiverse Community License (OCL) v1.0**, introducing strict Privacy-by-Design requirements and updated commercial terms.
+
+### Optimized
+- Enhanced Admin Portal performance by enabling Next.js prefetching for all sidebar navigation links, ensuring instantaneous page transitions.
+- Optimized the Roadmap Manager with memoized sub-components and `useCallback` hooks, preventing redundant re-renders in the interactive editor.
+- Implemented Skeleton loaders across Roadmap, Ecosystem, and Settings pages to improve perceived performance and eliminate layout shifts during data fetching.
+- Improved Largest Contentful Paint (LCP) for the admin dashboard by setting priority loading on core brand assets.
+- Refactored state management in Settings and Roadmap managers for snappier UI interactions and more efficient reconciliation.
+
 
 ### Changed
 - Redefined Phase 1 Roadmap objectives to focus on: Meta Search Engines, Intent Extraction, Brand Persistence, Caching, Local Indexing, and Affiliates.

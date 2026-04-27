@@ -95,6 +95,7 @@ export default function AdminSidebar({ onClose }: { onClose?: () => void }) {
               src="/favicon-256x256.png" 
               alt="Oxiverse Logo" 
               fill 
+              priority
               className="object-contain"
             />
           </div>
@@ -124,7 +125,6 @@ export default function AdminSidebar({ onClose }: { onClose?: () => void }) {
             <Link
               key={item.name}
               href={item.href}
-              prefetch={false}
               onClick={() => onClose?.()}
               className={`flex items-center px-4 py-3 text-sm font-bold rounded-xl transition-all duration-300 group ${
                 isActive

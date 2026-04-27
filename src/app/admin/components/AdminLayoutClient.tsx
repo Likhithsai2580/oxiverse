@@ -27,6 +27,7 @@ export default function AdminLayoutClient({
               src="/favicon-256x256.png" 
               alt="Oxiverse Logo" 
               fill 
+              priority
               className="object-contain"
             />
           </div>
