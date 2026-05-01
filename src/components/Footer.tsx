@@ -33,6 +33,7 @@ const community: FooterLink[] = [
   { name: 'Dev Discussions', href: 'https://codeberg.org/oxiverse/intentforge/discussions' },
   { name: 'Open Issues', href: 'https://codeberg.org/oxiverse/intentforge/issues/new' },
   { name: 'Contribution Guide', href: 'https://codeberg.org/oxiverse/intentforge/src/branch/main/CONTRIBUTING.md' },
+  { name: 'Join as Co-founder', href: '/cofounder' },
 ]
 
 export default function Footer() {

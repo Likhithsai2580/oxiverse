@@ -4,6 +4,7 @@ All notable changes to the Oxiverse project will be documented in this file.
 
 ## [Unreleased]
 ### Added
+- Created `/cofounder` page outlining the vision, core non-negotiable principles (privacy focus, source available), and procedure for onboarding a new co-founder.
 - Integrated Roadmap Manager into the Admin Portal, allowing real-time customization of project milestones.
 - Implemented file-based persistent storage for the Roadmap system to ensure data integrity and bypass Supabase dependency for this critical metadata.
 - Created `/api/roadmap` endpoint for managing roadmap state via the admin dashboard.

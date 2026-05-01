@@ -143,6 +143,7 @@ prisma/
 - ✅ Landing page with Hero, Features, Use Cases, Roadmap sections
 - ✅ Blog listing and detail pages with SEO
 - ✅ Research papers listing and detail pages
+- ✅ Co-founder page for onboarding potential partners
 - ✅ Responsive design with dark theme
 
 ### Admin Dashboard
