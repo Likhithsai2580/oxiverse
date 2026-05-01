@@ -15,12 +15,14 @@ const About = lazyLoad(() => import('@/app/(sections)/About'), { loading: Sectio
 const Newsletter = lazyLoad(() => import('@/app/(sections)/Newsletter'), { loading: SectionSkeleton })
 const Contact = lazyLoad(() => import('@/app/(sections)/Contact'), { loading: SectionSkeleton })
 import Footer from '@/components/Footer'
+import AnnouncementBanner from '@/components/AnnouncementBanner'
 
 export const revalidate = 3600 // Revalidate every hour
 
 export default function Home() {
   return (
     <main className="min-h-screen bg-transparent">
+      <AnnouncementBanner />
       <Navigation />
       <Hero />
       <Features />

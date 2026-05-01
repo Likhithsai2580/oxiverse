@@ -77,7 +77,7 @@ export default function CofounderContent() {
             <ol className="list-decimal marker:text-accent-300 pl-6 mb-6">
               <li className="mb-2"><strong>The Trial Month:</strong> We work together on the project for about 1 month. This helps us understand our dynamics, communication, and work ethics.</li>
               <li className="mb-2"><strong>The Equity Discussion:</strong> After a successful month, we will sit down and have an open discussion about equity distribution.</li>
-              <li className="mb-2"><strong>The Contract:</strong> We will then draft and sign a formal contract for a 1.5-year vesting schedule for the agreed equity.</li>
+              <li className="mb-2"><strong>The Contract:</strong> We will then draft and sign a formal contract featuring a standard startup equity structure: <strong>4 years total vesting</strong>, with a <strong>1-year cliff</strong>, followed by <strong>monthly vesting</strong>.</li>
             </ol>
           </section>
 

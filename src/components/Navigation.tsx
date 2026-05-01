@@ -43,9 +43,10 @@ export default function Navigation() {
   return (
     <motion.nav
       initial={false}
+      style={{ top: 'var(--banner-height, 0px)' }}
       animate={{ paddingTop: isScrolled ? "0.5rem" : "1rem", paddingBottom: isScrolled ? "0.5rem" : "1rem" }}
       transition={{ type: "spring", stiffness: 300, damping: 30 }}
-      className="fixed top-0 left-0 right-0 z-50 px-4 pointer-events-none"
+      className="fixed left-0 right-0 z-50 px-4 pointer-events-none transition-[top] duration-300"
     >
       <motion.div
         animate={{
