@@ -36,7 +36,7 @@ export default function Features() {
           <div className="inline-block border-2 border-primary-50 px-3 py-1 mb-6 bg-primary-950">
             <span className="font-mono text-xs uppercase tracking-widest font-bold text-accent-300">The Core</span>
           </div>
-          <h2 className="font-display text-[3rem] md:text-[4.5rem] leading-[0.85] text-primary-50 tracking-tighter font-bold uppercase">
+          <h2 className="font-display text-[clamp(2rem,9vw,3rem)] md:text-[4.5rem] leading-[0.85] text-primary-50 tracking-tighter font-bold uppercase break-words sm:break-normal">
             An Uncompromising<br />
             <span className="text-accent-300">Ecosystem.</span>
           </h2>
