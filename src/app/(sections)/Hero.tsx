@@ -14,7 +14,7 @@ export default function Hero() {
   }, [])
 
   return (
-    <section id="home" className="relative min-h-screen flex items-center justify-center pt-24 overflow-hidden bg-primary-800 retro-bg">
+    <section id="home" className="relative min-h-screen flex items-start sm:items-center justify-center pt-32 sm:pt-24 pb-12 overflow-hidden bg-primary-800 retro-bg">
       
       <div className="relative z-10 w-full max-w-screen-2xl mx-auto px-4 md:px-12 py-16 flex flex-col justify-center pointer-events-none">
         
