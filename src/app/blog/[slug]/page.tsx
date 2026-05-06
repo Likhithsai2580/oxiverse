@@ -9,6 +9,7 @@ import Footer from '@/components/Footer'
 import Image from 'next/image'
 import * as motion from 'framer-motion/client'
 import Link from 'next/link'
+import Mermaid from '@/components/Mermaid'
 
 export const revalidate = 60
 
@@ -77,6 +78,13 @@ const MarkdownComponents = {
       </span>
     );
   },
+  code: ({ node, className, children, ...props }: any) => {
+    const match = /language-(\w+)/.exec(className || '')
+    if (match && match[1] === 'mermaid') {
+      return <Mermaid chart={String(children).replace(/\n$/, '')} />
+    }
+    return <code className={className} {...props}>{children}</code>
+  }
 }
 
 export default async function BlogPostPage({ params }: BlogPostPageProps) {

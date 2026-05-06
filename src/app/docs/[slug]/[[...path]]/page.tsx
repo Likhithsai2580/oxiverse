@@ -9,6 +9,7 @@ import { prisma } from '@/lib/prisma'
 import Link from 'next/link'
 import fs from 'fs'
 import path from 'path'
+import Mermaid from '@/components/Mermaid'
 
 export const revalidate = 0 // Keep it dynamic to reflect filesystem changes instantly
 
@@ -419,6 +420,13 @@ export default async function ProjectDocsPage({ params }: PageProps) {
                               {props.children}
                             </Link>
                           )
+                        },
+                        code: ({ node, className, children, ...props }: any) => {
+                          const match = /language-(\w+)/.exec(className || '')
+                          if (match && match[1] === 'mermaid') {
+                            return <Mermaid chart={String(children).replace(/\n$/, '')} />
+                          }
+                          return <code className={className} {...props}>{children}</code>
                         }
                       }}
                     >

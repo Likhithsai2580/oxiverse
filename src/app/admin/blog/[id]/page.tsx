@@ -7,6 +7,7 @@ import { useToastContext } from '@/lib/providers/ToastProvider'
 import ReactMarkdown from 'react-markdown'
 import remarkGfm from 'remark-gfm'
 import AssetBrowser from '../../components/AssetBrowser'
+import Mermaid from '@/components/Mermaid'
 
 export default function AdminBlogEditPage() {
   const router = useRouter()
@@ -261,7 +262,18 @@ export default function AdminBlogEditPage() {
 
             {previewMode ? (
               <div className="prose prose-invert max-w-none min-h-[500px] p-6 bg-dark-950/50 rounded-2xl border border-white/5 shadow-inner">
-                <ReactMarkdown remarkPlugins={[remarkGfm]}>
+                <ReactMarkdown 
+                  remarkPlugins={[remarkGfm]}
+                  components={{
+                    code: ({ node, className, children, ...props }: any) => {
+                      const match = /language-(\w+)/.exec(className || '')
+                      if (match && match[1] === 'mermaid') {
+                        return <Mermaid chart={String(children).replace(/\n$/, '')} />
+                      }
+                      return <code className={className} {...props}>{children}</code>
+                    }
+                  }}
+                >
                   {formData.content || '*Draft summary goes here...*'}
                 </ReactMarkdown>
               </div>

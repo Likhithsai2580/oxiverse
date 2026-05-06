@@ -4,6 +4,7 @@ All notable changes to the Oxiverse project will be documented in this file.
 
 ## [Unreleased]
 ### Added
+- Integrated Mermaid.js rendering engine across all Markdown viewers (Documentation, Blog, Research, and Admin Previews) to support dynamic diagram generation.
 - Added a dynamic Announcement Banner to the top of the homepage, fully configurable (status, message, link, text) via a new "Announcements" section in the Admin Portal.
 - Created `/cofounder` page outlining the vision, core non-negotiable principles (privacy focus, source available), and procedure for onboarding a new co-founder.
 - Integrated Roadmap Manager into the Admin Portal, allowing real-time customization of project milestones.

@@ -8,6 +8,7 @@ import ReactMarkdown from 'react-markdown'
 import remarkGfm from 'remark-gfm'
 import Link from 'next/link'
 import AssetBrowser from '../../components/AssetBrowser'
+import Mermaid from '@/components/Mermaid'
 
 interface ResearchPaper {
   id: string
@@ -261,7 +262,18 @@ export default function AdminResearchEditPage() {
 
             {previewMode ? (
               <div className="prose prose-invert max-w-none min-h-[500px] p-6 bg-dark-950/50 rounded-2xl border border-white/5 shadow-inner">
-                <ReactMarkdown remarkPlugins={[remarkGfm]}>
+                <ReactMarkdown 
+                  remarkPlugins={[remarkGfm]}
+                  components={{
+                    code: ({ node, className, children, ...props }: any) => {
+                      const match = /language-(\w+)/.exec(className || '')
+                      if (match && match[1] === 'mermaid') {
+                        return <Mermaid chart={String(children).replace(/\n$/, '')} />
+                      }
+                      return <code className={className} {...props}>{children}</code>
+                    }
+                  }}
+                >
                   {formData.content || '*No content provided*'}
                 </ReactMarkdown>
               </div>
