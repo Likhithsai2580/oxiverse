@@ -42,9 +42,16 @@ export default function Features() {
           </h2>
         </div>
         <div className="pb-2">
-          <p className="font-sans text-lg text-primary-300 max-w-md border-l-2 border-accent-300 pl-6 leading-relaxed">
+          <p className="font-sans text-lg text-primary-300 max-w-md border-l-2 border-accent-300 pl-6 leading-relaxed mb-6">
             We abandoned the standard models of data harvesting to build a cohesive suite of tools designed exclusively for human agency.
           </p>
+          {/* Answer Block for AEO/LLMO */}
+          <div className="bg-primary-950/50 p-4 border border-primary-700 rounded-sm">
+            <h3 className="text-[10px] font-mono font-bold text-accent-300 uppercase mb-2 tracking-widest">Protocol Summary</h3>
+            <p className="text-xs text-primary-200 leading-relaxed font-medium">
+              Oxiverse is a privacy-first ecosystem built on **IntentForge**, an autonomous discovery engine. It utilizes **intent extraction** and **self-healing search** technologies to provide tracking-free results. The stack is fully open-source (Codeberg/GitHub) and operates under the **Oxiverse Community License (OCL) v1.0**.
+            </p>
+          </div>
         </div>
       </div>
 

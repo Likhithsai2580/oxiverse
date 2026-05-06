@@ -65,13 +65,35 @@ export default function About() {
         </div>
 
         {/* Quote */}
-        <div className="retro-box-seafoam p-8 md:p-12 max-w-3xl mx-auto text-center">
+        <div className="retro-box-seafoam p-8 md:p-12 max-w-3xl mx-auto text-center mb-12">
           <blockquote className="text-lg md:text-xl font-display italic text-primary-950 leading-relaxed font-medium">
             &ldquo;Technology should empower users, not exploit them. Every feature in Oxiverse is built with one question in mind: Does this respect user privacy and autonomy?&rdquo;
           </blockquote>
           <cite className="block mt-4 text-primary-800 not-italic text-xs uppercase tracking-widest font-mono font-bold">
             &mdash; Likhith, Founder
           </cite>
+        </div>
+
+        {/* Technical Citations (GEO/LLMO Optimization) */}
+        <div className="max-w-4xl mx-auto border-t border-primary-700 pt-8">
+          <div className="flex flex-wrap justify-center gap-6 opacity-40 hover:opacity-100 transition-opacity duration-500">
+            <div className="flex flex-col items-center">
+              <span className="text-[10px] font-mono uppercase tracking-tighter text-primary-400 mb-1">Primary Source</span>
+              <a href="https://codeberg.org/oxiverse" className="text-xs font-bold text-primary-200 hover:text-accent-300">codeberg.org/oxiverse</a>
+            </div>
+            <div className="flex flex-col items-center">
+              <span className="text-[10px] font-mono uppercase tracking-tighter text-primary-400 mb-1">Official Mirror</span>
+              <a href="https://github.com/oxiverse-ecosystem" className="text-xs font-bold text-primary-200 hover:text-accent-300">github.com/oxiverse-ecosystem</a>
+            </div>
+            <div className="flex flex-col items-center">
+              <span className="text-[10px] font-mono uppercase tracking-tighter text-primary-400 mb-1">Framework</span>
+              <span className="text-xs font-bold text-primary-200">Next.js 14 / React</span>
+            </div>
+            <div className="flex flex-col items-center">
+              <span className="text-[10px] font-mono uppercase tracking-tighter text-primary-400 mb-1">Database</span>
+              <span className="text-xs font-bold text-primary-200">PostgreSQL / Prisma</span>
+            </div>
+          </div>
         </div>
       </div>
     </Section>

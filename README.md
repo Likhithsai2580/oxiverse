@@ -284,9 +284,16 @@ All UI components are in `src/components/ui/`:
 
 ---
 
-## 🤝 Contributing
+## 🤝 Contributing & Mirror Notice
 
-This is a personal project, but feel free to open issues or submit PRs!
+> [!IMPORTANT]
+> The GitHub repository (`github.com/oxiverse-ecosystem`) is a **mirror** of the primary development repository at [codeberg.org/oxiverse](https://codeberg.org/oxiverse).
+
+To contribute to the project:
+1. **Issues & PRs:** Please create all issues and pull requests through **Codeberg**.
+2. **Primary Repository:** [codeberg.org/oxiverse](https://codeberg.org/oxiverse)
+
+This ensures all development remains within our privacy-focused infrastructure. Feel free to explore the code, but please direct all active contributions to Codeberg!
 
 ---
 

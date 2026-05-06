@@ -313,6 +313,10 @@ You now have a production-ready full-stack application with:
 - `DATABASE_SETUP.md` - Supabase instructions
 - `DEPLOYMENT.md` - Deployment guide
 
+### 🌐 Repository Info
+- **Primary Repo:** [codeberg.org/oxiverse](https://codeberg.org/oxiverse) (Use for Issues/PRs)
+- **Mirror:** [github.com/oxiverse-ecosystem](https://github.com/oxiverse-ecosystem)
+
 ---
 
 Built with ❤️ using Next.js, Supabase, Prisma, and Tailwind CSS

@@ -15,6 +15,7 @@ const Blog = lazyLoad(() => import('@/app/(sections)/Blog'), { loading: SectionS
 const About = lazyLoad(() => import('@/app/(sections)/About'), { loading: SectionSkeleton })
 const Newsletter = lazyLoad(() => import('@/app/(sections)/Newsletter'), { loading: SectionSkeleton })
 const Contact = lazyLoad(() => import('@/app/(sections)/Contact'), { loading: SectionSkeleton })
+const FAQ = lazyLoad(() => import('@/app/(sections)/FAQ'), { loading: SectionSkeleton })
 import Footer from '@/components/Footer'
 import AnnouncementBanner from '@/components/AnnouncementBanner'
 
@@ -39,6 +40,7 @@ export default function Home() {
       <Research />
       <Blog />
       <About />
+      <FAQ />
       <Newsletter />
       <Contact />
       <Footer />

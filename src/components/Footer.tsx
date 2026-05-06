@@ -111,12 +111,17 @@ export default function Footer() {
         </div>
 
         <div className="border-t-2 border-primary-700 mt-12 pt-8 flex flex-col md:flex-row items-center justify-between gap-4">
-          <div className="flex items-center gap-2 text-sm text-primary-500">
-            <span>&copy; {currentYear} Oxiverse. Built by</span>
-            <a href="https://codeberg.org/itxLikhith" target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 hover:text-accent-300 transition-colors">
-              <Image src="https://avatars.githubusercontent.com/u/254577690?v=4" alt="Likhith" width={20} height={20} className="rounded-full" />
-              <span>Likhith</span>
-            </a>
+          <div className="flex flex-col gap-1">
+            <div className="flex items-center gap-2 text-sm text-primary-500">
+              <span>&copy; {currentYear} Oxiverse. Built by</span>
+              <a href="https://codeberg.org/itxLikhith" target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 hover:text-accent-300 transition-colors">
+                <Image src="https://avatars.githubusercontent.com/u/254577690?v=4" alt="Likhith" width={20} height={20} className="rounded-full" />
+                <span>Likhith</span>
+              </a>
+            </div>
+            <p className="text-[10px] text-primary-600 font-mono uppercase tracking-tight">
+              GitHub is a mirror of <a href="https://codeberg.org/oxiverse" className="hover:text-accent-400 underline decoration-primary-700 underline-offset-2">Codeberg</a>. PRs & Issues through Codeberg only.
+            </p>
           </div>
           <div className="flex space-x-6">
             <Link href="/privacy" className="text-xs text-primary-500 hover:text-primary-300 transition-colors uppercase tracking-wider font-mono">Privacy Protocol</Link>

@@ -9,6 +9,11 @@ All notable changes to the Oxiverse project will be documented in this file.
 - Integrated Roadmap Manager into the Admin Portal, allowing real-time customization of project milestones.
 - Implemented file-based persistent storage for the Roadmap system to ensure data integrity and bypass Supabase dependency for this critical metadata.
 - Created `/api/roadmap` endpoint for managing roadmap state via the admin dashboard.
+### Changed
+- Implemented comprehensive **AEO (Answer Engine Optimization)**, **GEO (Generative Engine Optimization)**, and **LLMO (LLM Optimization)** protocols.
+- Enhanced JSON-LD with detailed `Organization`, `SoftwareApplication`, `SoftwareSourceCode`, and `FAQPage` schemas for maximum AI discoverability.
+- Added a high-density `AISpecs` section to the homepage to provide structured data for generative AI and search summaries.
+- Migrated primary development and contribution workflow to Codeberg; GitHub is now officially a mirror. Added mirror notices to `README.md` and `Footer`.
 - Migrated project license from IECL v1.0 to **Oxiverse Community License (OCL) v1.0**, introducing strict Privacy-by-Design requirements and updated commercial terms.
 
 ### Optimized
