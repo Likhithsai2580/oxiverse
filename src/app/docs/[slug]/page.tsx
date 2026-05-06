@@ -302,10 +302,51 @@ export default async function ProjectDocsPage({ params, searchParams }: PageProp
                   </div>
                   
                   <article className="markdown-body">
-                    <ReactMarkdown remarkPlugins={[remarkGfm]}>
+                    <ReactMarkdown 
+                      remarkPlugins={[remarkGfm]}
+                      components={{
+                        a: ({ node, ...props }) => {
+                          const href = props.href || ''
+                          const isInternal = href.startsWith('docs/') || href.endsWith('.md') || href.startsWith('./') || (!href.startsWith('http') && !href.startsWith('#'))
+                          
+                          if (isInternal) {
+                            // Clean up the path
+                            let cleanPath = href.replace(/^docs\//, '').replace(/^\.\//, '')
+                            // If it's just a folder name like 'reference', we might want to handle it, 
+                            // but for now let's assume it's a file or needs to be handled by the current logic
+                            
+                            return (
+                              <Link 
+                                href={`/docs/${project.slug}?path=${cleanPath}`}
+                                className="text-primary-400 hover:text-primary-300 underline underline-offset-4 decoration-primary-400/30 transition-all"
+                              >
+                                {props.children}
+                              </Link>
+                            )
+                          }
+                          
+                          return (
+                            <a 
+                              {...props} 
+                              target="_blank" 
+                              rel="noopener noreferrer" 
+                              className="text-primary-400 hover:text-primary-300 transition-colors inline-flex items-center gap-1"
+                            >
+                              {props.children}
+                              {!href.startsWith('#') && (
+                                <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                                </svg>
+                              )}
+                            </a>
+                          )
+                        }
+                      }}
+                    >
                       {fileData.content}
                     </ReactMarkdown>
                   </article>
+
                 </div>
               ) : (
                 <div className="relative z-10 text-center py-32">
