@@ -13,20 +13,50 @@ import path from 'path'
 export const revalidate = 0 // Keep it dynamic to reflect filesystem changes instantly
 
 interface PageProps {
-  params: { slug: string }
-  searchParams: { path?: string }
+  params: { slug: string, path?: string[] }
 }
 
-export async function generateMetadata({ params }: { params: { slug: string } }): Promise<Metadata> {
+export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
   const project = await prisma.project.findUnique({ where: { slug: params.slug } })
-  const title = project?.title || params.slug.charAt(0).toUpperCase() + params.slug.slice(1).replace(/-/g, ' ')
+  const currentPathSegments = params.path || []
+  let currentPath = currentPathSegments.join('/') || 'README.md'
   
+  // Attempt to fetch content for metadata extraction
+  let content = ''
+  const localFile = await getLocalFileContent(params.slug, currentPath)
+  if (localFile) {
+    content = localFile.content
+  } else if (project?.link) {
+    const remoteFile = await fetchCodebergContent(project.link, currentPath)
+    if (remoteFile) content = remoteFile.content
+  }
+
+  // Extract H1 for title
+  const h1Match = content.match(/^#\s+(.+)/m)
+  const pageTitle = h1Match ? h1Match[1] : currentPath.split('/').pop()?.replace('.md', '').replaceAll('-', ' ').replace(/^\w/, (c) => c.toUpperCase())
+  const projectTitle = project?.title || params.slug.charAt(0).toUpperCase() + params.slug.slice(1).replace(/-/g, ' ')
+  
+  // Extract first paragraph for description (clean markdown)
+  const description = content
+    .split('\n')
+    .find(line => line.trim().length > 40 && !line.startsWith('#') && !line.startsWith('!'))
+    ?.replace(/[#*`[\]]/g, '')
+    ?.slice(0, 160) || `Documentation for ${projectTitle} - ${pageTitle}`
+
+  const fullUrl = `/docs/${params.slug}${currentPathSegments.length > 0 ? '/' + currentPathSegments.join('/') : ''}`
+
   return {
-    title: `${title} Docs | Oxiverse`,
-    description: `Documentation for ${title}`,
+    title: `${pageTitle} | ${projectTitle} Docs`,
+    description: description,
     alternates: {
-      canonical: `/docs/${params.slug}`,
+      canonical: fullUrl,
     },
+    openGraph: {
+      title: `${pageTitle} | ${projectTitle} Docs`,
+      description: description,
+      type: 'article',
+      url: fullUrl,
+    }
   }
 }
 
@@ -65,10 +95,17 @@ async function getLocalDocs(slug: string) {
 async function getLocalFileContent(slug: string, filePath: string) {
   const docsDir = path.join(process.cwd(), 'docs', slug)
   
-  // Variants for the requested file
-  const variants = filePath.toLowerCase() === 'readme.md' 
-    ? ['README.md', 'readme.md', 'index.md', 'INDEX.md'] 
-    : [filePath]
+  let variants: string[] = []
+  if (filePath.toLowerCase() === 'readme.md' || filePath === '') {
+    variants = ['README.md', 'readme.md', 'index.md', 'INDEX.md']
+  } else {
+    const hasExtension = /\.[a-z0-9]+$/i.test(filePath)
+    if (hasExtension) {
+      variants = [filePath]
+    } else {
+      variants = [`${filePath}.md`, filePath]
+    }
+  }
 
   for (const variant of variants) {
     const fullPath = path.join(docsDir, variant)
@@ -93,10 +130,17 @@ async function fetchCodebergContent(repoUrl: string, filePath: string = 'README.
   const repoPath = normalizedUrl.replace('https://codeberg.org/', '').replace(/\/$/, '')
   const branches = ['main', 'master']
   
-  // Try with 'docs/' prefix first if it's not README.md, then try raw
-  const pathsToTry = filePath.toLowerCase() === 'readme.md' 
-    ? ['README.md', 'readme.md', 'README.markdown', 'readme.markdown']
-    : [`docs/${filePath}`, filePath]
+  let pathsToTry: string[] = []
+  if (filePath.toLowerCase() === 'readme.md' || filePath === '') {
+    pathsToTry = ['README.md', 'readme.md', 'README.markdown', 'readme.markdown']
+  } else {
+    const hasExtension = /\.[a-z0-9]+$/i.test(filePath)
+    if (hasExtension) {
+      pathsToTry = [`docs/${filePath}`, filePath]
+    } else {
+      pathsToTry = [`docs/${filePath}.md`, `docs/${filePath}`, `${filePath}.md`, filePath]
+    }
+  }
 
   for (const branch of branches) {
     for (const p of pathsToTry) {
@@ -115,7 +159,6 @@ async function fetchCodebergContent(repoUrl: string, filePath: string = 'README.
 
   return null
 }
-
 
 async function getCodebergFiles(repoUrl: string, dir: string = 'docs') {
     if (!repoUrl) return []
@@ -155,17 +198,14 @@ async function getCodebergFiles(repoUrl: string, dir: string = 'docs') {
     return []
 }
 
-export default async function ProjectDocsPage({ params, searchParams }: PageProps) {
+export default async function ProjectDocsPage({ params }: PageProps) {
   const dbProject = await prisma.project.findUnique({ where: { slug: params.slug } })
-  
-  // Check if we have local docs even if not in DB
   const localDocs = await getLocalDocs(params.slug)
   
   if (!dbProject && (!localDocs || localDocs.length === 0)) {
     notFound()
   }
 
-  // Create virtual project if missing from DB
   const project = dbProject || {
     title: params.slug.charAt(0).toUpperCase() + params.slug.slice(1).replace(/-/g, ' '),
     slug: params.slug,
@@ -173,19 +213,14 @@ export default async function ProjectDocsPage({ params, searchParams }: PageProp
     imageUrl: null
   }
 
-  const currentPath = searchParams.path || 'README.md'
+  const currentPathSegments = params.path || []
+  let currentPath = currentPathSegments.join('/') || 'README.md'
   
-  // Content Resolution Priority:
-  // 1. Local Filesystem
-  // 2. Codeberg Repository
   let fileData = await getLocalFileContent(params.slug, currentPath)
   if (!fileData && project.link) {
     fileData = await fetchCodebergContent(project.link, currentPath)
   }
 
-  // Sidebar File List Resolution:
-  // 1. Local Filesystem
-  // 2. Codeberg Repository (if no local files found)
   let docsFiles = localDocs
   let isLocal = !!(localDocs && localDocs.length > 0)
 
@@ -193,7 +228,6 @@ export default async function ProjectDocsPage({ params, searchParams }: PageProp
     docsFiles = await getCodebergFiles(project.link, 'docs')
   }
 
-  // Group files by directory
   const groups: Record<string, any[]> = {}
   docsFiles?.forEach((file: any) => {
     const groupName = file.group || 'General'
@@ -201,13 +235,42 @@ export default async function ProjectDocsPage({ params, searchParams }: PageProp
     groups[groupName].push(file)
   })
 
+  // Structured Data (JSON-LD)
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "TechArticle",
+    "headline": `${project.title} - ${currentPath.split('/').pop()?.replace('.md', '')}`,
+    "description": project.description || `Documentation for ${project.title}`,
+    "image": project.imageUrl,
+    "author": {
+      "@type": "Organization",
+      "name": "Oxiverse"
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "Oxiverse",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "https://www.oxiverse.com/logo.png"
+      }
+    },
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": `https://www.oxiverse.com/docs/${project.slug}${currentPathSegments.length > 0 ? '/' + currentPathSegments.join('/') : ''}`
+    }
+  }
+
   return (
     <main className="min-h-screen bg-transparent pt-20">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
       <Navigation />
+
       <Section id="docs-viewer" className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex flex-col lg:flex-row gap-8">
           
-          {/* Sidebar */}
           <aside className="lg:w-72 flex-shrink-0">
             <div className="sticky top-28 space-y-8">
               <div>
@@ -247,15 +310,19 @@ export default async function ProjectDocsPage({ params, searchParams }: PageProp
                     <div key={group} className="space-y-2">
                       <h3 className="px-3 text-[10px] font-bold text-dark-500 uppercase tracking-[0.2em] mb-2">{group.replace('-', ' ')}</h3>
                       <div className="space-y-1">
-                        {files.filter(f => f.name.toLowerCase() !== 'readme.md' && f.name.toLowerCase() !== 'index.md').map((file) => (
-                          <Link 
-                            key={file.path}
-                            href={`/docs/${project.slug}?path=${file.path}`}
-                            className={`block px-3 py-2 rounded-lg text-sm transition-all border ${currentPath === file.path ? 'bg-primary-500/10 text-primary-400 font-bold border-primary-500/20' : 'text-dark-400 hover:text-white hover:bg-white/5 border-transparent'}`}
-                          >
-                            {file.name.replace('.md', '').replaceAll('-', ' ').replaceAll('_', ' ').replace(/^\w/, (c: string) => c.toUpperCase())}
-                          </Link>
-                        ))}
+                        {files.filter(f => f.name.toLowerCase() !== 'readme.md' && f.name.toLowerCase() !== 'index.md').map((file) => {
+                          const fileLinkPath = file.path.replace('.md', '')
+                          const isActive = currentPath === file.path || currentPath === fileLinkPath
+                          return (
+                            <Link 
+                              key={file.path}
+                              href={`/docs/${project.slug}/${fileLinkPath}`}
+                              className={`block px-3 py-2 rounded-lg text-sm transition-all border ${isActive ? 'bg-primary-500/10 text-primary-400 font-bold border-primary-500/20' : 'text-dark-400 hover:text-white hover:bg-white/5 border-transparent'}`}
+                            >
+                              {file.name.replace('.md', '').replaceAll('-', ' ').replaceAll('_', ' ').replace(/^\w/, (c: string) => c.toUpperCase())}
+                            </Link>
+                          )
+                        })}
                       </div>
                     </div>
                   ))}
@@ -285,7 +352,6 @@ export default async function ProjectDocsPage({ params, searchParams }: PageProp
             </div>
           </aside>
 
-          {/* Content */}
           <div className="flex-1 min-w-0">
             <Card className="prose prose-invert prose-primary max-w-none bg-[#0a0a0b]/40 backdrop-blur-xl border-white/5 p-8 sm:p-16 relative overflow-hidden shadow-2xl">
               <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-primary-500/20 to-transparent" />
@@ -307,38 +373,51 @@ export default async function ProjectDocsPage({ params, searchParams }: PageProp
                       components={{
                         a: ({ node, ...props }) => {
                           const href = props.href || ''
-                          const isInternal = href.startsWith('docs/') || href.endsWith('.md') || href.startsWith('./') || (!href.startsWith('http') && !href.startsWith('#'))
                           
-                          if (isInternal) {
-                            // Clean up the path
-                            let cleanPath = href.replace(/^docs\//, '').replace(/^\.\//, '')
-                            // If it's just a folder name like 'reference', we might want to handle it, 
-                            // but for now let's assume it's a file or needs to be handled by the current logic
-                            
+                          if (href.startsWith('http')) {
                             return (
-                              <Link 
-                                href={`/docs/${project.slug}?path=${cleanPath}`}
-                                className="text-primary-400 hover:text-primary-300 underline underline-offset-4 decoration-primary-400/30 transition-all"
-                              >
+                              <a {...props} target="_blank" rel="noopener noreferrer" className="text-primary-400 hover:text-primary-300 transition-colors inline-flex items-center gap-1">
+                                {props.children}
+                                <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" /></svg>
+                              </a>
+                            )
+                          }
+
+                          if (href.startsWith('#')) {
+                            return <a {...props} className="text-primary-400 hover:text-primary-300 transition-colors" />
+                          }
+
+                          if (href.startsWith('/')) {
+                            return (
+                              <Link href={href} className="text-primary-400 hover:text-primary-300 underline underline-offset-4 decoration-primary-400/30 transition-all">
                                 {props.children}
                               </Link>
                             )
                           }
-                          
+
+                          let resolvedParts = [...currentPathSegments]
+                          if (resolvedParts.length > 0) resolvedParts.pop()
+
+                          const hrefParts = href.split('/')
+                          for (const part of hrefParts) {
+                            if (part === '.') continue
+                            if (part === '..') {
+                              resolvedParts.pop()
+                            } else if (part !== '') {
+                              resolvedParts.push(part)
+                            }
+                          }
+
+                          let finalPath = resolvedParts.join('/')
+                          finalPath = finalPath.replace(/\.md$/i, '').replace(/^docs\//i, '')
+
                           return (
-                            <a 
-                              {...props} 
-                              target="_blank" 
-                              rel="noopener noreferrer" 
-                              className="text-primary-400 hover:text-primary-300 transition-colors inline-flex items-center gap-1"
+                            <Link 
+                              href={`/docs/${project.slug}${finalPath ? `/${finalPath}` : ''}`}
+                              className="text-primary-400 hover:text-primary-300 underline underline-offset-4 decoration-primary-400/30 transition-all"
                             >
                               {props.children}
-                              {!href.startsWith('#') && (
-                                <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
-                                </svg>
-                              )}
-                            </a>
+                            </Link>
                           )
                         }
                       }}
@@ -346,7 +425,6 @@ export default async function ProjectDocsPage({ params, searchParams }: PageProp
                       {fileData.content}
                     </ReactMarkdown>
                   </article>
-
                 </div>
               ) : (
                 <div className="relative z-10 text-center py-32">
