@@ -7,6 +7,9 @@ import TermsContent from './TermsContent'
 export const metadata: Metadata = {
   title: 'Network Terms | Oxiverse',
   description: 'Oxiverse operational guidelines, licensing, and acceptable use policies.',
+  alternates: {
+    canonical: '/terms',
+  },
 }
 
 export default function TermsOfService() {

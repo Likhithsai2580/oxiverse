@@ -36,7 +36,7 @@ export const metadata: Metadata = {
     title: 'Research - Oxiverse',
     description: 'Research papers and publications from the Oxiverse team',
     type: 'website',
-    url: 'https://www.oxiverse.com/research',
+    url: 'https://oxiverse.com/research',
   },
 }
 

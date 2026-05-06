@@ -7,6 +7,9 @@ import LicenseContent from './LicenseContent'
 export const metadata: Metadata = {
   title: 'OCL License | Oxiverse',
   description: 'Oxiverse Community License (OCL) v1.0. Source-available, non-commercial use, and privacy-by-design requirements.',
+  alternates: {
+    canonical: '/license',
+  },
 }
 
 export default function LicensePage() {

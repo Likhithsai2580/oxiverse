@@ -36,7 +36,7 @@ export const metadata: Metadata = {
     title: 'Blog - Oxiverse',
     description: 'Latest updates, tutorials, and insights from the Oxiverse team',
     type: 'website',
-    url: 'https://www.oxiverse.com/blog',
+    url: 'https://oxiverse.com/blog',
   },
 }
 

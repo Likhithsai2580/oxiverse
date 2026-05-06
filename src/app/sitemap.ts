@@ -2,7 +2,7 @@ import { MetadataRoute } from 'next'
 import { prisma } from '@/lib/prisma'
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  const baseUrl = 'https://www.oxiverse.com'
+  const baseUrl = 'https://oxiverse.com'
 
   // Fetch all published blogs
   const blogs = await prisma.blog.findMany({

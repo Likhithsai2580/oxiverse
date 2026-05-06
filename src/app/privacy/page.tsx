@@ -7,6 +7,9 @@ import PrivacyContent from './PrivacyContent'
 export const metadata: Metadata = {
   title: 'Privacy Protocol | Oxiverse',
   description: 'Oxiverse Zero-Persistence Privacy Protocol. No storage, no tracking, total transparency.',
+  alternates: {
+    canonical: '/privacy',
+  },
 }
 
 export default function PrivacyPolicy() {

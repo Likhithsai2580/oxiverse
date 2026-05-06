@@ -19,7 +19,7 @@ const plexMono = IBM_Plex_Mono({
 })
 
 export const metadata: Metadata = {
-  metadataBase: new URL('https://www.oxiverse.com'),
+  metadataBase: new URL('https://oxiverse.com'),
   title: {
     default: 'Oxiverse - Explore • Connect • Create',
     template: '%s | Oxiverse',
@@ -32,7 +32,7 @@ export const metadata: Metadata = {
     description: 'A privacy-first ecosystem with search, browser, download manager, productivity suite, and more.',
     type: 'website',
     locale: 'en_US',
-    url: 'https://www.oxiverse.com',
+    url: 'https://oxiverse.com',
     siteName: 'Oxiverse',
   },
   twitter: {
@@ -74,7 +74,7 @@ export default function RootLayout({
       '@context': 'https://schema.org',
       '@type': 'Person',
       name: 'Likhith',
-      url: 'https://www.oxiverse.com',
+      url: 'https://oxiverse.com',
       jobTitle: 'Developer & Researcher',
       description: 'Portfolio of open-source repositories, technical blogs, and research papers on privacy-first infrastructure.',
       image: 'https://codeberg.org/itxLikhith.png',
@@ -88,7 +88,7 @@ export default function RootLayout({
       '@context': 'https://schema.org',
       '@type': 'WebSite',
       name: 'Oxiverse',
-      url: 'https://www.oxiverse.com',
+      url: 'https://oxiverse.com',
       description: 'An ecosystem of open-source products, developer documentation, and research publications.'
     }
   ]

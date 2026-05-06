@@ -29,6 +29,7 @@ const nextConfig = {
   eslint: {
     ignoreDuringBuilds: true,
   },
+  trailingSlash: false,
 }
 
 module.exports = nextConfig

@@ -5,8 +5,8 @@ export default function robots(): MetadataRoute.Robots {
     rules: {
       userAgent: '*',
       allow: '/',
-      disallow: ['/admin/', '/api/'],
+      disallow: ['/admin', '/api'],
     },
-    sitemap: 'https://www.oxiverse.com/sitemap.xml',
+    sitemap: 'https://oxiverse.com/sitemap.xml',
   }
 }

@@ -1,4 +1,5 @@
 import lazyLoad from 'next/dynamic'
+import { Metadata } from 'next'
 import Navigation from '@/components/Navigation'
 import Hero from '@/app/(sections)/Hero'
 import Features from '@/app/(sections)/Features'
@@ -16,6 +17,12 @@ const Newsletter = lazyLoad(() => import('@/app/(sections)/Newsletter'), { loadi
 const Contact = lazyLoad(() => import('@/app/(sections)/Contact'), { loading: SectionSkeleton })
 import Footer from '@/components/Footer'
 import AnnouncementBanner from '@/components/AnnouncementBanner'
+
+export const metadata: Metadata = {
+  alternates: {
+    canonical: '/',
+  },
+}
 
 export const revalidate = 3600 // Revalidate every hour
 
