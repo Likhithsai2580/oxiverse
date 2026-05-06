@@ -2,26 +2,11 @@ import { NextResponse } from 'next/server'
 import type { NextRequest } from 'next/server'
 
 export function middleware(request: NextRequest) {
-  const url = request.nextUrl.clone()
-  const host = request.headers.get('host')
-
-  // 1. Enforce Apex Domain (non-www) for canonical consistency
-  // This helps resolve "Duplicate without user-selected canonical" issues
-  if (host === 'www.oxiverse.com') {
-    url.host = 'oxiverse.com'
-    return NextResponse.redirect(url, 301)
-  }
-
-  // 2. Ensure we are not using trailing slashes (Next.js default, but being explicit for SEO)
-  // This helps resolve "Page with redirect" issues
-  if (
-    request.nextUrl.pathname !== '/' &&
-    request.nextUrl.pathname.endsWith('/')
-  ) {
-    url.pathname = url.pathname.slice(0, -1)
-    return NextResponse.redirect(url, 301)
-  }
-
+  // We are removing manual domain/slash redirects from here because:
+  // 1. Next.js handles trailing slashes via `trailingSlash: false` in next.config.js
+  // 2. Vercel handles domain redirects (www vs non-www) more efficiently at the edge.
+  // This prevents the "Too many redirects" loop you encountered.
+  
   return NextResponse.next()
 }
 
