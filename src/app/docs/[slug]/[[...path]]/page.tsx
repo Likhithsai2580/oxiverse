@@ -252,12 +252,12 @@ export default async function ProjectDocsPage({ params }: PageProps) {
       "name": "Oxiverse",
       "logo": {
         "@type": "ImageObject",
-        "url": "https://www.oxiverse.com/logo.png"
+        "url": "https://oxiverse.com/logo.png"
       }
     },
     "mainEntityOfPage": {
       "@type": "WebPage",
-      "@id": `https://www.oxiverse.com/docs/${project.slug}${currentPathSegments.length > 0 ? '/' + currentPathSegments.join('/') : ''}`
+      "@id": `https://oxiverse.com/docs/${project.slug}${currentPathSegments.length > 0 ? '/' + currentPathSegments.join('/') : ''}`
     }
   }
 

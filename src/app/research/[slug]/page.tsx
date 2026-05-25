@@ -28,6 +28,11 @@ export async function generateStaticParams() {
 export async function generateMetadata({ params }: ResearchPaperPageProps): Promise<Metadata> {
   const paper = await prisma.researchPaper.findUnique({
     where: { slug: params.slug },
+    include: {
+      author: {
+        select: { name: true, email: true },
+      },
+    },
   })
 
   if (!paper) {
@@ -36,11 +41,21 @@ export async function generateMetadata({ params }: ResearchPaperPageProps): Prom
     }
   }
 
+  const authorName = paper.author.name || paper.author.email || 'Oxiverse Research'
+  const pubDate = paper.publishedAt || paper.createdAt
+  const formattedPubDate = pubDate.toISOString().split('T')[0].replace(/-/g, '/') // YYYY/MM/DD
+
   return {
     title: `${paper.title} - Oxiverse`,
     description: paper.abstract || `Read ${paper.title} on Oxiverse`,
     alternates: {
       canonical: `/research/${params.slug}`,
+    },
+    other: {
+      'citation_title': paper.title,
+      'citation_author': authorName,
+      'citation_publication_date': formattedPubDate,
+      'citation_pdf_url': paper.pdfUrl ? (paper.pdfUrl.startsWith('http') ? paper.pdfUrl : `https://oxiverse.com${paper.pdfUrl}`) : '',
     },
     openGraph: {
       title: paper.title,
@@ -122,19 +137,19 @@ export default async function ResearchPaperPage({ params }: ResearchPaperPagePro
         '@type': 'ListItem',
         position: 1,
         name: 'Home',
-        item: 'https://www.oxiverse.com'
+        item: 'https://oxiverse.com'
       },
       {
         '@type': 'ListItem',
         position: 2,
         name: 'Research',
-        item: 'https://www.oxiverse.com/research'
+        item: 'https://oxiverse.com/research'
       },
       {
         '@type': 'ListItem',
         position: 3,
         name: paper.title,
-        item: `https://www.oxiverse.com/research/${params.slug}`
+        item: `https://oxiverse.com/research/${params.slug}`
       }
     ]
   }
@@ -152,20 +167,20 @@ export default async function ResearchPaperPage({ params }: ResearchPaperPagePro
     author: {
       '@type': 'Person',
       name: (paper.author as any).name || (paper.author as any).email,
-      url: `https://www.oxiverse.com/authors/${(paper.author as any).name?.toLowerCase().replace(/\s+/g, '-') || 'admin'}`
+      url: `https://oxiverse.com/authors/${(paper.author as any).name?.toLowerCase().replace(/\s+/g, '-') || 'admin'}`
     },
     publisher: {
       '@type': 'Organization',
       name: 'Oxiverse',
       logo: {
         '@type': 'ImageObject',
-        url: 'https://www.oxiverse.com/favicon-256x256.png'
+        url: 'https://oxiverse.com/favicon-256x256.png'
       },
-      url: 'https://www.oxiverse.com'
+      url: 'https://oxiverse.com'
     },
     mainEntityOfPage: {
       '@type': 'WebPage',
-      '@id': `https://www.oxiverse.com/research/${params.slug}`
+      '@id': `https://oxiverse.com/research/${params.slug}`
     },
     keywords: 'privacy, technology research, decentralized search, algorithmic transparency'
   }
@@ -277,7 +292,31 @@ export default async function ResearchPaperPage({ params }: ResearchPaperPagePro
           transition={{ duration: 0.6, delay: 0.5 }}
           className="pb-12"
         >
-          {paper.content ? (
+          {paper.pdfUrl ? (
+            <div className="space-y-6">
+              <div className="relative w-full h-[850px] bg-dark-900/50 rounded-2xl border border-white/10 shadow-2xl overflow-hidden">
+                <iframe
+                  src={`${paper.pdfUrl}#toolbar=0`}
+                  className="w-full h-full border-none"
+                  title={paper.title}
+                  loading="lazy"
+                />
+              </div>
+              <div className="flex justify-center">
+                <a
+                  href={paper.pdfUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center px-6 py-3 bg-white/5 hover:bg-white/10 border border-white/10 text-white rounded-xl font-bold transition-all"
+                >
+                  <svg className="w-5 h-5 mr-2 text-primary-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+                  </svg>
+                  Open PDF in New Tab
+                </a>
+              </div>
+            </div>
+          ) : paper.content ? (
             <div className="prose prose-invert prose-lg max-w-none 
               prose-p:text-dark-300 prose-p:leading-relaxed
               prose-headings:text-white prose-headings:font-bold

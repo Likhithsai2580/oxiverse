@@ -21,7 +21,7 @@ const item = {
 
 const features = [
   { id: '01', name: 'Privacy Search', description: 'Intent-driven search engine devoid of tracking, targeting, or profiling.', linkText: 'Discover Search', href: 'https://search.oxiverse.com' },
-  { id: '02', name: 'Ethical Ads', description: 'Context-based advertising relying on query intent, not personal exploitation.', linkText: 'View Ad Ethics', href: '#' },
+  { id: '02', name: 'Intent Affiliates', description: 'Query-intent matching for relevant products with zero tracking or advertising cookies.', linkText: 'Affiliate Policy', href: '#' },
   { id: '03', name: 'Data Autonomy', description: 'Total consent management with zero-retention policies. Your data remains yours.', linkText: 'Our Privacy Policy', href: '/privacy' },
   { id: '04', name: 'Open Stack', description: 'Built on Next.js, FastAPI, & Qdrant. Fully transparent and community-auditable.', linkText: 'Audit Source Code', href: 'https://codeberg.org/oxiverse' }
 ]
@@ -31,12 +31,12 @@ export default function Features() {
     <Section id="products" className="pt-32 pb-24 bg-primary-800 relative z-10">
 
       {/* Header */}
-      <div className="max-w-7xl mx-auto px-4 md:px-8 mb-16 grid grid-cols-1 md:grid-cols-2 gap-12 items-start">
+      <div className="max-w-7xl mx-auto px-4 md:px-8 mb-16 grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
         <div>
           <div className="inline-block border-2 border-primary-50 px-3 py-1 mb-6 bg-primary-950">
             <span className="font-mono text-xs uppercase tracking-widest font-bold text-accent-300">The Core</span>
           </div>
-          <h2 className="font-display text-[clamp(2rem,9vw,3rem)] md:text-[4.5rem] leading-[0.85] text-primary-50 tracking-tighter font-bold uppercase break-words sm:break-normal">
+          <h2 className="font-display text-4xl sm:text-5xl lg:text-5xl xl:text-6xl leading-[1.0] text-primary-50 tracking-tighter font-bold uppercase break-words sm:break-normal">
             An Uncompromising<br />
             <span className="text-accent-300">Ecosystem.</span>
           </h2>

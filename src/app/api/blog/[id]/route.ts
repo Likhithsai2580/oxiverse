@@ -3,6 +3,7 @@ import { getServerSession } from 'next-auth'
 import { authOptions } from '@/lib/authOptions'
 import { prisma } from '@/lib/prisma'
 import { slugify } from '@/lib/utils'
+import { revalidatePath } from 'next/cache'
 
 // GET /api/blog/[id] - Get a single blog post
 export async function GET(
@@ -95,6 +96,11 @@ export async function PUT(
       },
     })
 
+    revalidatePath('/')
+    revalidatePath('/blog')
+    revalidatePath(`/blog/${blog.slug}`)
+    revalidatePath('/sitemap.xml')
+
     return NextResponse.json(blog)
   } catch (error) {
     console.error('Error updating blog:', error)
@@ -128,6 +134,11 @@ export async function DELETE(
     }
 
     await prisma.blog.delete({ where: { id: params.id } })
+
+    revalidatePath('/')
+    revalidatePath('/blog')
+    revalidatePath(`/blog/${existing.slug}`)
+    revalidatePath('/sitemap.xml')
 
     return NextResponse.json({ message: 'Blog post deleted successfully' })
   } catch (error) {

@@ -122,19 +122,19 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
         '@type': 'ListItem',
         position: 1,
         name: 'Home',
-        item: 'https://www.oxiverse.com'
+        item: 'https://oxiverse.com'
       },
       {
         '@type': 'ListItem',
         position: 2,
         name: 'Blog',
-        item: 'https://www.oxiverse.com/blog'
+        item: 'https://oxiverse.com/blog'
       },
       {
         '@type': 'ListItem',
         position: 3,
         name: blog.title,
-        item: `https://www.oxiverse.com/blog/${params.slug}`
+        item: `https://oxiverse.com/blog/${params.slug}`
       }
     ]
   }
@@ -152,20 +152,20 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
     author: {
       '@type': 'Person',
       name: (blog.author as any).name || (blog.author as any).email,
-      url: `https://www.oxiverse.com/authors/${(blog.author as any).name?.toLowerCase().replace(/\s+/g, '-') || 'admin'}`
+      url: `https://oxiverse.com/authors/${(blog.author as any).name?.toLowerCase().replace(/\s+/g, '-') || 'admin'}`
     },
     publisher: {
       '@type': 'Organization',
       name: 'Oxiverse',
       logo: {
         '@type': 'ImageObject',
-        url: 'https://www.oxiverse.com/favicon-256x256.png'
+        url: 'https://oxiverse.com/favicon-256x256.png'
       },
-      url: 'https://www.oxiverse.com'
+      url: 'https://oxiverse.com'
     },
     mainEntityOfPage: {
       '@type': 'WebPage',
-      '@id': `https://www.oxiverse.com/blog/${params.slug}`
+      '@id': `https://oxiverse.com/blog/${params.slug}`
     },
     keywords: 'privacy, search engine, decentralized, infrastructure, oxiverse'
   }

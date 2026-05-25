@@ -3,6 +3,7 @@ import { getServerSession } from 'next-auth'
 import { authOptions } from '@/lib/authOptions'
 import { prisma } from '@/lib/prisma'
 import { slugify } from '@/lib/utils'
+import { revalidatePath } from 'next/cache'
 
 export const dynamic = 'force-dynamic'
 
@@ -117,6 +118,10 @@ export async function POST(request: NextRequest) {
         tags: true,
       },
     })
+
+    revalidatePath('/')
+    revalidatePath('/blog')
+    revalidatePath('/sitemap.xml')
 
     return NextResponse.json(blog, { status: 201 })
   } catch (error) {

@@ -3,6 +3,7 @@ import { getServerSession } from 'next-auth'
 import { authOptions } from '@/lib/authOptions'
 import { prisma } from '@/lib/prisma'
 import { slugify } from '@/lib/utils'
+import { revalidatePath } from 'next/cache'
 
 // GET /api/research/[id] - Get a single research paper
 export async function GET(
@@ -96,6 +97,11 @@ export async function PUT(
       },
     })
 
+    revalidatePath('/')
+    revalidatePath('/research')
+    revalidatePath(`/research/${paper.slug}`)
+    revalidatePath('/sitemap.xml')
+
     return NextResponse.json(paper)
   } catch (error) {
     console.error('Error updating research paper:', error)
@@ -129,6 +135,11 @@ export async function DELETE(
     }
 
     await prisma.researchPaper.delete({ where: { id: params.id } })
+
+    revalidatePath('/')
+    revalidatePath('/research')
+    revalidatePath(`/research/${existing.slug}`)
+    revalidatePath('/sitemap.xml')
 
     return NextResponse.json({ message: 'Research paper deleted successfully' })
   } catch (error) {

@@ -2,7 +2,7 @@ import { MetadataRoute } from 'next'
 import { prisma } from '@/lib/prisma'
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  const baseUrl = 'https://www.oxiverse.com'
+  const baseUrl = 'https://oxiverse.com'
 
   // Fetch all published blogs
   const blogs = await prisma.blog.findMany({
@@ -43,6 +43,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     lastModified: blog.updatedAt,
     changeFrequency: 'weekly' as const,
     priority: 0.7,
+    images: blog.imageUrl ? [blog.imageUrl] : [],
   }))
 
   const researchRoutes = researchPapers.map((paper) => ({
@@ -50,6 +51,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     lastModified: paper.updatedAt,
     changeFrequency: 'weekly' as const,
     priority: 0.7,
+    images: paper.imageUrl ? [paper.imageUrl] : [],
   }))
 
   // Documentation routes

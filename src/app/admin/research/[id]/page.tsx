@@ -172,6 +172,12 @@ export default function AdminResearchEditPage() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
+
+    if (formData.published && !formData.pdfUrl) {
+      error('A PDF document is required to publish a research paper.')
+      return
+    }
+
     setIsLoading(true)
 
     try {
@@ -216,13 +222,6 @@ export default function AdminResearchEditPage() {
           <p className="text-dark-400">Manage technical papers and metrics</p>
         </div>
         <div className="flex gap-3">
-          <Button
-            type="button"
-            variant="ghost"
-            onClick={() => setPreviewMode(!previewMode)}
-          >
-            {previewMode ? 'Edit' : 'Preview'}
-          </Button>
           <Button type="submit" variant="primary" disabled={isLoading} className="shadow-lg shadow-primary-500/20">
             {isLoading ? <Spinner size="sm" /> : 'Save Paper'}
           </Button>
@@ -243,49 +242,16 @@ export default function AdminResearchEditPage() {
             />
           </Card>
 
-           <Card className="bg-dark-900/40 border-white/5">
-            <div className="flex items-center justify-between mb-4">
-              <label className="text-sm font-black uppercase tracking-widest text-dark-500">Technical Content</label>
-              <Button 
-                type="button" 
-                size="sm" 
-                variant="ghost" 
-                className="text-[10px] uppercase tracking-widest text-accent-400"
-                onClick={() => {
-                  setAssetTarget('content')
-                  setShowAssetBrowser(true)
-                }}
-               >
-                 Insert Media
-               </Button>
+           <Card className="bg-dark-900/40 border-white/5 p-8 flex flex-col items-center justify-center min-h-[400px] text-center">
+            <div className="w-16 h-16 bg-primary-500/10 rounded-2xl flex items-center justify-center mb-6">
+              <svg className="w-8 h-8 text-primary-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z" />
+              </svg>
             </div>
-
-            {previewMode ? (
-              <div className="prose prose-invert max-w-none min-h-[500px] p-6 bg-dark-950/50 rounded-2xl border border-white/5 shadow-inner">
-                <ReactMarkdown 
-                  remarkPlugins={[remarkGfm]}
-                  components={{
-                    code: ({ node, className, children, ...props }: any) => {
-                      const match = /language-(\w+)/.exec(className || '')
-                      if (match && match[1] === 'mermaid') {
-                        return <Mermaid chart={String(children).replace(/\n$/, '')} />
-                      }
-                      return <code className={className} {...props}>{children}</code>
-                    }
-                  }}
-                >
-                  {formData.content || '*No content provided*'}
-                </ReactMarkdown>
-              </div>
-            ) : (
-              <Textarea
-                value={formData.content}
-                onChange={(e) => setFormData({ ...formData, content: e.target.value })}
-                placeholder="Methodology, Architecture, Theorems..."
-                rows={25}
-                className="font-mono text-sm bg-dark-950/50 border-white/5 focus:border-primary-500/30"
-              />
-            )}
+            <h3 className="text-lg font-bold text-white mb-2">Research Paper PDF</h3>
+            <p className="text-sm text-dark-400 max-w-md">
+              Research publications on Oxiverse are now PDF-only. Please upload the compiled PDF document of your research paper in the sidebar to link it to this entry.
+            </p>
           </Card>
         </div>
 

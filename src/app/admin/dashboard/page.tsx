@@ -4,6 +4,7 @@ import { redirect } from 'next/navigation'
 import { prisma } from '@/lib/prisma'
 import { Card, Button } from '@/components/ui'
 import Link from 'next/link'
+import SystemMonitor from '../components/SystemMonitor'
 
 export const dynamic = 'force-dynamic'
 
@@ -75,6 +76,9 @@ export default async function AdminDashboardPage() {
           </Link>
         </div>
       </div>
+
+      {/* Mainframe System Monitor */}
+      <SystemMonitor />
 
       {/* Stats Grid */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">

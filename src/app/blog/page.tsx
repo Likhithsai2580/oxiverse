@@ -20,7 +20,7 @@ const jsonLd = {
     name: 'Oxiverse',
     logo: {
       '@type': 'ImageObject',
-      url: 'https://www.oxiverse.com/favicon-256x256.png'
+      url: 'https://oxiverse.com/favicon-256x256.png'
     }
   }
 }
