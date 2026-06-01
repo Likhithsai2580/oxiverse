@@ -44,7 +44,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     ?.replace(/[#*`[\]]/g, '')
     ?.slice(0, 160) || `Documentation for ${projectTitle} - ${pageTitle}`
 
-  const fullUrl = `/docs/${params.slug}${currentPathSegments.length > 0 ? '/' + currentPathSegments.join('/') : ''}`
+  const fullUrl = `https://oxiverse.com/docs/${params.slug}${currentPathSegments.length > 0 ? '/' + currentPathSegments.join('/') : ''}`
 
   return {
     title: `${pageTitle} | ${projectTitle} Docs`,

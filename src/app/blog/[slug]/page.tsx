@@ -1,6 +1,6 @@
 import { prisma } from '@/lib/prisma'
 import { Metadata } from 'next'
-import { notFound } from 'next/navigation'
+import { notFound, redirect } from 'next/navigation'
 import ReactMarkdown from 'react-markdown'
 import remarkGfm from 'remark-gfm'
 import { formatDate, calculateReadingTime } from '@/lib/utils'
@@ -10,6 +10,8 @@ import Image from 'next/image'
 import * as motion from 'framer-motion/client'
 import Link from 'next/link'
 import Mermaid from '@/components/Mermaid'
+
+const SITE_URL = 'https://oxiverse.com'
 
 export const revalidate = 60
 
@@ -40,7 +42,7 @@ export async function generateMetadata({ params }: BlogPostPageProps): Promise<M
     title: `${blog.title} - Oxiverse`,
     description: blog.excerpt || `Read ${blog.title} on Oxiverse`,
     alternates: {
-      canonical: `/blog/${params.slug}`,
+      canonical: `${SITE_URL}/blog/${params.slug}`,
     },
     openGraph: {
       title: blog.title,
@@ -98,6 +100,13 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
   }) as any
 
   if (!blog || !blog.published) {
+    // Check for a dynamic redirect (old slug → new slug)
+    const slugRedirect = await prisma.slugRedirect.findUnique({
+      where: { oldPath: `/blog/${params.slug}` },
+    })
+    if (slugRedirect) {
+      redirect(slugRedirect.newPath)
+    }
     notFound()
   }
 

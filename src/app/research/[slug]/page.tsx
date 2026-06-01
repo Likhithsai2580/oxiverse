@@ -1,6 +1,6 @@
 import { prisma } from '@/lib/prisma'
 import { Metadata } from 'next'
-import { notFound } from 'next/navigation'
+import { notFound, redirect } from 'next/navigation'
 import ReactMarkdown from 'react-markdown'
 import remarkGfm from 'remark-gfm'
 import { formatDate, calculateReadingTime } from '@/lib/utils'
@@ -10,6 +10,8 @@ import Image from 'next/image'
 import * as motion from 'framer-motion/client'
 import Link from 'next/link'
 import Mermaid from '@/components/Mermaid'
+
+const SITE_URL = 'https://oxiverse.com'
 
 export const revalidate = 60
 
@@ -49,7 +51,7 @@ export async function generateMetadata({ params }: ResearchPaperPageProps): Prom
     title: `${paper.title} - Oxiverse`,
     description: paper.abstract || `Read ${paper.title} on Oxiverse`,
     alternates: {
-      canonical: `/research/${params.slug}`,
+      canonical: `${SITE_URL}/research/${params.slug}`,
     },
     other: {
       'citation_title': paper.title,
@@ -113,6 +115,13 @@ export default async function ResearchPaperPage({ params }: ResearchPaperPagePro
   }) as any
 
   if (!paper || !paper.published) {
+    // Check for a dynamic redirect (old slug → new slug)
+    const slugRedirect = await prisma.slugRedirect.findUnique({
+      where: { oldPath: `/research/${params.slug}` },
+    })
+    if (slugRedirect) {
+      redirect(slugRedirect.newPath)
+    }
     notFound()
   }
 

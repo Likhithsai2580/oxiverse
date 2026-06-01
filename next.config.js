@@ -31,13 +31,7 @@ const nextConfig = {
   },
   trailingSlash: false,
   async redirects() {
-    return [
-      {
-        source: '/blog/ravana-v2-building-a-cognitive-architecture-with-bounded-agi',
-        destination: '/blog/building-ravana-v2-a-proto-homeostatic-cognitive-architecture',
-        permanent: true,
-      },
-    ]
+    return []
   },
 }
 

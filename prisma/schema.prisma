@@ -161,3 +161,13 @@ model Newsletter {
   email     String   @unique
   createdAt DateTime @default(now())
 }
+
+model SlugRedirect {
+  id         String   @id @default(cuid())
+  oldPath    String   @unique  // e.g. "/blog/old-slug"
+  newPath    String            // e.g. "/blog/new-slug" or "/blog"
+  type       String   @default("blog") // "blog", "research", "docs", "page"
+  createdAt  DateTime @default(now())
+
+  @@index([oldPath])
+}
