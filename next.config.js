@@ -33,6 +33,24 @@ const nextConfig = {
   async redirects() {
     return []
   },
+  async headers() {
+    return [
+      {
+        source: '/',
+        headers: [
+          {
+            key: 'Link',
+            value: [
+              '</.well-known/api-catalog>; rel="api-catalog"',
+              '</sitemap.xml>; rel="sitemap"',
+              '</docs>; rel="service-doc"',
+              '</api/blog>; rel="service-desc"',
+            ].join(', '),
+          },
+        ],
+      },
+    ]
+  },
 }
 
 module.exports = nextConfig

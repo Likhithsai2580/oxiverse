@@ -8,5 +8,8 @@ export default function robots(): MetadataRoute.Robots {
       disallow: ['/admin/', '/api/'],
     },
     sitemap: 'https://oxiverse.com/sitemap.xml',
+    other: {
+      'Content-Signal': 'ai-train=yes, search=yes, ai-input=yes',
+    },
   }
 }

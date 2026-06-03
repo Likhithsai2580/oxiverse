@@ -27,6 +27,21 @@ export function middleware(request: NextRequest) {
   const host = request.headers.get('host') || ''
   const pathname = url.pathname
 
+  // 0. Markdown content negotiation: rewrite to markdown proxy when agent requests it
+  const accept = request.headers.get('accept') || ''
+  const skipMdConvert = request.headers.get('x-md-convert')
+  if (accept.includes('text/markdown') && skipMdConvert !== 'skip') {
+    const mdUrl = new URL(url)
+    mdUrl.pathname = '/api/md'
+    mdUrl.searchParams.set('path', pathname)
+    // Preserve query params from the original request
+    const originalParams = url.searchParams.toString()
+    if (originalParams) {
+      mdUrl.searchParams.set('query', originalParams)
+    }
+    return NextResponse.rewrite(mdUrl)
+  }
+
   // 1. Canonical domain: force https://oxiverse.com (no www, no http)
   //    This fixes "Page with redirect" in Google Search Console.
   const isWww = host.startsWith('www.')
