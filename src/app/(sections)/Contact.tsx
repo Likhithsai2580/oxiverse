@@ -50,7 +50,78 @@ export default function Contact() {
           ))}
         </div>
 
-        <div className="mt-10 text-center">
+        {/* Booking & Scheduling Links */}
+        <div className="mt-16 border-t-2 border-primary-800 pt-12">
+          <div className="mb-8">
+            <h3 className="font-display text-2xl text-primary-50 font-bold uppercase tracking-tight">
+              Booking & <span className="text-accent-300">Scheduling</span>
+            </h3>
+            <p className="mt-2 text-primary-450 font-mono text-xs md:text-sm">
+              Schedule a virtual session directly via Cal.com for collaborations, talks, or media.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <motion.a
+              href="https://cal.com/itxlikhith/speaking"
+              target="_blank"
+              rel="noopener noreferrer"
+              initial={{ opacity: 0, y: 15 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: 0.1 }}
+              className="retro-box p-0 group block"
+            >
+              <div className="retro-header-bar-dark !py-1.5 !px-3 text-[10px]">
+                <span>SPEAKING.EXE</span>
+              </div>
+              <div className="p-6 bg-primary-950 text-primary-300 group-hover:text-accent-300 transition-colors">
+                <h4 className="text-base font-bold text-primary-50 font-display uppercase mb-2">Technical Talk / Speaking</h4>
+                <p className="text-xs text-primary-400 font-mono leading-relaxed">Book a session for conferences, panels, or technical presentation slots.</p>
+              </div>
+            </motion.a>
+
+            <motion.a
+              href="https://cal.com/itxlikhith/partnership-collaboration"
+              target="_blank"
+              rel="noopener noreferrer"
+              initial={{ opacity: 0, y: 15 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: 0.2 }}
+              className="retro-box p-0 group block"
+            >
+              <div className="retro-header-bar-dark !py-1.5 !px-3 text-[10px]">
+                <span>COLLAB.EXE</span>
+              </div>
+              <div className="p-6 bg-primary-950 text-primary-300 group-hover:text-accent-300 transition-colors">
+                <h4 className="text-base font-bold text-primary-50 font-display uppercase mb-2">Partnership & Collab</h4>
+                <p className="text-xs text-primary-400 font-mono leading-relaxed">Discuss ecosystem integrations, operator partnerships, or co-founding opportunities.</p>
+              </div>
+            </motion.a>
+
+            <motion.a
+              href="https://cal.com/itxlikhith/press"
+              target="_blank"
+              rel="noopener noreferrer"
+              initial={{ opacity: 0, y: 15 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: 0.3 }}
+              className="retro-box p-0 group block"
+            >
+              <div className="retro-header-bar-dark !py-1.5 !px-3 text-[10px]">
+                <span>PRESS.EXE</span>
+              </div>
+              <div className="p-6 bg-primary-950 text-primary-300 group-hover:text-accent-300 transition-colors">
+                <h4 className="text-base font-bold text-primary-50 font-display uppercase mb-2">Press & Media</h4>
+                <p className="text-xs text-primary-400 font-mono leading-relaxed">Schedule interviews, request quotes, or coordinate press coverage.</p>
+              </div>
+            </motion.a>
+          </div>
+        </div>
+
+        <div className="mt-16 text-center">
           <p className="text-primary-400 text-sm font-mono">
             Prefer email? <a href="mailto:likhith@oxiverse.com" className="text-accent-300 hover:text-accent-200 transition-colors">likhith@oxiverse.com</a>
           </p>

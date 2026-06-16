@@ -85,14 +85,6 @@ export default function About() {
               <span className="text-[10px] font-mono uppercase tracking-tighter text-primary-400 mb-1">Official Mirror</span>
               <a href="https://github.com/oxiverse-ecosystem" className="text-xs font-bold text-primary-200 hover:text-accent-300">github.com/oxiverse-ecosystem</a>
             </div>
-            <div className="flex flex-col items-center">
-              <span className="text-[10px] font-mono uppercase tracking-tighter text-primary-400 mb-1">Framework</span>
-              <span className="text-xs font-bold text-primary-200">Next.js 14 / React</span>
-            </div>
-            <div className="flex flex-col items-center">
-              <span className="text-[10px] font-mono uppercase tracking-tighter text-primary-400 mb-1">Database</span>
-              <span className="text-xs font-bold text-primary-200">PostgreSQL / Prisma</span>
-            </div>
           </div>
         </div>
       </div>

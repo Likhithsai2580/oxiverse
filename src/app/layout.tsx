@@ -152,31 +152,63 @@ export default function RootLayout({
           name: 'What is Oxiverse?',
           acceptedAnswer: {
             '@type': 'Answer',
-            text: 'Oxiverse is a privacy-first ecosystem of products including a search engine (IntentForge), browser, and productivity tools, all built on source-available principles and Privacy-by-Design.'
+            text: 'Oxiverse is a comprehensive, privacy-first ecosystem designed as a principled alternative to Big Tech platforms. We provide a suite of tools—including search, browser, email, docs, and cloud storage—built with zero tracking, full data sovereignty, and ethical design at the core.'
           }
         },
         {
           '@type': 'Question',
-          name: 'Is Oxiverse open source?',
+          name: 'How does your search engine protect my privacy?',
           acceptedAnswer: {
             '@type': 'Answer',
-            text: 'Yes, Oxiverse is source-available under the Oxiverse Community License (OCL) v1.0, ensuring transparency and privacy for all users.'
+            text: 'At our core is IntentForge, an autonomous discovery engine utilizing "self-healing" search technology to provide high-utility results, such as code snippets, without user profiling or ad-clutter. Your "intent" is served, but it is never stored.'
           }
         },
         {
           '@type': 'Question',
-          name: 'Where is the official Oxiverse source code?',
+          name: 'What does "Open Source" mean for me as a user?',
           acceptedAnswer: {
             '@type': 'Answer',
-            text: 'The primary development repository is hosted on Codeberg (codeberg.org/oxiverse). A mirror exists on GitHub (github.com/oxiverse-ecosystem), but all contributions should be directed to Codeberg to ensure development remains within privacy-focused infrastructure.'
+            text: 'All our applications operate under the Oxiverse Community License (OCL) v1.0. This ensures our tools remain transparent, auditable, and committed to your digital footprint, serving as a private, human-centric alternative to tracking-heavy infrastructure.'
           }
         },
         {
           '@type': 'Question',
-          name: 'What is IntentForge?',
+          name: 'Are your services accessible to developers and researchers?',
           acceptedAnswer: {
             '@type': 'Answer',
-            text: 'IntentForge is an autonomous discovery engine utilizing intent extraction and self-healing search technology to provide private, relevant results without user profiling or data retention.'
+            text: 'Yes. We cater to privacy-conscious developers and academic researchers who require a transparent, auditable tech stack—including Next.js, FastAPI, and Qdrant—without the interference of commercial data harvesting.'
+          }
+        },
+        {
+          '@type': 'Question',
+          name: 'What are your operating hours?',
+          acceptedAnswer: {
+            '@type': 'Answer',
+            text: 'As a digital-first, 24-hour ecosystem, our infrastructure is always online, Sunday through Saturday. We are ready to serve you at any time of day.'
+          }
+        },
+        {
+          '@type': 'Question',
+          name: 'How can I get in touch for support?',
+          acceptedAnswer: {
+            '@type': 'Answer',
+            text: 'You can reach our team via SMS at +91 94914 84790. For immediate digital connection, you may also message us on WhatsApp at https://wa.me/919491484790.'
+          }
+        },
+        {
+          '@type': 'Question',
+          name: 'Where is Oxiverse based?',
+          acceptedAnswer: {
+            '@type': 'Answer',
+            text: 'Oxiverse is headquartered in India. While our origins lie in developer-focused projects hosted on Codeberg, we now operate as a global ecosystem dedicated to data autonomy.'
+          }
+        },
+        {
+          '@type': 'Question',
+          name: 'Why should I switch from "Big Tech"?',
+          acceptedAnswer: {
+            '@type': 'Answer',
+            text: 'We challenge the "normalization" of algorithmic bias and data retention as the price of admission for using the web. We empower you with "Enclave Security," ensuring your digital experience remains a safe haven that respects your data sovereignty.'
           }
         }
       ]

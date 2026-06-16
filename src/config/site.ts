@@ -1,6 +1,6 @@
 export const siteConfig = {
   name: "Oxiverse",
-  description: "The next generation of privacy-first infrastructure. A secure, decentralized ecosystem for pioneers of the open internet.",
+  description: "The next generation of privacy-first infrastructure. A secure, stable ecosystem for builders. Source available. Zero tracking.",
   url: "https://oxiverse.com",
   ogImage: "https://oxiverse.com/og.jpg",
   links: {
@@ -33,7 +33,7 @@ export const siteConfig = {
       white: "Connect.",
       gradient2: "Create.",
     },
-    subtitle: "The next generation of privacy-first infrastructure. A secure, decentralized ecosystem for pioneers of the open internet.",
+    subtitle: "The next generation of privacy-first infrastructure. A secure, stable ecosystem for builders. Source available. Zero tracking.",
     cta: {
       primary: {
         text: "Launch Search",

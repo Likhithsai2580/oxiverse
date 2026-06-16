@@ -59,8 +59,8 @@ export default function Hero() {
               </h1>
               
               <p className="font-sans text-lg md:text-xl font-medium text-primary-100 max-w-xl leading-relaxed mt-6 drop-shadow-[1px_1px_0_rgba(0,0,0,1)]">
-                A highly secure, decentralized ecosystem architected for builders. 
-                We engineer a framework devoid of tracking and algorithmic bias.
+                A highly secure, stable ecosystem architected for builders. 
+                Source available. Zero tracking. Zero users profiled.
               </p>
 
               {/* Flat Geometric Buttons */}
@@ -108,16 +108,16 @@ export default function Hero() {
                       <span className="text-accent-300 font-black whitespace-nowrap">STABLE</span>
                     </div>
                     <div className="flex justify-between items-center border-b-2 border-primary-800/50 pb-2">
-                      <span className="text-primary-400">NET_LATENCY</span>
-                      <span className="text-primary-50 font-black whitespace-nowrap">12ms</span>
+                      <span className="text-primary-400">SOURCE_CODE</span>
+                      <span className="text-primary-50 font-black whitespace-nowrap">AVAILABLE</span>
                     </div>
                     <div className="flex justify-between items-center border-b-2 border-primary-800/50 pb-2">
-                      <span className="text-primary-400">DATA_CIPHER</span>
-                      <span className="text-primary-50 font-black whitespace-nowrap">AES-256</span>
+                      <span className="text-primary-400">TRACKING</span>
+                      <span className="text-primary-50 font-black whitespace-nowrap">0 USERS</span>
                     </div>
                     <div className="flex justify-between items-center border-b-2 border-primary-800/50 pb-2">
-                      <span className="text-primary-400">ACTIVE_NODES</span>
-                      <span className="text-primary-50 font-black whitespace-nowrap">2,408</span>
+                      <span className="text-primary-400">LICENSE</span>
+                      <span className="text-primary-50 font-black whitespace-nowrap">OCL v1.0</span>
                     </div>
                     
                     {/* Blinking Prompt */}

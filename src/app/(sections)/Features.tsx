@@ -21,9 +21,9 @@ const item = {
 
 const features = [
   { id: '01', name: 'Privacy Search', description: 'Intent-driven search engine devoid of tracking, targeting, or profiling.', linkText: 'Discover Search', href: 'https://search.oxiverse.com' },
-  { id: '02', name: 'Intent Affiliates', description: 'Query-intent matching for relevant products with zero tracking or advertising cookies.', linkText: 'Affiliate Policy', href: '#' },
+  { id: '02', name: 'Monetization', description: 'No ads. No tracking. Revenue through sovereign commerce affiliates, developer APIs, and commercial licensing — all privacy-preserving.', linkText: 'How We Sustain', href: '/monetization' },
   { id: '03', name: 'Data Autonomy', description: 'Total consent management with zero-retention policies. Your data remains yours.', linkText: 'Our Privacy Policy', href: '/privacy' },
-  { id: '04', name: 'Open Stack', description: 'Built on Next.js, FastAPI, & Qdrant. Fully transparent and community-auditable.', linkText: 'Audit Source Code', href: 'https://codeberg.org/oxiverse' }
+  { id: '04', name: 'Open Stack', description: 'Cognitive architectures, autonomous search, and privacy-first applications — all decoder-first, locally trainable, and source-available under OCL v1.0.', linkText: 'Audit Source Code', href: 'https://codeberg.org/oxiverse' },
 ]
 
 export default function Features() {
@@ -49,7 +49,7 @@ export default function Features() {
           <div className="bg-primary-950/50 p-4 border border-primary-700 rounded-sm">
             <h3 className="text-[10px] font-mono font-bold text-accent-300 uppercase mb-2 tracking-widest">Protocol Summary</h3>
             <p className="text-xs text-primary-200 leading-relaxed font-medium">
-              Oxiverse is a privacy-first ecosystem built on **IntentForge**, an autonomous discovery engine. It utilizes **intent extraction** and **self-healing search** technologies to provide tracking-free results. The stack is fully open-source (Codeberg/GitHub) and operates under the **Oxiverse Community License (OCL) v1.0**.
+              Oxiverse is a privacy-first ecosystem built on IntentForge — an autonomous discovery engine using intent extraction and self-healing search for tracking-free results. The stack is fully open-source (Codeberg/GitHub mirror) under the Oxiverse Community License (OCL) v1.0. No ads, no tracking, ever.
             </p>
           </div>
         </div>
