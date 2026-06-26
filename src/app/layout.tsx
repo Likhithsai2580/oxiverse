@@ -81,6 +81,45 @@ export default function RootLayout({
   const jsonLd = [
     {
       '@context': 'https://schema.org',
+      '@type': 'Person',
+      '@id': 'https://oxiverse.com/#person',
+      name: 'Likhith',
+      alternateName: 'Likhith Sai Seemala',
+      givenName: 'Likhith',
+      familyName: 'Seemala',
+      image: 'https://avatars.githubusercontent.com/u/254577690?v=4',
+      description: 'Founder of Oxiverse, a privacy-first open-source ecosystem. Developer building privacy-first alternatives to big tech.',
+      url: 'https://oxiverse.com',
+      sameAs: [
+        'https://codeberg.org/itxLikhith',
+        'https://github.com/itxLikhith',
+        'https://twitter.com/itxLikhith',
+        'https://instagram.com/itxLikhith',
+        'https://reddit.com/user/itxLikhith',
+        'https://t.me/itxLikhith',
+        'https://cal.com/itxlikhith',
+        'https://wikitia.com/wiki/Likhith_Sai_Seemala',
+        'https://github.com/Likhithsai2580',
+      ],
+      jobTitle: 'Founder & Developer',
+      worksFor: {
+        '@type': 'Organization',
+        name: 'Oxiverse',
+        url: 'https://oxiverse.com',
+      },
+      knowsAbout: [
+        'Privacy-by-Design',
+        'Open Source Software',
+        'Search Engine Technology',
+        'Next.js',
+        'TypeScript',
+        'Software Architecture',
+      ],
+      email: 'likhith@oxiverse.com',
+      nationality: { '@type': 'Country', name: 'India' },
+    },
+    {
+      '@context': 'https://schema.org',
       '@type': 'Organization',
       name: 'Oxiverse',
       url: 'https://oxiverse.com',
@@ -88,14 +127,17 @@ export default function RootLayout({
       description: 'A privacy-first ecosystem specializing in intent-based discovery, search technology, and secure productivity tools.',
       founder: {
         '@type': 'Person',
+        '@id': 'https://oxiverse.com/#person',
         name: 'Likhith',
         url: 'https://codeberg.org/itxLikhith'
       },
       sameAs: [
         'https://codeberg.org/oxiverse',
         'https://github.com/oxiverse-ecosystem',
-        'https://twitter.com/itxLikhith'
-      ]
+        'https://twitter.com/itxLikhith',
+        'https://instagram.com/itxLikhith',
+      ],
+      address: { '@type': 'PostalAddress', addressCountry: 'IN' },
     },
     {
       '@context': 'https://schema.org',

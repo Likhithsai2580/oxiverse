@@ -3,9 +3,41 @@ import Section from '@/components/ui/Section'
 import Button from '@/components/ui/Button'
 import Image from 'next/image'
 
+const personJsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'Person',
+  '@id': 'https://oxiverse.com/#person',
+  name: 'Likhith',
+  alternateName: 'Likhith Sai Seemala',
+  givenName: 'Likhith',
+  familyName: 'Seemala',
+  image: 'https://avatars.githubusercontent.com/u/254577690?v=4',
+  description: 'Founder of Oxiverse, a privacy-first open-source ecosystem. Developer building privacy-first alternatives to big tech.',
+  url: 'https://oxiverse.com',
+  sameAs: [
+    'https://codeberg.org/itxLikhith',
+    'https://github.com/itxLikhith',
+    'https://twitter.com/itxLikhith',
+    'https://instagram.com/itxLikhith',
+    'https://reddit.com/user/itxLikhith',
+    'https://t.me/itxLikhith',
+    'https://cal.com/itxlikhith',
+    'https://wikitia.com/wiki/Likhith_Sai_Seemala',
+    'https://github.com/Likhithsai2580',
+  ],
+  jobTitle: 'Founder & Developer',
+  worksFor: { '@type': 'Organization', name: 'Oxiverse', url: 'https://oxiverse.com' },
+  email: 'likhith@oxiverse.com',
+  nationality: { '@type': 'Country', name: 'India' },
+}
+
 export default function About() {
   return (
     <Section id="about" className="pt-32 pb-24 bg-primary-800 relative z-10">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(personJsonLd) }}
+      />
       <div className="max-w-7xl mx-auto px-4 md:px-8">
 
         <div className="mb-16">

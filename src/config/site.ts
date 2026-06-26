@@ -7,6 +7,8 @@ export const siteConfig = {
     codeberg: "https://codeberg.org/oxiverse",
     search: "https://search.oxiverse.com",
     twitter: "https://twitter.com/itxLikhith",
+    github: "https://github.com/itxLikhith",
+    instagram: "https://instagram.com/itxLikhith",
   },
   mainNav: [
     {
