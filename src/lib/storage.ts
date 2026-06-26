@@ -29,33 +29,73 @@ export async function saveFile(file: File, subDir: string = 'images'): Promise<S
       await fs.writeFile(filePath, buffer);
     } catch (err) {
       console.warn('Local filesystem write failed (likely EROFS):', err);
-      // In production/serverless, this is expected to fail. We proceed with Supabase.
     }
   }
 
-  // 2. Supabase Upload (Backup)
+  // 2. Supabase Upload (Primary for Vercel, Backup for local)
   let supabaseUrl = null;
-  try {
-    const bucketName = 'images'; // Standard bucket for all assets
-    const bucketPath = `${subDir}/${fileName}`;
-    
-    const { data, error } = await supabaseAdmin.storage
-      .from(bucketName)
-      .upload(bucketPath, buffer, {
-        contentType: file.type,
-        upsert: true,
-      });
+  let supabaseError = null;
 
-    if (error) {
-      console.error('Supabase upload failed:', error.message);
-    } else if (data) {
-      const { data: publicData } = supabaseAdmin.storage
+  if (supabaseAdmin) {
+    try {
+      const bucketName = 'images'; // Standard bucket for all assets
+      const bucketPath = `${subDir}/${fileName}`;
+      
+      let uploadRes = await supabaseAdmin.storage
         .from(bucketName)
-        .getPublicUrl(bucketPath);
-      supabaseUrl = publicData.publicUrl;
+        .upload(bucketPath, buffer, {
+          contentType: file.type,
+          upsert: true,
+        });
+
+      let error = uploadRes.error;
+      let data = uploadRes.data;
+
+      // Automatically create bucket if not found
+      if (error && (error.message.includes('bucket') || error.message.includes('not found') || (error as any).statusCode === '404' || (error as any).status === 404)) {
+        console.log(`Bucket '${bucketName}' not found. Attempting to create it...`);
+        const { error: createError } = await supabaseAdmin.storage.createBucket(bucketName, {
+          public: true,
+          fileSizeLimit: 52428800 // 50MB
+        });
+        
+        if (!createError) {
+          console.log(`Bucket '${bucketName}' created successfully. Retrying upload...`);
+          const retryRes = await supabaseAdmin.storage
+            .from(bucketName)
+            .upload(bucketPath, buffer, {
+              contentType: file.type,
+              upsert: true,
+            });
+          data = retryRes.data;
+          error = retryRes.error;
+        } else {
+          console.error(`Failed to create bucket '${bucketName}':`, createError.message);
+          supabaseError = `Failed to create bucket: ${createError.message}`;
+        }
+      }
+
+      if (error) {
+        console.error('Supabase upload failed:', error.message);
+        supabaseError = error.message;
+      } else if (data) {
+        const { data: publicData } = supabaseAdmin.storage
+          .from(bucketName)
+          .getPublicUrl(bucketPath);
+        supabaseUrl = publicData.publicUrl;
+      }
+    } catch (err: any) {
+      console.error('An unexpected error occurred during Supabase backup:', err);
+      supabaseError = err?.message || String(err);
     }
-  } catch (err) {
-    console.error('An unexpected error occurred during Supabase backup:', err);
+  } else {
+    supabaseError = 'Supabase admin client not initialized. Check your environment variables (SUPABASE_URL, SUPABASE_SERVICE_ROLE_KEY).';
+    console.error(supabaseError);
+  }
+
+  // If hosting on Vercel (or production), fail loudly if cloud storage upload failed
+  if (isVercel && !supabaseUrl) {
+    throw new Error(`Cloud storage upload failed: ${supabaseError}`);
   }
 
   return {

@@ -26,20 +26,21 @@ export async function GET(req: NextRequest) {
     
     const supabaseAssets: any[] = []
     
-    await Promise.all(subDirs.map(async (dir) => {
-      try {
-        const { data, error } = await supabaseAdmin.storage
-          .from(bucket)
-          .list(dir, {
-            limit: 50,
-            sortBy: { column: 'name', order: 'desc' },
-          })
+    if (supabaseAdmin) {
+      await Promise.all(subDirs.map(async (dir) => {
+        try {
+          const { data, error } = await supabaseAdmin.storage
+            .from(bucket)
+            .list(dir, {
+              limit: 50,
+              sortBy: { column: 'name', order: 'desc' },
+            })
 
-        if (data && !error) {
-          data.forEach(file => {
-            if (file.name === '.emptyFolderPlaceholder') return
-            
-            const publicUrl = supabaseAdmin.storage.from(bucket).getPublicUrl(`${dir}/${file.name}`).data.publicUrl
+          if (data && !error) {
+            data.forEach(file => {
+              if (file.name === '.emptyFolderPlaceholder') return
+              
+              const publicUrl = supabaseAdmin.storage.from(bucket).getPublicUrl(`${dir}/${file.name}`).data.publicUrl
             
             // Avoid duplicates with DB entries
             if (!dbAssets.find(a => a.url === publicUrl)) {
@@ -60,6 +61,7 @@ export async function GET(req: NextRequest) {
         console.warn(`Failed to list dir ${dir}:`, err)
       }
     }))
+    }
 
     // Return union, DB assets first (they have better metadata)
     return NextResponse.json([...dbAssets, ...supabaseAssets])
@@ -104,7 +106,7 @@ export async function DELETE(req: NextRequest) {
     }
 
     // 2. Delete from Supabase Storage
-    if (storagePath) {
+    if (storagePath && supabaseAdmin) {
       const { data, error } = await supabaseAdmin.storage.from('images').remove([storagePath])
       if (error) console.error('Storage deletion error:', error)
     }
