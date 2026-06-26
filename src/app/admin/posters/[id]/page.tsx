@@ -53,6 +53,12 @@ export default function AdminPosterEditPage() {
     const file = e.target.files?.[0]
     if (!file) return
 
+    if (file.size > 4.5 * 1024 * 1024) {
+      error('Image size exceeds 4.5MB limit. Vercel restricts uploads to 4.5MB. Please upload a smaller image.')
+      e.target.value = ''
+      return
+    }
+
     setIsUploading(true)
     try {
       const uploadFormData = new FormData()

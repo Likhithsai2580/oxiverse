@@ -60,6 +60,12 @@ export default function AdminBlogEditPage() {
     const file = e.target.files?.[0]
     if (!file) return
 
+    if (file.size > 4.5 * 1024 * 1024) {
+      error('File size exceeds 4.5MB limit. Vercel restricts request payloads to 4.5MB. Please upload a smaller PDF.')
+      e.target.value = ''
+      return
+    }
+
     setIsParsing(true)
     
     try {
@@ -94,6 +100,12 @@ export default function AdminBlogEditPage() {
   const handleImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0]
     if (!file) return
+
+    if (file.size > 4.5 * 1024 * 1024) {
+      error('Image size exceeds 4.5MB limit. Vercel restricts uploads to 4.5MB. Please upload a smaller image.')
+      e.target.value = ''
+      return
+    }
 
     setIsUploading(true)
     try {
