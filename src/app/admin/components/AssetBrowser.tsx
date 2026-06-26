@@ -112,7 +112,7 @@ export default function AssetBrowser({ onSelect, category, allowUpload = true }:
           <div className="relative">
             <input 
               type="file" 
-              accept="image/*" 
+              accept="image/png, image/jpeg, image/gif, image/webp" 
               className="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-10"
               onChange={handleUpload}
               disabled={isUploading}

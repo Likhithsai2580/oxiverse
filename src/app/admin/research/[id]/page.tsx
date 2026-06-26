@@ -364,7 +364,7 @@ export default function AdminResearchEditPage() {
                 <div className="relative group flex-1">
                   <input
                     type="file"
-                    accept="image/*"
+                    accept="image/png, image/jpeg, image/gif, image/webp"
                     onChange={handleImageUpload}
                     className="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-10"
                   />

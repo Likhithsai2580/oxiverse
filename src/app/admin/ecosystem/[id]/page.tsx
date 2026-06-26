@@ -287,7 +287,7 @@ export default function AdminProjectEditPage() {
                 <div className="relative group w-full">
                   <input
                     type="file"
-                    accept="image/*"
+                    accept="image/png, image/jpeg, image/gif, image/webp"
                     onChange={handleImageUpload}
                     className="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-10"
                     disabled={isUploading}
