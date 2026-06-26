@@ -34,8 +34,8 @@ export async function POST(req: NextRequest) {
     })
 
     return NextResponse.json(result)
-  } catch (err) {
+  } catch (err: any) {
     console.error('Local Upload Error:', err)
-    return NextResponse.json({ error: 'Internal Server Error' }, { status: 500 })
+    return NextResponse.json({ error: err.message || 'Internal Server Error' }, { status: 500 })
   }
 }
