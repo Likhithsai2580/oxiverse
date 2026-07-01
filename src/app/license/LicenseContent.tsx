@@ -57,8 +57,95 @@ export default function LicenseContent() {
               <li>(b) create derivative works of the Software;</li>
               <li>(c) share the Software and derivative works, <strong>for Non-Commercial Purposes only</strong>.</li>
             </ul>
-            <p>Derivative works must be distributed under a license approved by the Open Source Initiative (OSI). However, such derivative works may not relicense, sublicense, or obscure the original Oxiverse Software's copyright notices, and any modification to the core Oxiverse Software must remain under OCL v1.0. "Core Oxiverse Software" means the Oxiverse cognitive architecture (including RAVANA, RLMv2, ConceptGraph, and successor components), IntentForge search engine, and any other Oxiverse services released under this License unless explicitly designated otherwise by Licensor.</p>
+            <p>Derivative works of the Software must be distributed under this License (OCL v1.0) and may not be relicensed, sublicensed, or distributed under different terms. Specifically, any modification to the core Oxiverse Software must remain under OCL v1.0. "Core Oxiverse Software" means the Oxiverse cognitive architecture (including RAVANA, RLMv2, ConceptGraph, and successor components), IntentForge search engine, and any other Oxiverse services released under this License unless explicitly designated otherwise by Licensor.</p>
+            <div className="p-4 border-l-4 border-accent-300/50 bg-primary-800/30 my-6 text-primary-200 text-sm">
+              <p className="font-bold text-accent-200 mb-2">Core Modification vs. Service Consumption</p>
+              <p className="mb-2"><strong>(i) Core Modifications.</strong> Modifying, forking, extending, or creating derivative works of the core source code constitutes a derivative work and <strong>must remain under OCL v1.0</strong>. Such modifications may not be relicensed, sublicensed, or distributed under different terms.</p>
+              <p className="mb-0"><strong>(ii) Service Consumption.</strong> Independently developed applications, products, or services that merely consume, interact with, or depend on the Software through its hosted services, APIs, or platform interfaces — without copying, modifying, or incorporating the Software's source code — are <strong>not</strong> considered derivative works. Such independent projects may be licensed under your choice of:</p>
+              <ul className="mt-2 mb-0 list-none pl-4 text-primary-200">
+                <li>An OSI-approved open source license (e.g., MIT, Apache 2.0, GPL, etc.); <strong>or</strong></li>
+                <li>This License (OCL v1.0).</li>
+              </ul>
+            </div>
             <p><strong>Commercial use is prohibited except as expressly permitted under Section 3.</strong></p>
+
+            <div className="overflow-x-auto my-10">
+              <p className="font-display text-accent-300 text-lg uppercase tracking-wider mb-4 border-b border-primary-700 pb-2">
+                License Comparison — Choose what fits your project
+              </p>
+              <p className="text-sm text-primary-300 mb-6 leading-relaxed">
+                Building an app on top of Oxiverse services? Here's how OCL stacks up against popular OSI-approved licenses.
+                Permissive licenses (MIT, Apache 2.0) let you do almost anything. Copyleft (GPL v3) keeps derivatives open.
+                OCL adds a privacy-by-design requirement and non-commercial restriction for the core — but <strong>your service-consumption project</strong> can use any of these.
+              </p>
+              <table className="w-full min-w-[640px] text-sm border-collapse">
+                <thead>
+                  <tr className="border-b-2 border-accent-300/40">
+                    <th className="text-left py-3 px-4 font-display text-primary-50 uppercase tracking-wider text-xs">Dimension</th>
+                    <th className="text-center py-3 px-4 font-display text-accent-300 uppercase tracking-wider text-xs">OCL v1.0</th>
+                    <th className="text-center py-3 px-4 font-display text-primary-300 uppercase tracking-wider text-xs">MIT</th>
+                    <th className="text-center py-3 px-4 font-display text-primary-300 uppercase tracking-wider text-xs">Apache 2.0</th>
+                    <th className="text-center py-3 px-4 font-display text-primary-300 uppercase tracking-wider text-xs">GPL v3</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr className="border-b border-primary-700/50 hover:bg-primary-800/20 transition-colors">
+                    <td className="py-3 px-4 text-primary-200 font-medium">Commercial Use</td>
+                    <td className="py-3 px-4 text-center"><span className="text-amber-400">⚠️</span> <span className="text-primary-300 text-xs">Requires license</span></td>
+                    <td className="py-3 px-4 text-center text-green-400">✅ Yes</td>
+                    <td className="py-3 px-4 text-center text-green-400">✅ Yes</td>
+                    <td className="py-3 px-4 text-center text-green-400">✅ Yes</td>
+                  </tr>
+                  <tr className="border-b border-primary-700/50 hover:bg-primary-800/20 transition-colors">
+                    <td className="py-3 px-4 text-primary-200 font-medium">Modify & Distribute</td>
+                    <td className="py-3 px-4 text-center text-green-400">✅ Yes*</td>
+                    <td className="py-3 px-4 text-center text-green-400">✅ Yes</td>
+                    <td className="py-3 px-4 text-center text-green-400">✅ Yes</td>
+                    <td className="py-3 px-4 text-center text-green-400">✅ Yes</td>
+                  </tr>
+                  <tr className="border-b border-primary-700/50 hover:bg-primary-800/20 transition-colors">
+                    <td className="py-3 px-4 text-primary-200 font-medium">Must Open Source Changes</td>
+                    <td className="py-3 px-4 text-center"><span className="text-primary-300 text-xs">Core must stay OCL</span></td>
+                    <td className="py-3 px-4 text-center text-primary-400">❌ No</td>
+                    <td className="py-3 px-4 text-center text-primary-400">❌ No</td>
+                    <td className="py-3 px-4 text-center text-green-400">✅ Yes</td>
+                  </tr>
+                  <tr className="border-b border-primary-700/50 hover:bg-primary-800/20 transition-colors">
+                    <td className="py-3 px-4 text-primary-200 font-medium">Patent Grant</td>
+                    <td className="py-3 px-4 text-center"><span className="text-amber-400">⚠️</span> <span className="text-primary-300 text-xs">Non-commercial only</span></td>
+                    <td className="py-3 px-4 text-center text-primary-400">❌ No</td>
+                    <td className="py-3 px-4 text-center text-green-400">✅ Yes</td>
+                    <td className="py-3 px-4 text-center text-green-400">✅ Yes</td>
+                  </tr>
+                  <tr className="border-b border-primary-700/50 hover:bg-primary-800/20 transition-colors">
+                    <td className="py-3 px-4 text-primary-200 font-medium">Privacy Requirements</td>
+                    <td className="py-3 px-4 text-center text-green-400">✅ Yes</td>
+                    <td className="py-3 px-4 text-center text-primary-400">❌ None</td>
+                    <td className="py-3 px-4 text-center text-primary-400">❌ None</td>
+                    <td className="py-3 px-4 text-center text-primary-400">❌ None</td>
+                  </tr>
+                  <tr className="border-b border-primary-700/50 hover:bg-primary-800/20 transition-colors">
+                    <td className="py-3 px-4 text-primary-200 font-medium">Relicensing Freedom</td>
+                    <td className="py-3 px-4 text-center"><span className="text-primary-300 text-xs">Core stays OCL</span></td>
+                    <td className="py-3 px-4 text-center text-green-400">✅ Yes</td>
+                    <td className="py-3 px-4 text-center text-green-400">✅ Yes</td>
+                    <td className="py-3 px-4 text-center"><span className="text-amber-400">⚠️</span> <span className="text-primary-300 text-xs">Must stay GPL</span></td>
+                  </tr>
+                  <tr className="border-b-2 border-accent-300/40 hover:bg-primary-800/20 transition-colors">
+                    <td className="py-3 px-4 text-primary-200 font-medium">Best For</td>
+                    <td className="py-3 px-4 text-center text-xs text-primary-300">Privacy-first ecosystem projects</td>
+                    <td className="py-3 px-4 text-center text-xs text-primary-300">Simple permissive sharing</td>
+                    <td className="py-3 px-4 text-center text-xs text-primary-300">Patent-safe open source</td>
+                    <td className="py-3 px-4 text-center text-xs text-primary-300">Copyleft community projects</td>
+                  </tr>
+                </tbody>
+              </table>
+              <p className="text-xs text-primary-400 mt-4 italic">
+                * Modify & distribute under OCL allowed for non-commercial purposes. Core modifications must stay OCL.
+                See Section 1(i) vs (ii) for the full distinction.
+              </p>
+            </div>
+
           </section>
 
           <section className="mb-12">
@@ -155,6 +242,9 @@ export default function LicenseContent() {
             <p><strong>Commercial Licensing Exception:</strong> If Licensor wishes to include your contribution in a Proprietary Commercial License (Section 3(b)), Licensor must obtain your separate, explicit written consent and negotiate fair compensation with you at that time.</p>
             <p><strong>Contributor Commercial Licensing Benefit:</strong> If you are a contributor to the Software and wish to obtain a Proprietary Commercial License (Section 3(b)) to commercialize derivative works based on your contribution, you are eligible for preferential licensing terms (discounted or waived fees) at Licensor's discretion, contingent on: (a) Your contribution being already merged into the core Software; (b) You operating a distinct, separate commercial service or product (not a direct fork of the Software); (c) Your application for commercial licensing explicitly referencing your contributor status and the specific contribution(s) involved.</p>
             <p>The core Oxiverse Software and its cognitive architecture (RAVANA, RLMv2, ConceptGraph, and successor components) remain under OCL v1.0 and may not be relicensed, sublicensed, or closed-sourced by any party, including contributors. Only derivative works and original extensions created on top of the core may be commercialized under proprietary terms, subject to a valid Proprietary Commercial License.</p>
+            <p className="mt-4 p-3 border border-primary-700 bg-primary-900/30 rounded text-sm">
+              <strong>🔑 Key distinction:</strong> Contributions become part of the Software and are OCL. Independently developed apps that <em>use</em> Oxiverse services (APIs, hosted platform) without modifying the source code are separate projects — they are not derivative works and can be licensed under either an OSI-approved open source license or OCL per Section 1(ii).
+            </p>
           </section>
 
           <section className="mb-12">
