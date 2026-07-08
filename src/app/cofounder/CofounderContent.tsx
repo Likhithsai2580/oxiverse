@@ -68,16 +68,80 @@ export default function CofounderContent() {
             <div className="bg-primary-950/50 p-4 border border-primary-700/50 rounded flex flex-col md:flex-row gap-6 md:items-center">
               <div className="flex-1">
                 <span className="block text-[10px] uppercase text-primary-400 font-bold tracking-widest mb-1">Revenue Distribution</span>
-                <span className="text-3xl font-black text-accent-300">60% to 70%</span>
-                <span className="text-xs text-primary-200 ml-2">to the operational team</span>
+                <span className="text-3xl font-black text-accent-300">70%</span>
+                <span className="text-xs text-primary-200 ml-2">to the whole team</span>
               </div>
               <div className="w-px h-12 bg-primary-800 hidden md:block" />
               <div className="flex-1">
                 <span className="block text-[10px] uppercase text-primary-400 font-bold tracking-widest mb-1">Founder Share</span>
-                <span className="text-3xl font-black text-primary-100">30% or 40%</span>
+                <span className="text-3xl font-black text-primary-100">30%</span>
                 <span className="text-xs text-primary-300 ml-2">retained by creator</span>
               </div>
             </div>
+            <p className="text-primary-300 leading-relaxed text-sm mt-4">
+              The split is calculated on <strong>Gross Revenue minus VPS Costs</strong> — not gross revenue alone. Infrastructure hosting spend is deducted first, then the net is divided 70/30.
+            </p>
+            <div className="mt-4 p-4 border border-accent-300/30 bg-primary-950/40 rounded">
+              <span className="block text-[10px] uppercase text-accent-300 font-bold tracking-widest mb-2">Performance Check</span>
+              <p className="text-primary-200 leading-relaxed text-sm">
+                Every <strong>6 months</strong> we review the numbers. The team must show at least a <strong>5% revenue increase</strong> over the prior period to stay on the contract. A team is given <strong>2 chances in total</strong> — miss the growth target twice and the handover is reopened.
+              </p>
+            </div>
+          </section>
+
+          {/* Section 2b: Eligibility */}
+          <section className="p-8 border-2 border-primary-700 bg-primary-900/30 rounded-lg shadow-retro-sm relative overflow-hidden group hover:border-accent-300/30 transition-all duration-300">
+            <div className="absolute top-0 right-0 p-3 text-[10px] text-primary-500 font-mono">
+              [ 02B_THE_TEAM ]
+            </div>
+            <h2 className="text-2xl font-bold uppercase tracking-widest text-accent-300 mb-4 border-b border-primary-700 pb-2">
+              Who Qualifies
+            </h2>
+            <p className="text-primary-200 leading-relaxed text-sm mb-4">
+              Team members must be <strong>full-time</strong> on Oxiverse work and must <strong>not hold other paid jobs</strong>. The only exemption is personal <strong>trading and investments</strong> — those do not disqualify a member.
+            </p>
+            <p className="text-primary-200 leading-relaxed text-sm">
+              Within these rules, the team is free to build their own <strong>monetization strategies</strong> — as long as they stay inside the non-negotiable principles below.
+            </p>
+          </section>
+
+          {/* Section 2c: The Line */}
+          <section className="p-8 border-2 border-primary-700 bg-primary-900/30 rounded-lg shadow-retro-sm relative overflow-hidden group hover:border-accent-300/30 transition-all duration-300">
+            <div className="absolute top-0 right-0 p-3 text-[10px] text-primary-500 font-mono">
+              [ 02C_THE_LINE ]
+            </div>
+            <h2 className="text-2xl font-bold uppercase tracking-widest text-accent-300 mb-4 border-b border-primary-700 pb-2">
+              What We Will Never Do
+            </h2>
+            <p className="text-primary-200 leading-relaxed text-sm mb-4">
+              Every monetization path the team explores must respect these hard limits:
+            </p>
+            <ul className="space-y-2 text-sm text-primary-200">
+              <li className="flex gap-3"><span className="text-accent-300 font-black">✕</span><span><strong>Display Advertising:</strong> No banner ads, native ads, video ads, or any impression-based monetization. Ever.</span></li>
+              <li className="flex gap-3"><span className="text-accent-300 font-black">✕</span><span><strong>User Data Sales:</strong> No selling search history, click data, profiles, or inferred interests to third parties.</span></li>
+              <li className="flex gap-3"><span className="text-accent-300 font-black">✕</span><span><strong>Behavioral Targeting:</strong> No cross-site tracking, fingerprinting, or building advertising profiles of any kind.</span></li>
+              <li className="flex gap-3"><span className="text-accent-300 font-black">✕</span><span><strong>Surveillance Capitalism:</strong> No Google Analytics, Meta Pixel, or any third-party analytics that harvest user behavior.</span></li>
+              <li className="flex gap-3"><span className="text-accent-300 font-black">✕</span><span><strong>Search Manipulation:</strong> No paid placement, sponsored results masquerading as organic, or ranking for profit.</span></li>
+              <li className="flex gap-3"><span className="text-accent-300 font-black">✕</span><span><strong>Dark Patterns:</strong> No tricks to extract consent, no pre-checked boxes, no nag screens for monetization.</span></li>
+              <li className="flex gap-3"><span className="text-accent-300 font-black">✕</span><span><strong>Venture Capture:</strong> No investor pressure to pivot to surveillance. Oxiverse is founder-controlled.</span></li>
+              <li className="flex gap-3"><span className="text-accent-300 font-black">✕</span><span><strong>AI Training on User Data:</strong> No using queries or behavior to train models without explicit, revocable opt-in.</span></li>
+            </ul>
+          </section>
+
+          {/* Section 2d: Plugin Economy */}
+          <section className="p-8 border-2 border-primary-700 bg-primary-900/30 rounded-lg shadow-retro-sm relative overflow-hidden group hover:border-accent-300/30 transition-all duration-300">
+            <div className="absolute top-0 right-0 p-3 text-[10px] text-primary-500 font-mono">
+              [ 02D_THE_PLATFORM ]
+            </div>
+            <h2 className="text-2xl font-bold uppercase tracking-widest text-accent-300 mb-4 border-b border-primary-700 pb-2">
+              Free Core, Open Plugin Economy
+            </h2>
+            <p className="text-primary-200 leading-relaxed text-sm mb-4">
+              The <strong>core hand-over SaaS stays free</strong> for everyone. On top of it we ship a <strong>baseline plugin</strong> that other developers can extend to build and monetize their own features.
+            </p>
+            <p className="text-primary-200 leading-relaxed text-sm">
+              When third-party developers earn through the plugin marketplace, Oxiverse takes a <strong>2%–5% commission</strong> — leaving the vast majority with the builder.
+            </p>
           </section>
 
           {/* Section 3: Operations */}
