@@ -79,7 +79,7 @@ export default function CofounderContent() {
               </div>
             </div>
             <p className="text-primary-300 leading-relaxed text-sm mt-4">
-              The split is calculated on <strong>Gross Revenue minus VPS Costs</strong> — not gross revenue alone. Infrastructure hosting spend is deducted first, then the net is divided 70/30.
+              The split is calculated on <strong>Net Revenue</strong> = Gross Revenue minus <strong>Operating Costs</strong> (infrastructure, hosting, tooling, and any direct operational spend). Costs are deducted first, then the net is divided 70/30.
             </p>
             <div className="mt-4 p-4 border border-accent-300/30 bg-primary-950/40 rounded">
               <span className="block text-[10px] uppercase text-accent-300 font-bold tracking-widest mb-2">Performance Check</span>
@@ -160,6 +160,36 @@ export default function CofounderContent() {
               <li><strong>Feature Development:</strong> Implementing and rolling out updates and features based on my instructions and product roadmap.</li>
               <li><strong>Marketing & Growth:</strong> Driving user acquisition, handling support channels, and monetizing the platform.</li>
             </ul>
+          </section>
+
+          {/* Section 3b: How It Works */}
+          <section className="p-8 border-2 border-primary-700 bg-primary-900/30 rounded-lg shadow-retro-sm relative overflow-hidden group hover:border-accent-300/30 transition-all duration-300">
+            <div className="absolute top-0 right-0 p-3 text-[10px] text-primary-500 font-mono">
+              [ 03B_HOW_IT_WORKS ]
+            </div>
+            <h2 className="text-2xl font-bold uppercase tracking-widest text-accent-300 mb-4 border-b border-primary-700 pb-2">
+              How It Works
+            </h2>
+            <p className="text-primary-200 leading-relaxed text-sm mb-4">
+              These are not contracts to sign — they are the operating models Oxiverse follows. Read how each one works:
+            </p>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+              <a href="/operator" className="p-4 border-2 border-primary-700 bg-primary-950/40 rounded hover:border-accent-300/50 transition-all group/link">
+                <span className="block text-[10px] uppercase text-primary-400 font-bold tracking-widest mb-2">01 · Partnership</span>
+                <span className="text-primary-50 font-bold font-display uppercase text-sm group-hover/link:text-accent-300 transition-colors">Operator Model</span>
+                <p className="text-primary-400 text-xs leading-relaxed mt-2">Autonomous project management under a revenue-share model.</p>
+              </a>
+              <a href="/intern" className="p-4 border-2 border-primary-700 bg-primary-950/40 rounded hover:border-accent-300/50 transition-all group/link">
+                <span className="block text-[10px] uppercase text-primary-400 font-bold tracking-widest mb-2">02 · Training</span>
+                <span className="text-primary-50 font-bold font-display uppercase text-sm group-hover/link:text-accent-300 transition-colors">Intern Model</span>
+                <p className="text-primary-400 text-xs leading-relaxed mt-2">The validation phase that can lead to Operator status.</p>
+              </a>
+              <a href="/revenue" className="p-4 border-2 border-primary-700 bg-primary-950/40 rounded hover:border-accent-300/50 transition-all group/link">
+                <span className="block text-[10px] uppercase text-primary-400 font-bold tracking-widest mb-2">03 · Math</span>
+                <span className="text-primary-50 font-bold font-display uppercase text-sm group-hover/link:text-accent-300 transition-colors">Revenue Protocol</span>
+                <p className="text-primary-400 text-xs leading-relaxed mt-2">The deterministic 4-layer formula behind the 70/30 split.</p>
+              </a>
+            </div>
           </section>
 
           {/* Code Repositories */}

@@ -41,15 +41,40 @@ export default function MonetizationPage() {
             </p>
           </div>
 
-          {/* Revenue Pillars */}
+          {/* Revenue Examples */}
           <div className="space-y-8 mb-16">
-            <h2 className="text-[10px] font-mono font-bold text-accent-300 uppercase tracking-widest text-center mb-12">Revenue Pillars</h2>
+            <h2 className="text-[10px] font-mono font-bold text-accent-300 uppercase tracking-widest text-center mb-4">How We Monetize</h2>
+            <p className="text-primary-300 leading-relaxed text-sm md:text-base max-w-3xl mx-auto text-center mb-12 border-l-4 border-primary-700 pl-6">
+              The <strong>core product stays free</strong>. Monetization happens on top — new features, premium plugins, and services can be priced accordingly when needed. The three mechanisms below are <strong>examples</strong> of how we sustain the ecosystem, not the limit. Operators and interns are encouraged to invent new monetization techniques that follow the <a href="/license" className="text-accent-300 hover:underline">OCL License</a> and the <a href="/operator" className="text-accent-300 hover:underline">Oxiverse Constitution</a>.
+            </p>
+
+            {/* Operator / Intern Monetization */}
+            <div className="retro-box p-8 bg-primary-800 max-w-3xl mx-auto mb-10">
+              <div className="flex flex-col md:flex-row gap-6 md:items-center">
+                <div className="flex-1">
+                  <span className="block text-[10px] uppercase text-accent-300 font-bold tracking-widest mb-2">Operators & Interns</span>
+                  <p className="text-primary-200 leading-relaxed text-sm">
+                    These are <strong>examples only</strong>. Operators and interns may introduce <strong>new monetization techniques</strong> beyond them — pricing new features, premium plugins, or services — provided they strictly follow the <a href="/license" className="text-accent-300 hover:underline">OCL License</a> and the <a href="/operator" className="text-accent-300 hover:underline">Oxiverse Constitution</a>. The core stays free; new features can be monetized as needed.
+                  </p>
+                </div>
+                <div className="flex flex-col gap-3 shrink-0">
+                  <a href="/operator" className="inline-block px-5 py-2 bg-accent-300 text-primary-950 font-bold text-xs uppercase tracking-widest text-center hover:bg-accent-200 transition-colors">
+                    Operator Model
+                  </a>
+                  <a href="/intern" className="inline-block px-5 py-2 border-2 border-accent-300 text-accent-300 font-bold text-xs uppercase tracking-widest text-center hover:bg-accent-950/30 transition-colors">
+                    Intern Model
+                  </a>
+                </div>
+              </div>
+            </div>
+
+            <h3 className="text-[10px] font-mono font-bold text-primary-400 uppercase tracking-widest text-center mb-12">Example Mechanisms</h3>
             
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-              {/* Pillar 1: Sovereign Commerce Affiliates */}
+              {/* Example 1: Sovereign Commerce Affiliates */}
               <div className="retro-box p-0 group">
                 <div className="retro-header-bar">
-                  <span>PILLAR_01</span>
+                  <span>EXAMPLE_01</span>
                   <span className="text-[10px] font-mono text-primary-400 border border-primary-700 px-2 py-0.5 rounded">SOVEREIGN</span>
                 </div>
                 <div className="p-8 bg-primary-800 flex flex-col h-full">
@@ -71,10 +96,10 @@ export default function MonetizationPage() {
                 </div>
               </div>
 
-              {/* Pillar 2: Developer APIs */}
+              {/* Example 2: Developer APIs */}
               <div className="retro-box p-0 group">
                 <div className="retro-header-bar">
-                  <span>PILLAR_02</span>
+                  <span>EXAMPLE_02</span>
                   <span className="text-[10px] font-mono text-accent-300 border border-accent-300/30 px-2 py-0.5 rounded">PER-USE</span>
                 </div>
                 <div className="p-8 bg-primary-800 flex flex-col h-full">
@@ -96,10 +121,10 @@ export default function MonetizationPage() {
                 </div>
               </div>
 
-              {/* Pillar 3: Commercial Licensing */}
+              {/* Example 3: Commercial Licensing */}
               <div className="retro-box p-0 group">
                 <div className="retro-header-bar">
-                  <span>PILLAR_03</span>
+                  <span>EXAMPLE_03</span>
                   <span className="text-[10px] font-mono text-yellow-400 border border-yellow-400/30 px-2 py-0.5 rounded">ENTERPRISE</span>
                 </div>
                 <div className="p-8 bg-primary-800 flex flex-col h-full">
@@ -211,7 +236,7 @@ export default function MonetizationPage() {
                   <h4 className="font-bold text-accent-300 mb-3 uppercase tracking-wider font-mono text-sm">Financial Transparency</h4>
                   <ul className="space-y-2 text-primary-300 text-sm leading-relaxed">
                     <li className="flex items-center gap-2">• Quarterly sustainability reports published on <a href="/blog" className="text-accent-300 hover:underline">the blog</a></li>
-                    <li className="flex items-center gap-2">• Revenue breakdown by pillar (affiliates / APIs / licensing)</li>
+                    <li className="flex items-center gap-2">• Revenue breakdown by mechanism (examples, plus any operator-introduced innovations)</li>
                     <li className="flex items-center gap-2">• Operating costs vs. revenue — no hidden burn</li>
                     <li className="flex items-center gap-2">• No VC equity → no exit pressure</li>
                   </ul>
