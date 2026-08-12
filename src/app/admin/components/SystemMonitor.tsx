@@ -68,7 +68,7 @@ export default function SystemMonitor() {
       const randomMsg = messages[Math.floor(Math.random() * messages.length)]
       setLogs((prev) => {
         const next = [...prev, { timestamp: time, ...randomMsg }]
-        if (next.length > 30) next.shift() // Limit to 30 items
+        if (next.length > 16) next.splice(0, next.length - 16) // Keep the terminal lightweight
         return next
       })
 
@@ -84,14 +84,14 @@ export default function SystemMonitor() {
           }
         })
       )
-    }, 4000)
+    }, 10000)
 
     return () => clearInterval(logInterval)
   }, [])
 
   // Scroll terminal to bottom
   useEffect(() => {
-    terminalEndRef.current?.scrollIntoView({ behavior: 'smooth' })
+    terminalEndRef.current?.scrollIntoView({ block: 'nearest' })
   }, [logs])
 
   const triggerNodePing = (node: NodeStatus) => {
