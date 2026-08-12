@@ -20,11 +20,17 @@ interface BlogPostPageProps {
 }
 
 export async function generateStaticParams() {
-  const posts = await prisma.blog.findMany({
-    where: { published: true },
-    select: { slug: true },
-  })
-  return posts.map((post) => ({ slug: post.slug }))
+  try {
+    const posts = await prisma.blog.findMany({
+      where: { published: true },
+      select: { slug: true },
+    })
+    return posts.map((post) => ({ slug: post.slug }))
+  } catch (error) {
+    // Allow local builds and preview deployments to complete without a live database.
+    console.warn('Skipping blog static params because the database is unavailable.', error)
+    return []
+  }
 }
 
 export async function generateMetadata({ params }: BlogPostPageProps): Promise<Metadata> {

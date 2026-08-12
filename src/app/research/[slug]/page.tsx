@@ -20,11 +20,17 @@ interface ResearchPaperPageProps {
 }
 
 export async function generateStaticParams() {
-  const papers = await prisma.researchPaper.findMany({
-    where: { published: true },
-    select: { slug: true },
-  })
-  return papers.map((paper) => ({ slug: paper.slug }))
+  try {
+    const papers = await prisma.researchPaper.findMany({
+      where: { published: true },
+      select: { slug: true },
+    })
+    return papers.map((paper) => ({ slug: paper.slug }))
+  } catch (error) {
+    // Allow local builds and preview deployments to complete without a live database.
+    console.warn('Skipping research static params because the database is unavailable.', error)
+    return []
+  }
 }
 
 export async function generateMetadata({ params }: ResearchPaperPageProps): Promise<Metadata> {
