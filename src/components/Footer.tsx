@@ -58,7 +58,7 @@ export default function Footer() {
           <div className="col-span-2 md:col-span-2">
             <Link href="/" className="flex items-center space-x-3 mb-4">
               <div className="relative w-9 h-9">
-                <Image src="/favicon-128x128.png" alt="Oxiverse Logo" fill sizes="36px" className="object-contain" />
+                <Image src="/oxiverse-logo.svg" alt="Oxiverse Logo" fill sizes="36px" className="object-contain" />
               </div>
               <span className="text-lg font-bold font-display text-primary-50 uppercase">Oxiverse</span>
             </Link>

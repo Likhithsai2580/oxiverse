@@ -39,3 +39,20 @@ yarn-error.log*
 # Misc
 .DS_Store
 nul
+.pytest_cache/
+dist/
+*.log
+__pycache__/
+.venv/
+
+# Build artifacts
+*.tsbuildinfo
+
+# Scratch / one-off scripts
+/scratch/
+
+# User-generated uploads (media should live in storage, not git)
+/public/uploads/
+
+# Redundant favicon backup (duplicate of public/)
+/favicons/

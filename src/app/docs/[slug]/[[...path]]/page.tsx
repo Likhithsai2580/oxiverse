@@ -252,7 +252,7 @@ export default async function ProjectDocsPage({ params }: PageProps) {
       "name": "Oxiverse",
       "logo": {
         "@type": "ImageObject",
-        "url": "https://oxiverse.com/logo.png"
+        "url": "https://oxiverse.com/oxiverse-logo.svg"
       }
     },
     "mainEntityOfPage": {

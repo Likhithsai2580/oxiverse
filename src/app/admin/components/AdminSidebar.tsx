@@ -101,7 +101,7 @@ export default function AdminSidebar({ onClose }: { onClose?: () => void }) {
         <Link href="/" className="flex items-center gap-3 group">
           <div className="relative w-8 h-8 group-hover:scale-110 transition-transform">
             <Image 
-              src="/favicon-256x256.png" 
+              src="/oxiverse-logo.svg" 
               alt="Oxiverse Logo" 
               fill 
               priority

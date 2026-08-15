@@ -47,7 +47,7 @@ export default function AdminLoginPage() {
         <div className="text-center mb-8">
           <div className="relative w-16 h-16 mx-auto mb-4">
             <Image 
-              src="/favicon-256x256.png" 
+              src="/oxiverse-logo.svg" 
               alt="Oxiverse Logo" 
               fill 
               className="object-contain"

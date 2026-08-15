@@ -2,7 +2,6 @@
 
 import React from 'react'
 import Section from '@/components/ui/Section'
-import Image from 'next/image'
 import { motion } from 'framer-motion'
 import Link from 'next/link'
 
@@ -73,12 +72,6 @@ export default function Features() {
           </div>
           <div className="relative flex-1 bg-primary-900">
             <div className="absolute inset-0 z-10 bg-gradient-to-t from-primary-950 via-transparent to-transparent" />
-            <Image
-              src="/oxiverse-ecosystem-2.jpg"
-              alt="Ecosystem Map"
-              fill
-              className="object-cover opacity-50 group-hover:opacity-70 transition-opacity duration-700"
-            />
             <div className="absolute bottom-0 left-0 right-0 p-8 z-20">
               <span className="block text-accent-300 font-mono text-xs uppercase tracking-widest mb-3">Live Environment</span>
               <h3 className="font-display text-3xl md:text-4xl text-primary-50 font-bold uppercase tracking-tight max-w-lg">

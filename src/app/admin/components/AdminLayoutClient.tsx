@@ -24,7 +24,7 @@ export default function AdminLayoutClient({
         <div className="flex items-center gap-2">
            <div className="relative w-8 h-8">
             <Image 
-              src="/favicon-256x256.png" 
+              src="/oxiverse-logo.svg" 
               alt="Oxiverse Logo" 
               fill 
               priority

@@ -60,7 +60,7 @@ export default function Navigation() {
         <div className="flex items-center justify-between h-14 md:h-16">
           <Link href="/" className="flex items-center space-x-3 group relative z-[60]" onClick={() => setActiveSection('home')}>
             <div className="relative w-9 h-9">
-              <Image src="/favicon-256x256.png" alt="Oxiverse Logo" fill priority sizes="36px" className="object-contain" />
+              <Image src="/oxiverse-logo.svg" alt="Oxiverse Logo" fill priority sizes="36px" className="object-contain" />
             </div>
             <span className="text-lg font-black font-display tracking-tight text-primary-50 group-hover:text-accent-300 transition-colors uppercase">
               Oxiverse

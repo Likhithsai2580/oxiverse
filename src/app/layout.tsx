@@ -59,9 +59,12 @@ export const metadata: Metadata = {
   },
   icons: {
     icon: [
+      { url: '/oxiverse-logo.svg', type: 'image/svg+xml' },
       { url: '/favicon-16x16.png', sizes: '16x16', type: 'image/png' },
       { url: '/favicon-32x32.png', sizes: '32x32', type: 'image/png' },
+      { url: '/favicon-48x48.png', sizes: '48x48', type: 'image/png' },
     ],
+    shortcut: '/favicon.ico',
     apple: [
       { url: '/apple-touch-icon.png', sizes: '180x180', type: 'image/png' },
     ],
@@ -123,7 +126,7 @@ export default function RootLayout({
       '@type': 'Organization',
       name: 'Oxiverse',
       url: 'https://oxiverse.com',
-      logo: 'https://oxiverse.com/favicon-128x128.png',
+      logo: 'https://oxiverse.com/oxiverse-logo.svg',
       description: 'A privacy-first ecosystem specializing in intent-based discovery, search technology, and secure productivity tools.',
       founder: {
         '@type': 'Person',

@@ -183,7 +183,7 @@ export default async function ResearchPaperPage({ params }: ResearchPaperPagePro
       name: 'Oxiverse',
       logo: {
         '@type': 'ImageObject',
-        url: 'https://oxiverse.com/favicon-256x256.png'
+        url: 'https://oxiverse.com/oxiverse-logo.svg'
       },
       url: 'https://oxiverse.com'
     },
