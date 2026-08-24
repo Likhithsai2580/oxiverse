@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server'
 import { prisma } from '@/lib/prisma'
 import { getServerSession } from 'next-auth'
 import { authOptions } from '@/lib/authOptions'
+import { requireAdmin } from '@/lib/auth'
 
 export async function GET(
   req: NextRequest,
@@ -26,6 +27,8 @@ export async function PUT(
   req: NextRequest,
   { params }: { params: { id: string } }
 ) {
+  const guard = await requireAdmin()
+  if (guard) return guard
   const session = await getServerSession(authOptions)
 
   if (!session) {
@@ -55,6 +58,8 @@ export async function DELETE(
   req: NextRequest,
   { params }: { params: { id: string } }
 ) {
+  const guard = await requireAdmin()
+  if (guard) return guard
   const session = await getServerSession(authOptions)
 
   if (!session) {

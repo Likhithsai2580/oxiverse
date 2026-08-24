@@ -1,9 +1,8 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { getServerSession } from 'next-auth'
-import { authOptions } from '@/lib/authOptions'
 import { prisma } from '@/lib/prisma'
 import { z } from 'zod'
 import { DisplayMode, ProjectStatus } from '@prisma/client'
+import { requireAdmin } from '@/lib/auth'
 
 const ProjectSchema = z.object({
   title: z.string().min(1, 'Title is required'),
@@ -28,9 +27,9 @@ export async function GET(req: NextRequest, { params }: { params: { id: string }
 }
 
 export async function PUT(req: NextRequest, { params }: { params: { id: string } }) {
+  const guard = await requireAdmin()
+  if (guard) return guard
   try {
-    const session = await getServerSession(authOptions)
-    if (!session) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
 
     const json = await req.json()
     const result = ProjectSchema.safeParse(json)
@@ -76,9 +75,9 @@ export async function PUT(req: NextRequest, { params }: { params: { id: string }
 }
 
 export async function DELETE(req: NextRequest, { params }: { params: { id: string } }) {
+  const guard = await requireAdmin()
+  if (guard) return guard
   try {
-    const session = await getServerSession(authOptions)
-    if (!session) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
 
     await prisma.project.delete({
       where: { id: params.id }

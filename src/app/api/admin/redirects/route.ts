@@ -1,8 +1,11 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { prisma } from '@/lib/prisma'
+import { requireAdmin } from '@/lib/auth'
 
 // GET /api/admin/redirects — list all redirects
 export async function GET() {
+  const guard = await requireAdmin()
+  if (guard) return guard
   const redirects = await prisma.slugRedirect.findMany({
     orderBy: { createdAt: 'desc' },
   })
@@ -11,6 +14,8 @@ export async function GET() {
 
 // POST /api/admin/redirects — create a redirect
 export async function POST(request: NextRequest) {
+  const guard = await requireAdmin()
+  if (guard) return guard
   const body = await request.json()
   const { oldPath, newPath, type } = body
 
@@ -29,6 +34,8 @@ export async function POST(request: NextRequest) {
 
 // DELETE /api/admin/redirects — delete a redirect
 export async function DELETE(request: NextRequest) {
+  const guard = await requireAdmin()
+  if (guard) return guard
   const { searchParams } = new URL(request.url)
   const id = searchParams.get('id')
 

@@ -4,6 +4,7 @@ import { authOptions } from '@/lib/authOptions'
 import { prisma } from '@/lib/prisma'
 import { slugify } from '@/lib/utils'
 import { revalidatePath } from 'next/cache'
+import { requireAdmin } from '@/lib/auth'
 
 // GET /api/research/[id] - Get a single research paper
 export async function GET(
@@ -44,6 +45,8 @@ export async function PUT(
   request: NextRequest,
   { params }: { params: { id: string } }
 ) {
+  const guard = await requireAdmin()
+  if (guard) return guard
   try {
     const session = await getServerSession(authOptions)
     if (!session?.user) {
@@ -117,6 +120,8 @@ export async function DELETE(
   request: NextRequest,
   { params }: { params: { id: string } }
 ) {
+  const guard = await requireAdmin()
+  if (guard) return guard
   try {
     const session = await getServerSession(authOptions)
     if (!session?.user) {
