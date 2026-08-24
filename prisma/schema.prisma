@@ -121,6 +121,7 @@ model Project {
   status       ProjectStatus?
   link         String?
   hostedUrl    String?
+  docsUrl      String?        // External docs URL (e.g. https://docs.oxiverse.com/docs/<slug>); null = hide docs button
   createdAt    DateTime       @default(now())
   updatedAt    DateTime       @updatedAt
   imageUrl     String?
