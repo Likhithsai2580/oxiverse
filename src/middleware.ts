@@ -16,8 +16,9 @@ const STATIC_REDIRECTS: Record<string, string> = {
   // Research renames
   '/research/ravana-cognitive-dissonance-in-agi-alignment':
     '/research/ravana-cognitive-dissonance',
-  '/research/intentforge-a-privacy-preserving-self-improving-intent-driven-search-platform':
-    '/research/intentforge',
+  // NOTE: the long intentforge slug IS the current published slug; its old
+  // mapping to /research/intentforge pointed at a dead slug and 404'd, so it
+  // was removed. Add a mapping here only if the source slug no longer exists.
   // Legacy paths
   '/tos': '/terms',
   // Deleted pages → redirect to closest parent
