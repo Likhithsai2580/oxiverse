@@ -39,6 +39,7 @@ export default function AdminProjectEditPage() {
     status: 'current',
     link: '',
     hostedUrl: '',
+    docsUrl: '',
     imageUrl: '',
     imageDisplay: 'cover',
   })
@@ -64,6 +65,7 @@ export default function AdminProjectEditPage() {
           status: project.status || 'current',
           link: project.link || '',
           hostedUrl: project.hostedUrl || '',
+          docsUrl: project.docsUrl || '',
           imageUrl: project.imageUrl || '',
           imageDisplay: project.imageDisplay || 'cover',
         })
@@ -256,6 +258,14 @@ export default function AdminProjectEditPage() {
                 value={formData.link}
                 onChange={(e) => setFormData({ ...formData, link: e.target.value })}
                 placeholder="https://github.com/..."
+                className="font-mono text-xs"
+              />
+
+              <Input
+                label="Public Docs URL (e.g. https://docs.oxiverse.com/docs/slug)"
+                value={formData.docsUrl}
+                onChange={(e) => setFormData({ ...formData, docsUrl: e.target.value })}
+                placeholder="https://docs.oxiverse.com/docs/intentforge"
                 className="font-mono text-xs"
               />
             </div>

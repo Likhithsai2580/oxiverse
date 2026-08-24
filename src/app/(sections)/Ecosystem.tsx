@@ -68,9 +68,11 @@ export default async function Ecosystem() {
                 </p>
 
                 <div className="mt-auto pt-6 flex flex-col gap-3">
-                  {project.link && (
+                  {project.docsUrl && (
                     <Link
-                      href={`/docs/${project.slug}`}
+                      href={project.docsUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
                       className="text-xs font-bold font-mono text-primary-400 uppercase tracking-widest flex items-center gap-2 hover:text-accent-300 transition-colors w-fit"
                     >
                       Documentation

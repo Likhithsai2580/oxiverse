@@ -11,6 +11,7 @@ const ProjectSchema = z.object({
   status: z.nativeEnum(ProjectStatus).optional().nullable(),
   link: z.string().url('Invalid URL').optional().nullable().or(z.literal('')),
   hostedUrl: z.string().url('Invalid URL').optional().nullable().or(z.literal('')),
+  docsUrl: z.string().url('Invalid URL').optional().nullable().or(z.literal('')),
   imageUrl: z.string().optional().nullable(),
   imageDisplay: z.nativeEnum(DisplayMode).default(DisplayMode.cover),
 })
@@ -63,6 +64,7 @@ export async function PUT(req: NextRequest, { params }: { params: { id: string }
         status: data.status,
         link: data.link,
         hostedUrl: data.hostedUrl,
+        docsUrl: data.docsUrl,
         imageUrl: data.imageUrl,
         imageDisplay: data.imageDisplay,
       }

@@ -22,6 +22,6 @@ export default async function ProjectDocsPage({ params }: PageProps) {
 
   const currentPathSegments = params.path || []
   const subPath = currentPathSegments.join('/')
-  const url = `https://docs.oxiverse.com/${project.slug}${subPath ? '/' + subPath : ''}`
+  const url = `https://docs.oxiverse.com/docs/${project.slug}${subPath ? '/' + subPath : ''}`
   redirect(url)
 }
