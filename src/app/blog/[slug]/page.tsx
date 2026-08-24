@@ -199,6 +199,19 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
           transition={{ duration: 0.6 }}
           className="border-b border-dark-700 pb-12"
         >
+          {blog.imageUrl && (
+            <div className="relative w-full h-56 md:h-80 rounded-2xl overflow-hidden bg-white/5 border border-white/10 shadow-2xl mb-8">
+              <Image
+                src={blog.imageUrl}
+                alt={blog.title}
+                fill
+                priority
+                sizes="(max-width: 768px) 100vw, 768px"
+                className={`object-${blog.imageDisplay || 'cover'}`}
+              />
+            </div>
+          )}
+
           <div className="flex items-center gap-2 mb-6 text-primary-400 text-sm font-medium tracking-wider uppercase">
             <Link href="/blog" className="hover:text-primary-300 transition-colors">Blog</Link>
             <span>•</span>
@@ -214,18 +227,6 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
           </h1>
           
           <div className="flex items-center gap-4">
-            {blog.imageUrl && (
-              <div className="w-14 h-14 rounded-xl bg-white/5 border border-white/10 shadow-lg overflow-hidden flex items-center justify-center p-1.5 flex-shrink-0">
-                <Image
-                  src={blog.imageUrl}
-                  alt={blog.title}
-                  width={48}
-                  height={48}
-                  className="w-full h-full object-contain"
-                  priority
-                />
-              </div>
-            )}
             <div className="flex items-center gap-3 bg-white/5 px-4 py-2 rounded-full border border-white/10">
               <div className="relative w-8 h-8 rounded-full overflow-hidden border border-white/20">
                 {(blog.author as any).image ? (

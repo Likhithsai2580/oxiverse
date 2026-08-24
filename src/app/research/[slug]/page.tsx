@@ -214,6 +214,19 @@ export default async function ResearchPaperPage({ params }: ResearchPaperPagePro
           transition={{ duration: 0.6 }}
           className="border-b border-dark-700 pb-12"
         >
+          {paper.imageUrl && (
+            <div className="relative w-full h-56 md:h-80 rounded-2xl overflow-hidden bg-white/5 border border-white/10 shadow-2xl mb-8">
+              <Image
+                src={paper.imageUrl}
+                alt={paper.title}
+                fill
+                priority
+                sizes="(max-width: 768px) 100vw, 768px"
+                className={`object-${paper.imageDisplay || 'cover'}`}
+              />
+            </div>
+          )}
+
           <div className="flex items-center gap-2 mb-6 text-accent-400 text-sm font-medium tracking-wider uppercase">
             <Link href="/research" className="hover:text-accent-300 transition-colors">Research</Link>
             <span>•</span>
@@ -229,20 +242,7 @@ export default async function ResearchPaperPage({ params }: ResearchPaperPagePro
           </h1>
           
           <div className="flex items-center justify-between flex-wrap gap-6">
-            <div className="flex items-center gap-4">
-              {paper.imageUrl && (
-                <div className="w-14 h-14 rounded-xl bg-white/5 border border-white/10 shadow-lg overflow-hidden flex items-center justify-center p-1.5 flex-shrink-0">
-                  <Image
-                    src={paper.imageUrl}
-                    alt={paper.title}
-                    width={48}
-                    height={48}
-                    className="w-full h-full object-contain"
-                    priority
-                  />
-                </div>
-              )}
-              <div className="flex items-center gap-3 bg-white/5 px-4 py-2 rounded-full border border-white/10">
+            <div className="flex items-center gap-3 bg-white/5 px-4 py-2 rounded-full border border-white/10">
                 <div className="relative w-8 h-8 rounded-full overflow-hidden border border-white/20">
                   {(paper.author as any).image ? (
                     <Image
@@ -259,7 +259,6 @@ export default async function ResearchPaperPage({ params }: ResearchPaperPagePro
                 </div>
                 <span className="text-sm font-medium text-dark-200">{(paper.author as any).name || (paper.author as any).email}</span>
               </div>
-            </div>
 
             {paper.pdfUrl && (
               <a
@@ -301,7 +300,23 @@ export default async function ResearchPaperPage({ params }: ResearchPaperPagePro
           transition={{ duration: 0.6, delay: 0.5 }}
           className="pb-12"
         >
-          {paper.pdfUrl ? (
+          {paper.content ? (
+            <div className="prose prose-invert prose-lg max-w-none 
+              prose-p:text-dark-300 prose-p:leading-relaxed
+              prose-headings:text-white prose-headings:font-bold
+              prose-a:text-primary-400 prose-a:no-underline hover:prose-a:text-primary-300
+              prose-strong:text-white prose-code:text-accent-300
+              prose-img:rounded-2xl prose-blockquote:border-accent-500
+              prose-blockquote:bg-dark-900/50 prose-blockquote:py-1 prose-blockquote:px-6
+            ">
+              <ReactMarkdown 
+                remarkPlugins={[remarkGfm]}
+                components={MarkdownComponents}
+              >
+                {paper.content}
+              </ReactMarkdown>
+            </div>
+          ) : paper.pdfUrl ? (
             <div className="space-y-6">
               <div className="relative w-full h-[850px] bg-dark-900/50 rounded-2xl border border-white/10 shadow-2xl overflow-hidden">
                 <iframe
@@ -319,27 +334,11 @@ export default async function ResearchPaperPage({ params }: ResearchPaperPagePro
                   className="inline-flex items-center px-6 py-3 bg-white/5 hover:bg-white/10 border border-white/10 text-white rounded-xl font-bold transition-all"
                 >
                   <svg className="w-5 h-5 mr-2 text-primary-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 003 3h10a3 3 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
                   </svg>
                   Open PDF in New Tab
                 </a>
               </div>
-            </div>
-          ) : paper.content ? (
-            <div className="prose prose-invert prose-lg max-w-none 
-              prose-p:text-dark-300 prose-p:leading-relaxed
-              prose-headings:text-white prose-headings:font-bold
-              prose-a:text-primary-400 prose-a:no-underline hover:prose-a:text-primary-300
-              prose-strong:text-white prose-code:text-accent-300
-              prose-img:rounded-2xl prose-blockquote:border-accent-500
-              prose-blockquote:bg-dark-900/50 prose-blockquote:py-1 prose-blockquote:px-6
-            ">
-              <ReactMarkdown 
-                remarkPlugins={[remarkGfm]}
-                components={MarkdownComponents}
-              >
-                {paper.content}
-              </ReactMarkdown>
             </div>
           ) : (
             <div className="text-center py-20 bg-dark-900/30 rounded-3xl border border-white/5">
@@ -347,6 +346,23 @@ export default async function ResearchPaperPage({ params }: ResearchPaperPagePro
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
               </svg>
               <p className="text-dark-400 text-lg">Full research text is currently only available via the PDF download.</p>
+            </div>
+          )}
+
+          {/* PDF attachment — always available when uploaded, regardless of parsed markdown */}
+          {paper.pdfUrl && paper.content && (
+            <div className="flex justify-center mt-8 pt-8 border-t border-dark-700">
+              <a
+                href={paper.pdfUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center px-6 py-3 bg-white/5 hover:bg-white/10 border border-white/10 text-white rounded-xl font-bold transition-all"
+              >
+                <svg className="w-5 h-5 mr-2 text-primary-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 003 3h10a3 3 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+                </svg>
+                Open Original PDF
+              </a>
             </div>
           )}
         </motion.div>
