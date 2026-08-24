@@ -25,7 +25,7 @@ const sections = [
     title: 'Revenue Distribution',
     body: [
       'The split is calculated on Net Revenue = Gross Revenue minus Operating Costs (infrastructure, hosting, tooling, and any direct operational spend).',
-      '70% goes to the team, distributed among members via peer voting. 30% is retained by Oxiverse Systems LLP for core R&D and non-monetized services. The exact mathematical implementation is defined by the ORDP (Revenue Distribution Protocol).',
+      '30% is retained by Oxiverse Systems LLP for core R&D and non-monetized services. The ORDP (Oxiverse Revenue Distribution Protocol) is then applied to the remaining 70% to distribute it among the team via peer voting.',
     ],
   },
   {

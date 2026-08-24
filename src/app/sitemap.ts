@@ -16,6 +16,12 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     select: { slug: true, updatedAt: true },
   })
 
+  // Fetch all published CMS pages
+  const cmsPages = await prisma.cmsPage.findMany({
+    where: { published: true },
+    select: { slug: true, updatedAt: true },
+  })
+
   // Fetch all projects for docs
   const projects = await prisma.project.findMany({
     select: { slug: true, link: true, updatedAt: true },
@@ -32,6 +38,8 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     '/docs',
     '/cofounder',
     '/faq',
+    '/pages',
+    '/banners',
   ].map((route) => ({
     url: `${baseUrl}${route}`,
     lastModified: new Date(),
@@ -55,11 +63,18 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     images: paper.imageUrl ? [paper.imageUrl] : [],
   }))
 
-  // Documentation routes
+  const cmsPageRoutes = cmsPages.map((page) => ({
+    url: `${baseUrl}/pages/${page.slug}`,
+    lastModified: page.updatedAt,
+    changeFrequency: 'weekly' as const,
+    priority: 0.6,
+  }))
+
+  // Documentation routes (canonical host: docs.oxiverse.com)
   const docRoutes: MetadataRoute.Sitemap = []
   for (const project of projects) {
     docRoutes.push({
-      url: `${baseUrl}/docs/${project.slug}`,
+      url: `https://docs.oxiverse.com/${project.slug}`,
       lastModified: project.updatedAt,
       changeFrequency: 'weekly' as const,
       priority: 0.6,
@@ -80,7 +95,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
                 const relativePath = item.path.replace('docs/', '').replace('.md', '')
                 if (relativePath.toLowerCase() !== 'readme' && relativePath.toLowerCase() !== 'index') {
                   docRoutes.push({
-                    url: `${baseUrl}/docs/${project.slug}/${relativePath}`,
+                    url: `https://docs.oxiverse.com/${project.slug}/${relativePath}`,
                     lastModified: project.updatedAt,
                     changeFrequency: 'weekly' as const,
                     priority: 0.5,
@@ -95,5 +110,5 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     }
   }
 
-  return [...routes, ...blogRoutes, ...researchRoutes, ...docRoutes]
+  return [...routes, ...blogRoutes, ...researchRoutes, ...cmsPageRoutes, ...docRoutes]
 }

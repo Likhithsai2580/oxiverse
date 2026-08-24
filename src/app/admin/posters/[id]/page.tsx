@@ -1,9 +1,26 @@
 'use client'
 
-import { useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useRouter, useParams } from 'next/navigation'
-import { Card, Button, Input, Spinner } from '@/components/ui'
+import {
+  Card,
+  CardHeader,
+  CardTitle,
+  CardContent,
+  Button,
+  Input,
+  Dialog,
+} from '@/components/admin/ui'
 import { useToastContext } from '@/lib/providers/ToastProvider'
+import AssetBrowser from '../../components/AssetBrowser'
+import {
+  Save,
+  ArrowLeft,
+  Trash2,
+  Image as ImageIcon,
+  ExternalLink,
+} from 'lucide-react'
+import Link from 'next/link'
 
 export default function AdminPosterEditPage() {
   const router = useRouter()
@@ -12,6 +29,7 @@ export default function AdminPosterEditPage() {
   const [isLoading, setIsLoading] = useState(false)
   const [isFetching, setIsFetching] = useState(false)
   const [isUploading, setIsUploading] = useState(false)
+  const [showAssetBrowser, setShowAssetBrowser] = useState(false)
   const [formData, setFormData] = useState({
     title: '',
     imageUrl: '',
@@ -33,8 +51,8 @@ export default function AdminPosterEditPage() {
       if (res.ok) {
         const data = await res.json()
         setFormData({
-          title: data.title,
-          imageUrl: data.imageUrl,
+          title: data.title || '',
+          imageUrl: data.imageUrl || '',
           link: data.link || '',
         })
       } else {
@@ -54,7 +72,7 @@ export default function AdminPosterEditPage() {
     if (!file) return
 
     if (file.size > 4.5 * 1024 * 1024) {
-      error('Image size exceeds 4.5MB limit. Vercel restricts uploads to 4.5MB. Please upload a smaller image.')
+      error('Image size exceeds 4.5MB limit.')
       e.target.value = ''
       return
     }
@@ -72,24 +90,38 @@ export default function AdminPosterEditPage() {
 
       if (res.ok) {
         const data = await res.json()
-        setFormData(prev => ({ ...prev, imageUrl: data.url }))
-        success('Image uploaded successfully!')
+        setFormData((prev) => ({ ...prev, imageUrl: data.url }))
+        success('Poster image uploaded!')
       } else {
         const data = await res.json()
         error(data.error || 'Failed to upload image')
       }
     } catch (err) {
-      error('An error occurred while uploading the image')
+      error('An error occurred while uploading image')
     } finally {
       setIsUploading(false)
       e.target.value = ''
     }
   }
 
+  const handleAssetSelect = (url: string) => {
+    setFormData((prev) => ({ ...prev, imageUrl: url }))
+    setShowAssetBrowser(false)
+  }
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
-    setIsLoading(true)
 
+    if (!formData.title.trim()) {
+      error('Poster title is required')
+      return
+    }
+    if (!formData.imageUrl.trim()) {
+      error('Poster image is required')
+      return
+    }
+
+    setIsLoading(true)
     try {
       const url = isEdit ? `/api/posters/${params.id}` : '/api/posters'
       const method = isEdit ? 'PUT' : 'POST'
@@ -116,115 +148,140 @@ export default function AdminPosterEditPage() {
 
   if (isFetching) {
     return (
-      <div className="p-8 flex items-center justify-center min-h-[400px]">
-        <Spinner size="lg" />
+      <div className="p-12 flex items-center justify-center min-h-[400px]">
+        <div className="flex flex-col items-center gap-3 text-zinc-400">
+          <div className="w-8 h-8 rounded-full border-2 border-sky-400 border-t-transparent animate-spin" />
+          <p className="text-xs">Loading poster details...</p>
+        </div>
       </div>
     )
   }
 
   return (
-    <div className="p-8 pb-20 max-w-5xl mx-auto">
-      <div className="flex items-center justify-between mb-8">
-        <div>
-          <h1 className="text-3xl font-bold text-white mb-2">
-            {isEdit ? 'Refine Visual' : 'New Aesthetic Artifact'}
-          </h1>
-          <p className="text-dark-400">Manage visual posters and external links</p>
+    <form onSubmit={handleSubmit} className="p-6 sm:p-8 max-w-5xl mx-auto space-y-6 pb-24">
+      {/* Top action header */}
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-zinc-800/80 pb-5">
+        <div className="flex items-center gap-3">
+          <Link href="/admin/posters">
+            <Button type="button" variant="ghost" size="icon" className="h-8 w-8">
+              <ArrowLeft className="w-4 h-4" />
+            </Button>
+          </Link>
+          <div>
+            <h1 className="text-xl sm:text-2xl font-black text-white tracking-tight">
+              {isEdit ? 'Edit Visual Poster' : 'New Visual Artifact'}
+            </h1>
+            <p className="text-xs text-zinc-400">Manage promotional posters and gallery graphics</p>
+          </div>
         </div>
-        <Button
-          variant="ghost"
-          onClick={() => router.push('/admin/posters')}
-          disabled={isLoading}
-        >
-          Cancel
+
+        <Button type="submit" variant="accent" size="sm" isLoading={isLoading} className="font-bold">
+          <Save className="w-3.5 h-3.5 mr-1.5" />
+          Save Poster
         </Button>
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
-        <div className="space-y-8">
-          <Card className="bg-dark-900/40 border-white/5 p-6">
-            <form onSubmit={handleSubmit} className="space-y-6">
-              <Input
-                label="Artifact Name"
-                value={formData.title}
-                onChange={(e) => setFormData({ ...formData, title: e.target.value })}
-                placeholder="Poster Title"
-                required
-                disabled={isLoading}
-                className="bg-dark-950/50 border-white/5 focus:border-primary-500/30 font-bold"
-              />
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
+        {/* Form Fields */}
+        <div className="lg:col-span-7 space-y-6">
+          <Card className="p-5 border-zinc-800/80 bg-zinc-950/70 space-y-4">
+            <Input
+              label="Poster Name / Title"
+              value={formData.title}
+              onChange={(e) => setFormData({ ...formData, title: e.target.value })}
+              placeholder="e.g. Genesis Protocol Visualization"
+              required
+              className="text-base font-bold"
+            />
 
-              <div className="space-y-2">
-                <label className="text-sm font-medium text-dark-300">Visual Asset</label>
-                <div className="flex gap-4">
-                  <Input
-                    value={formData.imageUrl}
-                    onChange={(e) => setFormData({ ...formData, imageUrl: e.target.value })}
-                    placeholder="URL or Upload"
-                    required
-                    disabled={isLoading}
-                    className="flex-1 bg-dark-950/50 border-white/5 focus:border-primary-500/30"
+            <div className="space-y-2">
+              <label className="text-xs font-semibold text-zinc-300 block">Poster Image</label>
+              <div className="flex gap-2">
+                <Input
+                  value={formData.imageUrl}
+                  onChange={(e) => setFormData({ ...formData, imageUrl: e.target.value })}
+                  placeholder="Paste image URL or upload"
+                  required
+                  className="flex-1 font-mono text-xs"
+                />
+                <label className="relative">
+                  <input
+                    type="file"
+                    accept="image/png, image/jpeg, image/gif, image/webp"
+                    onChange={handleImageUpload}
+                    className="hidden"
+                    disabled={isUploading}
                   />
-                  <div className="relative group">
-                    <input
-                      type="file"
-                      accept="image/png, image/jpeg, image/gif, image/webp"
-                      onChange={handleImageUpload}
-                      className="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-10"
-                      disabled={isUploading || isLoading}
-                    />
-                    <Button variant="outline" className="glass" disabled={isUploading || isLoading}>
-                      {isUploading ? <Spinner size="sm" /> : 'Upload'}
-                    </Button>
-                  </div>
-                </div>
-                <p className="text-[10px] text-dark-500 uppercase tracking-widest">Supports PNG, JPG, WEBP • Max 5MB</p>
+                  <Button
+                    type="button"
+                    variant="outline"
+                    disabled={isUploading}
+                    isLoading={isUploading}
+                    onClick={() => (document.querySelector('input[type="file"]') as HTMLInputElement)?.click()}
+                  >
+                    Upload
+                  </Button>
+                </label>
+                <Button
+                  type="button"
+                  variant="secondary"
+                  onClick={() => setShowAssetBrowser(true)}
+                >
+                  Library
+                </Button>
               </div>
+            </div>
 
-              <Input
-                label="Redirect Link (Optional)"
-                value={formData.link}
-                onChange={(e) => setFormData({ ...formData, link: e.target.value })}
-                placeholder="https://example.com/details"
-                disabled={isLoading}
-                className="bg-dark-950/50 border-white/5 focus:border-primary-500/30"
-              />
-
-              <Button type="submit" variant="primary" className="w-full shadow-lg shadow-primary-500/20" disabled={isLoading}>
-                {isLoading ? <Spinner size="sm" /> : isEdit ? 'Commit Changes' : 'Initialize Artifact'}
-              </Button>
-            </form>
+            <Input
+              label="External Redirect URL (Optional)"
+              value={formData.link}
+              onChange={(e) => setFormData({ ...formData, link: e.target.value })}
+              placeholder="https://..."
+              className="font-mono text-xs"
+            />
           </Card>
         </div>
 
-        <div className="space-y-4">
-           <h3 className="text-sm font-black uppercase tracking-widest text-dark-500">Live Preview</h3>
-          {formData.imageUrl ? (
-            <Card className="p-0 overflow-hidden bg-dark-900 border-white/10 shadow-2xl relative group">
-              <div className="aspect-[3/4] relative">
+        {/* Live Preview Card */}
+        <div className="lg:col-span-5 space-y-3">
+          <span className="text-xs font-bold text-zinc-400 uppercase tracking-wider block">
+            Live Card Preview
+          </span>
+          <Card className="p-0 overflow-hidden border-zinc-800/80 bg-zinc-950 shadow-2xl">
+            {formData.imageUrl ? (
+              <div className="aspect-[3/4] relative bg-zinc-950">
                 <img
                   src={formData.imageUrl}
                   alt={formData.title || 'Preview'}
                   className="w-full h-full object-cover"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-dark-950/90 via-transparent to-transparent flex flex-col justify-end p-6">
-                  <h4 className="text-white font-bold text-2xl truncate">{formData.title || 'Artifact Title'}</h4>
-                  <p className="text-dark-400 text-sm mt-1">{formData.link ? 'Active Navigation' : 'Visual Only'}</p>
+                <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-transparent to-transparent flex flex-col justify-end p-5">
+                  <p className="text-white font-bold text-base truncate">{formData.title || 'Poster Title'}</p>
+                  <p className="text-[11px] text-zinc-400 mt-0.5">
+                    {formData.link ? 'Active Link Destination' : 'Visual Gallery Item'}
+                  </p>
                 </div>
               </div>
-            </Card>
-          ) : (
-            <div className="aspect-[3/4] bg-dark-900/40 rounded-2xl border-2 border-dashed border-white/5 flex flex-col items-center justify-center text-dark-500 space-y-4">
-              <div className="w-16 h-16 bg-dark-800 rounded-full flex items-center justify-center">
-                <svg className="w-8 h-8 opacity-20" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
-                </svg>
+            ) : (
+              <div className="aspect-[3/4] flex flex-col items-center justify-center text-zinc-600 bg-zinc-900/30 p-6 text-center">
+                <ImageIcon className="w-8 h-8 mb-2 stroke-[1.5]" />
+                <p className="text-xs font-semibold text-zinc-400">No Image Selected</p>
+                <p className="text-[10px] text-zinc-500 mt-1">Upload an image or select one from the asset library</p>
               </div>
-              <p className="text-xs font-medium uppercase tracking-widest">Awaiting Visual Input</p>
-            </div>
-          )}
+            )}
+          </Card>
         </div>
       </div>
-    </div>
+
+      {/* Media Modal */}
+      <Dialog
+        isOpen={showAssetBrowser}
+        onClose={() => setShowAssetBrowser(false)}
+        title="Poster Asset Library"
+        size="xl"
+      >
+        <AssetBrowser onSelect={handleAssetSelect} category="posters" />
+      </Dialog>
+    </form>
   )
 }

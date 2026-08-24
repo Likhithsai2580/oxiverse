@@ -31,7 +31,13 @@ const nextConfig = {
   },
   trailingSlash: false,
   async redirects() {
-    return []
+    return [
+      {
+        source: '/posters',
+        destination: '/gallery',
+        permanent: true,
+      },
+    ]
   },
   async headers() {
     return [
@@ -54,4 +60,3 @@ const nextConfig = {
 }
 
 module.exports = nextConfig
-

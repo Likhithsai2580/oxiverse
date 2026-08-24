@@ -114,8 +114,8 @@ export default function About() {
               <a href="https://codeberg.org/oxiverse" className="text-xs font-bold text-primary-200 hover:text-accent-300">codeberg.org/oxiverse</a>
             </div>
             <div className="flex flex-col items-center">
-              <span className="text-[10px] font-mono uppercase tracking-tighter text-primary-400 mb-1">Official Mirror</span>
-              <a href="https://github.com/oxiverse-ecosystem" className="text-xs font-bold text-primary-200 hover:text-accent-300">github.com/oxiverse-ecosystem</a>
+              <span className="text-[10px] font-mono uppercase tracking-tighter text-primary-400 mb-1">Documentation</span>
+              <a href="https://docs.oxiverse.com" className="text-xs font-bold text-primary-200 hover:text-accent-300">docs.oxiverse.com</a>
             </div>
           </div>
         </div>

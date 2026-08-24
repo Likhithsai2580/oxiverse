@@ -1,13 +1,43 @@
 'use client'
 
-import { useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useRouter, useParams } from 'next/navigation'
-import { Button, Input, Textarea, Card, Spinner, Modal } from '@/components/ui'
+import {
+  Card,
+  CardHeader,
+  CardTitle,
+  CardContent,
+  Button,
+  Input,
+  Textarea,
+  Badge,
+  Dialog,
+} from '@/components/admin/ui'
 import { useToastContext } from '@/lib/providers/ToastProvider'
 import ReactMarkdown from 'react-markdown'
 import remarkGfm from 'remark-gfm'
 import AssetBrowser from '../../components/AssetBrowser'
+import PdfToMarkdownModal from '../../components/PdfToMarkdownModal'
 import Mermaid from '@/components/Mermaid'
+import {
+  Save,
+  Eye,
+  Edit3,
+  FileUp,
+  Image as ImageIcon,
+  Heading,
+  Bold,
+  Italic,
+  Code,
+  List,
+  Quote,
+  Link as LinkIcon,
+  Sparkles,
+  ArrowLeft,
+  Trash2,
+  CheckCircle,
+} from 'lucide-react'
+import Link from 'next/link'
 
 export default function AdminBlogEditPage() {
   const router = useRouter()
@@ -16,13 +46,12 @@ export default function AdminBlogEditPage() {
   const [isLoading, setIsLoading] = useState(false)
   const [isFetching, setIsFetching] = useState(false)
   const [previewMode, setPreviewMode] = useState(false)
-  const [isParsing, setIsParsing] = useState(false)
   const [isUploading, setIsUploading] = useState(false)
   const [showAssetBrowser, setShowAssetBrowser] = useState(false)
+  const [showPdfModal, setShowPdfModal] = useState(false)
   const [assetTarget, setAssetTarget] = useState<'image' | 'content'>('image')
-  
+
   const [categories, setCategories] = useState<any[]>([])
-  const [tags, setTags] = useState<any[]>([])
   const [formData, setFormData] = useState({
     title: '',
     excerpt: '',
@@ -45,92 +74,10 @@ export default function AdminBlogEditPage() {
 
   const fetchTaxonomy = async () => {
     try {
-      const [catRes, tagRes] = await Promise.all([
-        fetch('/api/admin/categories'),
-        fetch('/api/admin/tags'),
-      ])
-      setCategories(await catRes.json())
-      setTags(await tagRes.json())
+      const catRes = await fetch('/api/admin/categories')
+      if (catRes.ok) setCategories(await catRes.json())
     } catch (err) {
-      console.error('Failed to load taxonomy')
-    }
-  }
-
-  const handlePdfUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0]
-    if (!file) return
-
-    if (file.size > 4.5 * 1024 * 1024) {
-      error('File size exceeds 4.5MB limit. Vercel restricts request payloads to 4.5MB. Please upload a smaller PDF.')
-      e.target.value = ''
-      return
-    }
-
-    setIsParsing(true)
-    
-    try {
-      const uploadFormData = new FormData()
-      uploadFormData.append('file', file)
-
-      const res = await fetch('/api/admin/parse-pdf', {
-        method: 'POST',
-        body: uploadFormData,
-      })
-
-      if (res.ok) {
-        const data = await res.json()
-        setFormData(prev => ({
-          ...prev,
-          content: data.markdown,
-          title: prev.title || data.info?.Title || file.name.replace('.pdf', '')
-        }))
-        success('PDF parsed successfully!')
-      } else {
-        const data = await res.json()
-        error(data.error || 'Failed to parse PDF')
-      }
-    } catch (err) {
-      error('An error occurred while parsing the PDF')
-    } finally {
-      setIsParsing(false)
-      e.target.value = ''
-    }
-  }
-
-  const handleImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0]
-    if (!file) return
-
-    if (file.size > 4.5 * 1024 * 1024) {
-      error('Image size exceeds 4.5MB limit. Vercel restricts uploads to 4.5MB. Please upload a smaller image.')
-      e.target.value = ''
-      return
-    }
-
-    setIsUploading(true)
-    try {
-      const uploadFormData = new FormData()
-      uploadFormData.append('file', file)
-      uploadFormData.append('type', 'blog')
-
-      const res = await fetch('/api/admin/upload-image', {
-        method: 'POST',
-        body: uploadFormData,
-      })
-
-      if (res.ok) {
-        const data = await res.json()
-        setFormData(prev => ({ ...prev, imageUrl: data.url }))
-        success('Image uploaded successfully!')
-      } else {
-        const data = await res.json()
-        error(data.error || 'Failed to upload image')
-      }
-    } catch (err) {
-      error('An error occurred while uploading the image')
-    } finally {
-      setIsUploading(false)
-      e.target.value = ''
+      console.error('Failed to load categories')
     }
   }
 
@@ -139,12 +86,12 @@ export default function AdminBlogEditPage() {
     try {
       const res = await fetch(`/api/blog/${params.id}`)
       if (res.ok) {
-        const post: any = await res.json()
+        const post = await res.json()
         setFormData({
-          title: post.title,
+          title: post.title || '',
           excerpt: post.excerpt || '',
-          content: post.content,
-          published: post.published,
+          content: post.content || '',
+          published: post.published || false,
           imageUrl: post.imageUrl || '',
           imageDisplay: post.imageDisplay || 'cover',
           categoryId: post.categoryId || '',
@@ -162,30 +109,82 @@ export default function AdminBlogEditPage() {
     }
   }
 
+  const handleImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0]
+    if (!file) return
+
+    if (file.size > 4.5 * 1024 * 1024) {
+      error('Image size exceeds 4.5MB limit.')
+      e.target.value = ''
+      return
+    }
+
+    setIsUploading(true)
+    try {
+      const uploadFormData = new FormData()
+      uploadFormData.append('file', file)
+      uploadFormData.append('type', 'blog')
+
+      const res = await fetch('/api/admin/upload-image', {
+        method: 'POST',
+        body: uploadFormData,
+      })
+
+      if (res.ok) {
+        const data = await res.json()
+        setFormData((prev) => ({ ...prev, imageUrl: data.url }))
+        success('Header image uploaded!')
+      } else {
+        const data = await res.json()
+        error(data.error || 'Failed to upload image')
+      }
+    } catch (err) {
+      error('An error occurred while uploading image')
+    } finally {
+      setIsUploading(false)
+      e.target.value = ''
+    }
+  }
+
   const handleAssetSelect = (url: string) => {
     if (assetTarget === 'image') {
-      setFormData(prev => ({ ...prev, imageUrl: url }))
+      setFormData((prev) => ({ ...prev, imageUrl: url }))
     } else {
-      setFormData(prev => ({ ...prev, content: (prev.content || '') + `\n\n![Image](${url})` }))
+      setFormData((prev) => ({ ...prev, content: (prev.content || '') + `\n\n![Image](${url})\n` }))
     }
     setShowAssetBrowser(false)
   }
 
+  const handlePdfImport = ({ title, abstract, markdown }: { title?: string; abstract?: string; markdown: string }) => {
+    setFormData((prev) => ({
+      ...prev,
+      title: prev.title.trim() ? prev.title : title || prev.title,
+      excerpt: prev.excerpt.trim() ? prev.excerpt : abstract || prev.excerpt,
+      content: markdown,
+    }))
+    success('PDF content imported and converted into Markdown!')
+  }
+
+  const insertMarkdownSyntax = (prefix: string, suffix: string = '') => {
+    setFormData((prev) => ({
+      ...prev,
+      content: (prev.content || '') + `\n${prefix}text${suffix}\n`,
+    }))
+  }
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
-    
+
     if (!formData.title.trim()) {
       error('Headline is required')
       return
     }
-
     if (!formData.content.trim()) {
       error('Content is required')
       return
     }
 
     setIsLoading(true)
-
     try {
       const url = isEdit ? `/api/blog/${params.id}` : '/api/blog'
       const method = isEdit ? 'PUT' : 'POST'
@@ -197,7 +196,7 @@ export default function AdminBlogEditPage() {
       })
 
       if (res.ok) {
-        success(isEdit ? 'Post updated' : 'Post created')
+        success(isEdit ? 'Blog post updated successfully' : 'Blog post published')
         router.push('/admin/blog')
       } else {
         const data = await res.json()
@@ -212,69 +211,158 @@ export default function AdminBlogEditPage() {
 
   if (isFetching) {
     return (
-      <div className="p-8 flex items-center justify-center min-h-[400px]">
-        <Spinner size="lg" />
+      <div className="p-12 flex items-center justify-center min-h-[400px]">
+        <div className="flex flex-col items-center gap-3 text-zinc-400">
+          <div className="w-8 h-8 rounded-full border-2 border-sky-400 border-t-transparent animate-spin" />
+          <p className="text-xs">Loading post data...</p>
+        </div>
       </div>
     )
   }
 
   return (
-    <form onSubmit={handleSubmit} className="p-8 pb-20">
-      <div className="flex items-center justify-between mb-8">
-        <div>
-          <h1 className="text-3xl font-bold text-white mb-2">
-            {isEdit ? 'Refine Post' : 'New Journal Entry'}
-          </h1>
-          <p className="text-dark-400">Compose and organize your thoughts</p>
+    <form onSubmit={handleSubmit} className="p-6 sm:p-8 max-w-7xl mx-auto space-y-6 pb-24">
+      {/* Top action header */}
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-zinc-800/80 pb-5">
+        <div className="flex items-center gap-3">
+          <Link href="/admin/blog">
+            <Button type="button" variant="ghost" size="icon" className="h-8 w-8">
+              <ArrowLeft className="w-4 h-4" />
+            </Button>
+          </Link>
+          <div>
+            <h1 className="text-xl sm:text-2xl font-black text-white tracking-tight">
+              {isEdit ? 'Refine Post' : 'Compose Blog Entry'}
+            </h1>
+            <p className="text-xs text-zinc-400">Draft rich editorial pieces in Markdown</p>
+          </div>
         </div>
-        <div className="flex gap-3">
+
+        <div className="flex items-center gap-2.5">
           <Button
             type="button"
-            variant="ghost"
+            variant="outline"
+            size="sm"
+            onClick={() => setShowPdfModal(true)}
+            className="border-sky-500/30 text-sky-400 hover:bg-sky-500/10"
+          >
+            <FileUp className="w-3.5 h-3.5 mr-1.5" />
+            Import PDF
+          </Button>
+
+          <Button
+            type="button"
+            variant="secondary"
+            size="sm"
             onClick={() => setPreviewMode(!previewMode)}
           >
-            {previewMode ? 'Edit' : 'Preview'}
+            {previewMode ? (
+              <>
+                <Edit3 className="w-3.5 h-3.5 mr-1.5" />
+                Edit
+              </>
+            ) : (
+              <>
+                <Eye className="w-3.5 h-3.5 mr-1.5" />
+                Preview
+              </>
+            )}
           </Button>
-          <Button type="submit" variant="primary" disabled={isLoading} className="shadow-lg shadow-primary-500/20">
-            {isLoading ? <Spinner size="sm" /> : 'Save Post'}
+
+          <Button type="submit" variant="accent" size="sm" isLoading={isLoading} className="font-bold">
+            <Save className="w-3.5 h-3.5 mr-1.5" />
+            Save Post
           </Button>
         </div>
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-        {/* Main Content */}
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        {/* Main Content Area (2 Cols) */}
         <div className="lg:col-span-2 space-y-6">
-          <Card className="bg-dark-900/40 border-white/5">
+          <Card className="p-5 border-zinc-800/80 bg-zinc-950/70">
             <Input
-              label="Headline"
+              label="Article Headline"
               value={formData.title}
               onChange={(e) => setFormData({ ...formData, title: e.target.value })}
-              placeholder="The Future of Distributed Intelligence..."
+              placeholder="e.g. Advancements in Intent Infrastructure"
               required
-              className="text-lg font-bold"
+              className="text-base font-bold"
             />
           </Card>
 
-          <Card className="bg-dark-900/40 border-white/5">
-            <div className="flex items-center justify-between mb-4">
-               <label className="text-sm font-black uppercase tracking-widest text-dark-500">Editorial Content</label>
-               <Button 
-                type="button" 
-                size="sm" 
-                variant="ghost" 
-                className="text-[10px] uppercase tracking-widest text-primary-400"
-                onClick={() => {
-                  setAssetTarget('content')
-                  setShowAssetBrowser(true)
-                }}
-               >
-                 Insert Image
-               </Button>
+          <Card className="p-5 border-zinc-800/80 bg-zinc-950/70 space-y-4">
+            <div className="flex items-center justify-between border-b border-zinc-800/80 pb-3">
+              <span className="text-xs font-bold text-zinc-300">Article Content</span>
+
+              {/* Formatting Toolbar */}
+              {!previewMode && (
+                <div className="flex items-center gap-1">
+                  <button
+                    type="button"
+                    onClick={() => insertMarkdownSyntax('## ')}
+                    className="p-1.5 text-zinc-400 hover:text-white rounded hover:bg-zinc-800"
+                    title="Heading"
+                  >
+                    <Heading className="w-3.5 h-3.5" />
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => insertMarkdownSyntax('**', '**')}
+                    className="p-1.5 text-zinc-400 hover:text-white rounded hover:bg-zinc-800"
+                    title="Bold"
+                  >
+                    <Bold className="w-3.5 h-3.5" />
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => insertMarkdownSyntax('*', '*')}
+                    className="p-1.5 text-zinc-400 hover:text-white rounded hover:bg-zinc-800"
+                    title="Italic"
+                  >
+                    <Italic className="w-3.5 h-3.5" />
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => insertMarkdownSyntax('```ts\n', '\n```')}
+                    className="p-1.5 text-zinc-400 hover:text-white rounded hover:bg-zinc-800"
+                    title="Code Block"
+                  >
+                    <Code className="w-3.5 h-3.5" />
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => insertMarkdownSyntax('- ')}
+                    className="p-1.5 text-zinc-400 hover:text-white rounded hover:bg-zinc-800"
+                    title="Bullet List"
+                  >
+                    <List className="w-3.5 h-3.5" />
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => insertMarkdownSyntax('> ')}
+                    className="p-1.5 text-zinc-400 hover:text-white rounded hover:bg-zinc-800"
+                    title="Quote"
+                  >
+                    <Quote className="w-3.5 h-3.5" />
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setAssetTarget('content')
+                      setShowAssetBrowser(true)
+                    }}
+                    className="p-1.5 text-sky-400 hover:text-sky-300 rounded hover:bg-zinc-800"
+                    title="Insert Media Image"
+                  >
+                    <ImageIcon className="w-3.5 h-3.5" />
+                  </button>
+                </div>
+              )}
             </div>
 
             {previewMode ? (
-              <div className="prose prose-invert max-w-none min-h-[500px] p-6 bg-dark-950/50 rounded-2xl border border-white/5 shadow-inner">
-                <ReactMarkdown 
+              <div className="prose prose-invert max-w-none min-h-[500px] p-6 bg-zinc-950/80 rounded-xl border border-zinc-800 text-xs sm:text-sm leading-relaxed">
+                <ReactMarkdown
                   remarkPlugins={[remarkGfm]}
                   components={{
                     code: ({ node, className, children, ...props }: any) => {
@@ -283,168 +371,156 @@ export default function AdminBlogEditPage() {
                         return <Mermaid chart={String(children).replace(/\n$/, '')} />
                       }
                       return <code className={className} {...props}>{children}</code>
-                    }
+                    },
                   }}
                 >
-                  {formData.content || '*Draft summary goes here...*'}
+                  {formData.content || '*No content written yet...*'}
                 </ReactMarkdown>
               </div>
             ) : (
               <Textarea
                 value={formData.content}
                 onChange={(e) => setFormData({ ...formData, content: e.target.value })}
-                placeholder="Write your story..."
-                rows={25}
-                className="font-mono text-sm bg-dark-950/50 border-white/5 focus:border-primary-500/30"
+                placeholder="Write your article in Markdown. Headings, code blocks, tables, and lists are supported..."
+                rows={24}
+                className="font-mono text-xs bg-zinc-950/80 border-zinc-800 focus-visible:ring-sky-500 leading-relaxed"
               />
-            )}
-            
-            {!previewMode && (
-              <div className="mt-4 text-[10px] text-dark-500 grid grid-cols-3 gap-2 uppercase tracking-tighter">
-                <span># Headline</span>
-                <span>**Bold**</span>
-                <span>[Link](url)</span>
-                <span>- List</span>
-                <span>```Code```</span>
-                <span>![Img](url)</span>
-              </div>
             )}
           </Card>
         </div>
 
-        {/* Sidebar */}
+        {/* Sidebar Metadata (1 Col) */}
         <div className="space-y-6">
-          <Card className="bg-dark-900/40 border-white/5">
-            <h3 className="text-sm font-black uppercase tracking-widest text-dark-500 mb-4">Content Meta</h3>
-            
-            <div className="space-y-5">
-              <div>
-                <label className="text-xs font-bold text-dark-400 mb-2 block">Primary Category</label>
-                <select
-                  value={formData.categoryId}
-                  onChange={(e) => setFormData({ ...formData, categoryId: e.target.value })}
-                  className="w-full bg-dark-950 border border-white/5 text-white rounded-lg px-4 py-2 text-sm outline-none focus:border-primary-500/30"
-                >
-                  <option value="">Select Category</option>
-                  {categories.map(cat => (
-                    <option key={cat.id} value={cat.id}>{cat.name}</option>
-                  ))}
-                </select>
-              </div>
+          <Card className="p-5 border-zinc-800/80 bg-zinc-950/70 space-y-5">
+            <h3 className="text-xs font-bold text-zinc-300 uppercase tracking-wider border-b border-zinc-800/80 pb-2">
+              Publication Settings
+            </h3>
 
-               <div>
-                <label className="text-xs font-bold text-dark-400 mb-2 block">Post Visibility</label>
-                <div className="flex items-center gap-3 p-3 bg-dark-950/50 rounded-xl border border-white/5">
-                  <input
-                    type="checkbox"
-                    id="published"
-                    checked={formData.published}
-                    onChange={(e) => setFormData({ ...formData, published: e.target.checked })}
-                    className="w-4 h-4 rounded border-dark-600 bg-dark-800 text-primary-500 focus:ring-primary-500"
-                  />
-                  <label htmlFor="published" className="text-sm text-dark-300 cursor-pointer">Live on Site</label>
-                </div>
+            <div>
+              <label className="text-xs font-semibold text-zinc-300 mb-1.5 block">Category</label>
+              <select
+                value={formData.categoryId}
+                onChange={(e) => setFormData({ ...formData, categoryId: e.target.value })}
+                className="w-full bg-zinc-900/80 border border-zinc-800 text-zinc-100 rounded-lg px-3 py-2 text-xs focus:outline-none focus:ring-1 focus:ring-sky-500 cursor-pointer"
+              >
+                <option value="">Select a Category</option>
+                {categories.map((cat) => (
+                  <option key={cat.id} value={cat.id}>
+                    {cat.name}
+                  </option>
+                ))}
+              </select>
+            </div>
+
+            <div className="flex items-center justify-between p-3 bg-zinc-900/50 rounded-lg border border-zinc-800/80">
+              <div>
+                <p className="text-xs font-bold text-white">Publish Status</p>
+                <p className="text-[10px] text-zinc-400">Make live on public website</p>
               </div>
+              <input
+                type="checkbox"
+                id="published-toggle"
+                checked={formData.published}
+                onChange={(e) => setFormData({ ...formData, published: e.target.checked })}
+                className="w-4 h-4 rounded border-zinc-700 bg-zinc-800 text-sky-500 focus:ring-sky-500 cursor-pointer"
+              />
             </div>
           </Card>
 
-          <Card className="bg-dark-900/40 border-white/5">
-            <h3 className="text-sm font-black uppercase tracking-widest text-dark-500 mb-2">PDF Assistant</h3>
-             <div className="relative group">
-                <input
-                  type="file"
-                  accept=".pdf"
-                  onChange={handlePdfUpload}
-                  className="absolute inset-0 w-full h-full opacity-0 cursor-pointer disabled:cursor-not-allowed z-10"
-                  disabled={isParsing}
-                />
-                <Button
-                  type="button"
-                  variant="outline"
-                  className="w-full glass group-hover:bg-primary-500/5"
-                  disabled={isParsing}
-                >
-                  {isParsing ? <Spinner size="sm" /> : 'Parse from PDF'}
-                </Button>
-              </div>
-          </Card>
-
-          <Card className="bg-dark-900/40 border-white/5">
+          <Card className="p-5 border-zinc-800/80 bg-zinc-950/70 space-y-3">
             <Textarea
-              label="Teaser / Excerpt"
+              label="Article Summary / Teaser"
               value={formData.excerpt}
               onChange={(e) => setFormData({ ...formData, excerpt: e.target.value })}
-              placeholder="Short description for cards..."
+              placeholder="Short synopsis displayed in cards and SEO previews..."
               rows={4}
               className="text-xs"
             />
           </Card>
 
-          <Card className="bg-dark-900/40 border-white/5">
-            <h3 className="text-sm font-black uppercase tracking-widest text-dark-500 mb-4">Post Graphics</h3>
+          <Card className="p-5 border-zinc-800/80 bg-zinc-950/70 space-y-4">
+            <h3 className="text-xs font-bold text-zinc-300 uppercase tracking-wider border-b border-zinc-800/80 pb-2">
+              Featured Header Image
+            </h3>
+
             {formData.imageUrl ? (
-              <div className="relative aspect-video rounded-xl overflow-hidden border border-white/10 group">
-                <img src={formData.imageUrl} className="w-full h-full object-cover" />
+              <div className="relative aspect-video rounded-lg overflow-hidden border border-zinc-800 group">
+                <img src={formData.imageUrl} className="w-full h-full object-cover" alt="Featured header" />
                 <button
                   type="button"
                   onClick={() => setFormData({ ...formData, imageUrl: '' })}
-                  className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center text-white"
+                  className="absolute inset-0 bg-black/70 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center text-xs font-bold text-rose-400 gap-1.5"
                 >
-                  Clear Asset
+                  <Trash2 className="w-4 h-4" /> Remove Image
                 </button>
               </div>
             ) : (
-            <div className="flex gap-2">
-                <div className="relative group flex-1">
+              <div className="flex gap-2">
+                <label className="relative flex-1">
                   <input
                     type="file"
                     accept="image/png, image/jpeg, image/gif, image/webp"
                     onChange={handleImageUpload}
-                    className="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-10"
+                    className="hidden"
                     disabled={isUploading}
                   />
-                  <Button type="button" variant="outline" className="w-full glass" disabled={isUploading}>
-                    {isUploading ? <Spinner size="sm" /> : 'Upload'}
+                  <Button
+                    type="button"
+                    variant="outline"
+                    className="w-full"
+                    disabled={isUploading}
+                    isLoading={isUploading}
+                    onClick={() => (document.querySelector('input[type="file"]') as HTMLInputElement)?.click()}
+                  >
+                    Upload
                   </Button>
-                </div>
-                <Button 
-                  type="button" 
-                  variant="outline" 
-                  className="glass flex-1"
+                </label>
+                <Button
+                  type="button"
+                  variant="secondary"
+                  className="flex-1"
                   onClick={() => {
                     setAssetTarget('image')
                     setShowAssetBrowser(true)
                   }}
                 >
-                  Library
+                  Media Library
                 </Button>
-            </div>
+              </div>
             )}
-            
-            <div className="mt-4">
-              <label className="text-xs font-bold text-dark-400 mb-2 block">Image Display Mode</label>
+
+            <div>
+              <label className="text-xs font-semibold text-zinc-300 mb-1.5 block">Image Display Mode</label>
               <select
                 value={formData.imageDisplay}
                 onChange={(e) => setFormData({ ...formData, imageDisplay: e.target.value })}
-                className="w-full bg-dark-950 border border-white/5 text-white rounded-lg px-4 py-2 text-sm outline-none focus:border-primary-500/30"
+                className="w-full bg-zinc-900/80 border border-zinc-800 text-zinc-100 rounded-lg px-3 py-1.5 text-xs focus:outline-none focus:ring-1 focus:ring-sky-500 cursor-pointer"
               >
-                <option value="cover">Cover (Fills area, may crop)</option>
-                <option value="contain">Contain (Fits area, preserves aspect ratio)</option>
-                <option value="fill">Fill (Stretches to fill area)</option>
+                <option value="cover">Cover (Fills area)</option>
+                <option value="contain">Contain (Preserves aspect ratio)</option>
+                <option value="fill">Fill (Stretches)</option>
               </select>
             </div>
           </Card>
         </div>
       </div>
-      
-      <Modal 
-        isOpen={showAssetBrowser} 
+
+      {/* Asset Browser Modal */}
+      <Dialog
+        isOpen={showAssetBrowser}
         onClose={() => setShowAssetBrowser(false)}
-        title="Asset Library"
+        title="Media Asset Library"
         size="xl"
       >
         <AssetBrowser onSelect={handleAssetSelect} category="blog" />
-      </Modal>
+      </Dialog>
+
+      {/* PDF to Markdown Parser Modal */}
+      <PdfToMarkdownModal
+        isOpen={showPdfModal}
+        onClose={() => setShowPdfModal(false)}
+        onImport={handlePdfImport}
+      />
     </form>
   )
 }

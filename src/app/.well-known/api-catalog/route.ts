@@ -24,14 +24,19 @@ export async function GET() {
         methods: ['GET', 'POST'],
       },
       {
-        path: '/api/announcement',
-        description: 'Site announcement banner data',
-        methods: ['GET', 'POST'],
-      },
-      {
         path: '/api/newsletter',
         description: 'Newsletter subscription',
         methods: ['POST'],
+      },
+      {
+        path: '/api/banners',
+        description: 'Active banners by placement (public)',
+        methods: ['GET'],
+      },
+      {
+        path: '/api/publish/pages',
+        description: 'Published CMS pages (public)',
+        methods: ['GET'],
       },
       {
         path: '/api/posters',

@@ -1,9 +1,25 @@
 'use client'
 
-import { useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import Link from 'next/link'
-import { Card, Button, Spinner } from '@/components/ui'
+import {
+  Card,
+  CardHeader,
+  CardTitle,
+  CardDescription,
+  CardContent,
+  Button,
+  Badge,
+} from '@/components/admin/ui'
 import { useToastContext } from '@/lib/providers/ToastProvider'
+import {
+  Sparkles,
+  Plus,
+  Trash2,
+  Edit,
+  ExternalLink,
+  Calendar,
+} from 'lucide-react'
 
 interface Poster {
   id: string
@@ -27,8 +43,7 @@ export default function AdminPostersPage() {
     try {
       const res = await fetch('/api/posters')
       if (res.ok) {
-        const data = await res.json()
-        setPosters(data)
+        setPosters(await res.json())
       } else {
         error('Failed to load posters')
       }
@@ -39,14 +54,14 @@ export default function AdminPostersPage() {
     }
   }
 
-  const handleDelete = async (id: string) => {
-    if (!confirm('Are you sure you want to delete this poster?')) return
+  const handleDelete = async (id: string, title: string) => {
+    if (!confirm(`Are you sure you want to delete poster "${title}"?`)) return
 
     try {
       const res = await fetch(`/api/posters/${id}`, { method: 'DELETE' })
       if (res.ok) {
         success('Poster deleted')
-        setPosters(posters.filter((p) => p.id !== id))
+        setPosters((prev) => prev.filter((p) => p.id !== id))
       } else {
         error('Failed to delete poster')
       }
@@ -56,72 +71,96 @@ export default function AdminPostersPage() {
   }
 
   return (
-    <div className="p-8 pb-20">
-      <div className="flex items-center justify-between mb-12">
+    <div className="p-6 sm:p-8 max-w-7xl mx-auto space-y-6">
+      {/* Header */}
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
-          <h1 className="text-4xl font-bold text-white mb-2 tracking-tight">Visual Posters</h1>
-          <p className="text-dark-400">Manage aesthetic artifacts and external links</p>
+          <h1 className="text-2xl sm:text-3xl font-extrabold text-white tracking-tight">
+            Visual Posters & Artwork
+          </h1>
+          <p className="text-xs sm:text-sm text-zinc-400 mt-1">
+            Curate aesthetic visual cards, brand posters, and outbound project links.
+          </p>
         </div>
+
         <Link href="/admin/posters/new">
-          <Button variant="primary" size="lg" className="shadow-lg shadow-primary-500/20">
-            <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
-            </svg>
-            Add New Poster
+          <Button variant="default" size="sm" className="font-bold">
+            <Plus className="w-3.5 h-3.5 mr-1.5" />
+            New Poster
           </Button>
         </Link>
       </div>
 
+      {/* Posters Grid */}
       {isLoading ? (
-        <div className="flex items-center justify-center min-h-[400px]">
-          <Spinner size="lg" />
+        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
+          {[1, 2, 3, 4].map((i) => (
+            <div key={i} className="aspect-[3/4] rounded-xl bg-zinc-900/40 border border-zinc-800 animate-pulse" />
+          ))}
         </div>
       ) : posters.length === 0 ? (
-        <Card className="bg-dark-900/40 border-white/5 py-24 text-center">
-            <div className="w-20 h-20 bg-dark-800 rounded-full flex items-center justify-center mx-auto mb-6">
-                 <svg className="w-10 h-10 text-dark-500 opacity-20" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
-                </svg>
-            </div>
-          <h2 className="text-xl font-bold text-white mb-2">No visual artifacts found</h2>
-          <p className="text-dark-400 mb-8 max-w-sm mx-auto">Upload your first poster to your website to showcase your brand.</p>
+        <Card className="text-center py-16 border-zinc-800/80 bg-zinc-950/40">
+          <div className="w-12 h-12 rounded-2xl bg-zinc-900 border border-zinc-800 flex items-center justify-center mx-auto mb-4 text-zinc-500 shadow-inner">
+            <Sparkles className="w-6 h-6" />
+          </div>
+          <h3 className="text-sm font-bold text-white mb-1">No posters added</h3>
+          <p className="text-xs text-zinc-400 max-w-sm mx-auto mb-6">
+            Upload your first aesthetic visual poster to showcase in the community gallery.
+          </p>
           <Link href="/admin/posters/new">
-            <Button variant="outline" className="glass">Initialize Artifact</Button>
+            <Button variant="outline" size="sm">
+              <Plus className="w-3.5 h-3.5 mr-1.5" />
+              Upload First Poster
+            </Button>
           </Link>
         </Card>
       ) : (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5">
           {posters.map((poster) => (
-            <Card key={poster.id} className="overflow-hidden p-0 bg-dark-900/40 border-white/5 group relative shadow-2xl">
-              <div className="relative aspect-[3/4] bg-dark-900 overflow-hidden">
+            <Card
+              key={poster.id}
+              className="p-0 overflow-hidden border-zinc-800/80 bg-zinc-950/60 hover:border-zinc-700/80 transition-all group flex flex-col justify-between"
+            >
+              <div className="relative aspect-[3/4] bg-zinc-950 overflow-hidden">
                 <img
                   src={poster.imageUrl}
                   alt={poster.title}
-                  className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-dark-950/90 via-dark-950/20 to-transparent group-hover:opacity-100 transition-opacity p-6 flex flex-col justify-end">
-                  <h3 className="font-bold text-xl text-white mb-4 line-clamp-1">{poster.title}</h3>
-                  <div className="flex gap-2 w-full opacity-0 group-hover:opacity-100 transition-all translate-y-4 group-hover:translate-y-0 duration-300">
+                <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/30 to-transparent opacity-0 group-hover:opacity-100 transition-opacity p-4 flex flex-col justify-end">
+                  <p className="text-xs font-bold text-white mb-2">{poster.title}</p>
+                  <div className="flex gap-2">
                     <Link href={`/admin/posters/${poster.id}`} className="flex-1">
-                      <Button variant="outline" size="sm" className="w-full glass bg-dark-900/50 backdrop-blur-md">Edit</Button>
+                      <Button variant="outline" size="sm" className="w-full h-7 text-[11px] bg-zinc-900/80">
+                        <Edit className="w-3 h-3 mr-1" />
+                        Edit
+                      </Button>
                     </Link>
                     <Button
-                      variant="ghost"
-                      size="sm"
-                      onClick={() => handleDelete(poster.id)}
-                      className="bg-red-500/10 text-red-400 border border-red-500/20 hover:bg-red-500 hover:text-white px-3"
+                      variant="destructive"
+                      size="icon"
+                      className="h-7 w-7"
+                      onClick={() => handleDelete(poster.id, poster.title)}
                     >
-                      <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
-                     </svg>
+                      <Trash2 className="w-3.5 h-3.5" />
                     </Button>
                   </div>
                 </div>
-              </div>
-              <div className="absolute top-4 right-4 z-10">
-                 <div className="px-2 py-0.5 rounded-full bg-dark-950/60 backdrop-blur-md border border-white/5 text-[10px] text-dark-400 font-bold uppercase tracking-widest">
+
+                <div className="absolute top-2 right-2">
+                  <span className="text-[10px] font-mono font-semibold px-2 py-0.5 rounded bg-black/60 backdrop-blur-md text-zinc-300 border border-white/10">
                     {new Date(poster.createdAt).toLocaleDateString(undefined, { month: 'short', day: 'numeric' })}
-                 </div>
+                  </span>
+                </div>
+              </div>
+
+              <div className="p-3 border-t border-zinc-800/60 flex items-center justify-between">
+                <span className="text-xs font-bold text-zinc-200 truncate">{poster.title}</span>
+                {poster.link && (
+                  <Link href={poster.link} target="_blank">
+                    <ExternalLink className="w-3.5 h-3.5 text-zinc-500 hover:text-white" />
+                  </Link>
+                )}
               </div>
             </Card>
           ))}

@@ -28,7 +28,7 @@ export const metadata: Metadata = {
   keywords: [
     'Oxiverse', 'IntentForge', 'Privacy-First Search Engine', 'Autonomous Discovery Engine', 
     'Open Source Search', 'Intent Extraction', 'Self-Healing Search', 'Privacy-by-Design Infrastructure',
-    'Codeberg Oxiverse', 'GitHub Oxiverse Mirror', 'Secure Productivity Suite'
+    'Codeberg Oxiverse', 'Secure Productivity Suite'
   ],
   authors: [{ name: 'Likhith', url: 'https://codeberg.org/itxLikhith' }],
   publisher: 'Oxiverse',
@@ -136,7 +136,6 @@ export default function RootLayout({
       },
       sameAs: [
         'https://codeberg.org/oxiverse',
-        'https://github.com/oxiverse-ecosystem',
         'https://twitter.com/itxLikhith',
         'https://instagram.com/itxLikhith',
       ],
@@ -173,19 +172,6 @@ export default function RootLayout({
       targetProduct: {
         '@type': 'SoftwareApplication',
         name: 'Oxiverse'
-      }
-    },
-    {
-      '@context': 'https://schema.org',
-      '@type': 'SoftwareSourceCode',
-      name: 'Oxiverse GitHub Mirror',
-      description: 'Official mirror repository for Oxiverse Ecosystem.',
-      codeRepository: 'https://github.com/oxiverse-ecosystem',
-      isBasedOn: 'https://codeberg.org/oxiverse',
-      usageInfo: 'GitHub is a mirror. Please submit PRs and Issues via Codeberg.',
-      maintainer: {
-        '@type': 'Person',
-        name: 'Likhith'
       }
     },
     {
@@ -253,7 +239,7 @@ export default function RootLayout({
           name: 'Why should I switch from "Big Tech"?',
           acceptedAnswer: {
             '@type': 'Answer',
-            text: 'We challenge the "normalization" of algorithmic bias and data retention as the price of admission for using the web. We empower you with "Enclave Security," ensuring your digital experience remains a safe haven that respects your data sovereignty.'
+            text: 'We know privacy alone is not a proper reason to switch from a service that is convenient, and switching ecosystems has real friction. So we think from first principles: our search engine, IntentForge, understands your intent from the query itself instead of profiling you around it. We are building for the new generation of users who expect tools that work for them, on their terms.'
           }
         }
       ]

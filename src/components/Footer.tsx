@@ -23,16 +23,17 @@ const resources: FooterLink[] = [
   { name: 'API Reference', href: '/docs' },
   { name: 'Research Portal', href: '/research' },
   { name: 'Developer Blog', href: '/blog' },
+  { name: 'Visual Gallery', href: '/gallery' },
   { name: 'Project Roadmap', href: '/#roadmap' },
   { name: 'System FAQ', href: '/faq' },
 ]
 
 const community: FooterLink[] = [
   { name: 'Contributing Guide', href: '/contributing' },
-  { name: 'Open Issues', href: 'https://codeberg.org/oxiverse/intentforge/issues/new' },
+  { name: 'GitHub Repositories', href: 'https://github.com/itxLikhith' },
+  { name: 'Codeberg Issues', href: 'https://codeberg.org/oxiverse/intentforge/issues' },
   { name: 'Partnerships & Operators', href: '/cofounder' },
   { name: 'Operator Model', href: '/operator' },
-  { name: 'Intern Model', href: '/intern' },
   { name: 'Revenue Protocol', href: '/revenue' },
 ]
 
@@ -44,7 +45,7 @@ export default function Footer() {
     if (link.status === 'dev') {
       setModalOpen({
         name: link.name,
-        message: `${link.name} is currently in active development. Source code will be available on Codeberg when ready. Stay tuned for release updates!`
+        message: `${link.name} is currently in active development. Source code will be available on GitHub and Codeberg when ready. Stay tuned for release updates!`
       })
     } else {
       window.open(link.href, '_blank', 'noopener,noreferrer')
@@ -66,11 +67,29 @@ export default function Footer() {
               Explore &bull; Connect &bull; Create<br />
               A privacy-first ecosystem built for everyone.
             </p>
-            <div className="flex gap-3">
-              <Link href="https://codeberg.org/itxLikhith" target="_blank" rel="noopener noreferrer" className="text-primary-400 hover:text-accent-300 transition-colors">
-                <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M11.996 0c-6.627 0-12 5.373-12 12s5.373 12 12 12 12-5.373 12-12-5.373-12-12-12zm-3.084 18.257l2.124-7.854 2.124 7.854h-4.248zm6.541 0l-2.022-7.464 2.022-3.829 4.341 11.293h-4.341z" /></svg>
+            <div className="flex items-center gap-4">
+              <Link
+                href="https://github.com/itxLikhith"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="p-2 bg-primary-900 border border-primary-700 rounded text-primary-300 hover:text-accent-300 hover:border-accent-300 transition-colors"
+                title="GitHub"
+              >
+                <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                  <path fillRule="evenodd" clipRule="evenodd" d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.53 1.032 1.53 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z" />
+                </svg>
               </Link>
-
+              <Link
+                href="https://codeberg.org/itxLikhith"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="p-2 bg-primary-900 border border-primary-700 rounded text-primary-300 hover:text-accent-300 hover:border-accent-300 transition-colors"
+                title="Codeberg"
+              >
+                <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M11.996 0c-6.627 0-12 5.373-12 12s5.373 12 12 12 12-5.373 12-12-5.373-12-12-12zm-3.084 18.257l2.124-7.854 2.124 7.854h-4.248zm6.541 0l-2.022-7.464 2.022-3.829 4.341 11.293h-4.341z" />
+                </svg>
+              </Link>
             </div>
           </div>
 
@@ -132,13 +151,13 @@ export default function Footer() {
             </div>
             <div className="flex items-center gap-2 text-sm text-primary-500">
               <span>&copy; {currentYear} Oxiverse. Built by</span>
-              <a href="https://codeberg.org/itxLikhith" target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 hover:text-accent-300 transition-colors">
+              <a href="https://github.com/itxLikhith" target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 hover:text-accent-300 transition-colors">
                 <Image src="https://avatars.githubusercontent.com/u/254577690?v=4" alt="Likhith" width={20} height={20} className="rounded-full" />
                 <span>Likhith</span>
               </a>
             </div>
             <p className="text-[10px] text-primary-600 font-mono uppercase tracking-tight">
-              GitHub is a mirror of <a href="https://codeberg.org/oxiverse" className="hover:text-accent-400 underline decoration-primary-700 underline-offset-2">Codeberg</a>. Issues & PRs through Codeberg only.
+              Contribute on <a href="https://github.com/itxLikhith" target="_blank" rel="noopener noreferrer" className="hover:text-accent-400 underline decoration-primary-700 underline-offset-2">GitHub</a> or <a href="https://codeberg.org/oxiverse" target="_blank" rel="noopener noreferrer" className="hover:text-accent-400 underline decoration-primary-700 underline-offset-2">Codeberg</a>.
             </p>
           </div>
           <div className="flex flex-wrap gap-4 md:space-x-6">

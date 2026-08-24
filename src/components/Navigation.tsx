@@ -11,9 +11,8 @@ const navItems = [
   { name: 'Products', href: '/#products' },
   { name: 'Research', href: '/#research' },
   { name: 'Blog', href: '/#blog' },
+  { name: 'Gallery', href: '/gallery' },
   { name: 'Roadmap', href: '/#roadmap' },
-  { name: 'Community', href: '/#community' },
-  { name: 'Contact', href: '/#contact' },
   { name: 'Docs', href: '/docs' },
 ]
 
@@ -55,27 +54,27 @@ export default function Navigation() {
           boxShadow: isScrolled ? "4px 4px 0px rgba(0,0,0,1)" : "none",
         }}
         transition={{ duration: 0.3 }}
-        className="max-w-7xl mx-auto px-4 sm:px-8 border-2 pointer-events-auto"
+        className="max-w-7xl mx-auto px-4 sm:px-6 border-2 pointer-events-auto"
       >
-        <div className="flex items-center justify-between h-14 md:h-16">
-          <Link href="/" className="flex items-center space-x-3 group relative z-[60]" onClick={() => setActiveSection('home')}>
-            <div className="relative w-9 h-9">
+        <div className="flex items-center justify-between h-14 md:h-16 gap-2">
+          <Link href="/" className="flex items-center space-x-2.5 group relative z-[60] flex-shrink-0" onClick={() => setActiveSection('home')}>
+            <div className="relative w-8 h-8 md:w-9 md:h-9">
               <Image src="/oxiverse-logo.svg" alt="Oxiverse Logo" fill priority sizes="36px" className="object-contain" />
             </div>
-            <span className="text-lg font-black font-display tracking-tight text-primary-50 group-hover:text-accent-300 transition-colors uppercase">
+            <span className="text-base md:text-lg font-black font-display tracking-tight text-primary-50 group-hover:text-accent-300 transition-colors uppercase">
               Oxiverse
             </span>
           </Link>
 
-          <div className="hidden lg:flex items-center space-x-0">
-            {navItems.map((item, idx) => {
+          <div className="hidden lg:flex items-center space-x-0.5 xl:space-x-1">
+            {navItems.map((item) => {
               const id = item.href.replace('/#', '')
               const isActive = activeSection === id
               return (
                 <Link
                   key={item.name}
                   href={item.href}
-                  className={`px-3 py-2 text-[11px] font-bold uppercase tracking-widest transition-all font-mono border-b-2 ${isActive ? 'text-accent-300 border-accent-300' : 'text-primary-300 hover:text-primary-50 border-transparent hover:border-primary-50'
+                  className={`px-2.5 xl:px-3 py-1.5 text-[10px] xl:text-[11px] font-bold uppercase tracking-widest transition-all font-mono border-b-2 whitespace-nowrap ${isActive ? 'text-accent-300 border-accent-300' : 'text-primary-300 hover:text-primary-50 border-transparent hover:border-primary-50'
                     }`}
                   onClick={(e) => {
                     if (item.href.startsWith('/#')) {
@@ -99,8 +98,8 @@ export default function Navigation() {
             })}
           </div>
 
-          <div className="hidden lg:block">
-            <a href="https://codeberg.org/oxiverse/" target="_blank" rel="noopener noreferrer" className="retro-btn retro-btn-seafoam !py-2 !px-5 !text-xs !shadow-retro-sm">
+          <div className="hidden lg:block flex-shrink-0">
+            <a href="https://codeberg.org/oxiverse/" target="_blank" rel="noopener noreferrer" className="retro-btn retro-btn-seafoam !py-1.5 !px-4 !text-xs !shadow-retro-sm">
               Dev Access
             </a>
           </div>
@@ -121,7 +120,7 @@ export default function Navigation() {
               className="lg:hidden absolute top-[calc(100%+4px)] left-0 right-0 bg-primary-800 border-2 border-primary-50 shadow-retro-lg p-4 z-50"
             >
               <div className="flex flex-col space-y-1">
-                {navItems.map((item, idx) => (
+                {navItems.map((item) => (
                   <Link
                     key={item.name} href={item.href}
                     className={`block px-4 py-3 text-sm font-bold uppercase tracking-widest font-mono transition-all ${activeSection === item.href.replace('/#', '') ? 'text-accent-300 bg-primary-900' : 'text-primary-300 hover:text-primary-50 hover:bg-primary-900'

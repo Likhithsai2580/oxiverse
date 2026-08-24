@@ -16,7 +16,7 @@
       },
       {
         "text": "Brand Persistence",
-        "status": "pending"
+        "status": "done"
       },
       {
         "text": "Caching",
@@ -24,7 +24,7 @@
       },
       {
         "text": "Local Indexing",
-        "status": "pending"
+        "status": "done"
       },
       {
         "text": "Affiliates",
@@ -37,7 +37,7 @@
     "title": "Ecosystem Expansion",
     "status": "upcoming",
     "isLocked": false,
-    "blurIntensity": 0,
+    "blurIntensity": 2,
     "items": [
       {
         "text": "Oxiverse Browser (Chromium-based)",
@@ -74,7 +74,7 @@
     "title": "Future Vision",
     "status": "future",
     "isLocked": false,
-    "blurIntensity": 1,
+    "blurIntensity": 3,
     "items": [
       {
         "text": "AI-powered research assistant",
@@ -99,7 +99,7 @@
     "title": "Global Domination",
     "status": "future",
     "isLocked": true,
-    "blurIntensity": 8,
+    "blurIntensity": 20,
     "items": [
       {
         "text": "Launch global nodes",

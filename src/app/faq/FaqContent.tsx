@@ -68,8 +68,38 @@ const faqData: FaqItem[] = [
     answer: "Oxiverse is headquartered in India. While our origins lie in developer-focused projects hosted on Codeberg, we now operate as a global ecosystem dedicated to data autonomy."
   },
   {
+    question: "How do I report issues or contribute?",
+    answer: (
+      <div className="space-y-4">
+        <p>
+          All development, issues, and pull requests are managed through{" "}
+          <a href="https://codeberg.org/oxiverse" className="text-accent-300 hover:underline hover:text-accent-200 font-bold">
+            Codeberg
+          </a>
+          . Documentation lives in each project&apos;s repository under <span className="font-bold">/docs</span> and is published at{" "}
+          <a href="https://docs.oxiverse.com" className="text-accent-300 hover:underline hover:text-accent-200 font-bold">
+            docs.oxiverse.com
+          </a>
+          .
+        </p>
+        <p>
+          Issues and pull requests go through Codeberg only — it keeps every contribution in one auditable, open-source place.
+        </p>
+      </div>
+    )
+  },
+  {
     question: "Why should I switch from \"Big Tech\"?",
-    answer: "We challenge the \"normalization\" of algorithmic bias and data retention as the price of admission for using the web. We empower you with \"Enclave Security,\" ensuring your digital experience remains a safe haven that respects your data sovereignty."
+    answer: (
+      <div className="space-y-4">
+        <p>
+          We know that privacy alone is not a proper reason to switch from a service that is convenient. Switching ecosystems has real friction, and we don&apos;t pretend otherwise.
+        </p>
+        <p>
+          So we are thinking from first principles instead. Our search engine, IntentForge, understands your intent from the query itself — it is built to serve what you are actually looking for, not to profile you around it. We are building for the new generation of users who expect their tools to work for them, on their terms.
+        </p>
+      </div>
+    )
   }
 ]
 

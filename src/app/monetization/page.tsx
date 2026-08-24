@@ -244,7 +244,7 @@ export default function MonetizationPage() {
                 <div>
                   <h4 className="font-bold text-accent-300 mb-3 uppercase tracking-wider font-mono text-sm">Technical Transparency</h4>
                   <ul className="space-y-2 text-primary-300 text-sm leading-relaxed">
-                    <li className="flex items-center gap-2">• All code on <a href="https://codeberg.org/oxiverse" className="text-accent-300 hover:underline" target="_blank" rel="noopener noreferrer">Codeberg</a> (GitHub mirror)</li>
+                    <li className="flex items-center gap-2">• All code on <a href="https://codeberg.org/oxiverse" className="text-accent-300 hover:underline" target="_blank" rel="noopener noreferrer">Codeberg</a></li>
                     <li className="flex items-center gap-2">• Affiliate link logic auditable in source</li>
                     <li className="flex items-center gap-2">• API contracts versioned & documented</li>
                     <li className="flex items-center gap-2">• License terms in plain language (OCL v1.0)</li>

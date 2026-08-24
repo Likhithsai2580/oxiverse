@@ -17,7 +17,7 @@ const Newsletter = lazyLoad(() => import('@/app/(sections)/Newsletter'), { loadi
 const Contact = lazyLoad(() => import('@/app/(sections)/Contact'), { loading: SectionSkeleton })
 const FAQ = lazyLoad(() => import('@/app/(sections)/FAQ'), { loading: SectionSkeleton })
 import Footer from '@/components/Footer'
-import AnnouncementBanner from '@/components/AnnouncementBanner'
+import BannerDisplay from '@/components/BannerDisplay'
 
 export const metadata: Metadata = {
   alternates: {
@@ -30,7 +30,7 @@ export const revalidate = 3600 // Revalidate every hour
 export default function Home() {
   return (
     <main className="min-h-screen bg-transparent">
-      <AnnouncementBanner />
+      <BannerDisplay placement="announcement" />
       <Navigation />
       <Hero />
       <Features />

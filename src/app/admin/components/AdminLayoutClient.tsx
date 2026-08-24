@@ -1,73 +1,84 @@
 'use client'
 
-import { useState, ReactNode } from 'react'
+import React, { useState, useEffect, ReactNode } from 'react'
 import Image from 'next/image'
 import AdminSidebar from './AdminSidebar'
+import AdminTopbar from './AdminTopbar'
+import { Menu } from 'lucide-react'
 
-export default function AdminLayoutClient({ 
-  children, 
-  session 
-}: { 
-  children: ReactNode, 
-  session: any 
+export default function AdminLayoutClient({
+  children,
+  session,
+}: {
+  children: ReactNode
+  session: any
 }) {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false)
 
+  // Optimize the admin shell: flat zinc background, clean scrolling
+  useEffect(() => {
+    document.body.classList.add('admin-shell')
+    return () => {
+      document.body.classList.remove('admin-shell')
+    }
+  }, [])
+
   if (!session) {
-    return <main className="flex-1">{children}</main>
+    return <main className="flex-1 bg-zinc-950 min-h-screen">{children}</main>
   }
 
   return (
-    <div className="flex min-h-screen bg-dark-950">
-      {/* Mobile Header */}
-      <div className="lg:hidden fixed top-0 left-0 right-0 h-16 bg-dark-900/80 backdrop-blur-xl border-b border-white/5 z-40 flex items-center px-4 justify-between">
-        <div className="flex items-center gap-2">
-           <div className="relative w-8 h-8">
-            <Image 
-              src="/oxiverse-logo.svg" 
-              alt="Oxiverse Logo" 
-              fill 
-              priority
+    <div className="flex min-h-screen bg-zinc-950 text-zinc-100 antialiased font-sans">
+      {/* Mobile Header Bar */}
+      <div className="lg:hidden fixed top-0 left-0 right-0 h-14 bg-zinc-950/95 backdrop-blur-md z-40 flex items-center px-4 justify-between border-b border-zinc-800/80">
+        <div className="flex items-center gap-2.5">
+          <div className="relative w-7 h-7 bg-zinc-900 rounded-md border border-zinc-800 flex items-center justify-center p-1">
+            <Image
+              src="/oxiverse-logo.svg"
+              alt="Oxiverse Logo"
+              width={18}
+              height={18}
               className="object-contain"
             />
           </div>
-          <span className="text-lg font-black text-white tracking-tighter uppercase italic">
-            Oxi<span className="text-primary-500 not-italic">verse</span>
+          <span className="text-sm font-black tracking-tight text-white uppercase">
+            Oxi<span className="text-sky-400">verse</span>
           </span>
         </div>
-        <button 
+        <button
           onClick={() => setIsSidebarOpen(!isSidebarOpen)}
-          className="p-2 text-dark-400 hover:text-white transition-colors"
+          className="p-2 text-zinc-400 hover:text-white rounded-lg hover:bg-zinc-800 transition-colors"
+          aria-label="Toggle menu"
         >
-          <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            {isSidebarOpen ? (
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-            ) : (
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
-            )}
-          </svg>
+          <Menu className="w-5 h-5" />
         </button>
       </div>
 
-      {/* Sidebar */}
-      <div className={`
-        fixed inset-y-0 left-0 z-50 transform lg:relative lg:translate-x-0 transition duration-300 ease-in-out
-        ${isSidebarOpen ? 'translate-x-0' : '-translate-x-full'}
-      `}>
+      {/* Sidebar Drawer (Mobile) / Fixed Sidebar (Desktop) */}
+      <div
+        className={`fixed inset-y-0 left-0 z-50 transform lg:relative lg:translate-x-0 transition-transform duration-200 ease-out ${
+          isSidebarOpen ? 'translate-x-0' : '-translate-x-full'
+        }`}
+      >
         <AdminSidebar onClose={() => setIsSidebarOpen(false)} />
       </div>
 
-      {/* Backdrop */}
+      {/* Mobile Backdrop Overlay */}
       {isSidebarOpen && (
-        <div 
-          className="fixed inset-0 bg-black/60 backdrop-blur-sm z-40 lg:hidden"
+        <div
+          className="fixed inset-0 bg-black/70 backdrop-blur-sm z-40 lg:hidden"
           onClick={() => setIsSidebarOpen(false)}
         />
       )}
 
-      {/* Main Content */}
-      <main className={`flex-1 flex flex-col pt-16 lg:pt-0 transition-all duration-300`}>
-        {children}
+      {/* Main Content Area */}
+      <main className="flex-1 flex flex-col pt-14 lg:pt-0 min-w-0 bg-zinc-950">
+        <div className="hidden lg:block">
+          <AdminTopbar />
+        </div>
+        <div className="flex-1 overflow-x-hidden">
+          {children}
+        </div>
       </main>
     </div>
   )

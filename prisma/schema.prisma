@@ -142,6 +142,53 @@ model Poster {
   @@index([slug])
 }
 
+model CmsPage {
+  id            String      @id @default(cuid())
+  title         String
+  slug          String      @unique
+  excerpt       String?
+  content       String      @default("")
+  published     Boolean     @default(false)
+  publishedAt   DateTime?
+  order         Int         @default(0)
+  parentId      String?
+  parent        CmsPage?    @relation("PageTree", fields: [parentId], references: [id])
+  children      CmsPage[]   @relation("PageTree")
+  showInNav     Boolean     @default(false)
+  navLabel      String?
+  imageUrl      String?
+  imageDisplay  DisplayMode @default(cover)
+  metaTitle     String?
+  metaDescription String?
+  createdAt     DateTime    @default(now())
+  updatedAt     DateTime    @updatedAt
+
+  @@index([slug])
+  @@index([parentId])
+  @@index([order])
+  @@index([published])
+}
+
+model Banner {
+  id        String   @id @default(cuid())
+  title     String
+  imageUrl  String?
+  message   String?
+  link      String?
+  linkText  String?
+  placement String   @default("announcement") // 'announcement' | 'hero' | 'section'
+  active    Boolean  @default(true)
+  order     Int      @default(0)
+  startAt   DateTime?
+  endAt     DateTime?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([active])
+  @@index([placement])
+  @@index([order])
+}
+
 model MediaAsset {
   id        String   @id @default(cuid())
   fileName  String
@@ -171,3 +218,19 @@ model SlugRedirect {
 
   @@index([oldPath])
 }
+
+model RoadmapPhase {
+  id            String   @id @default(cuid())
+  phase         String
+  title         String
+  status        String   @default("future") // 'current' | 'upcoming' | 'future'
+  isLocked      Boolean  @default(false)
+  blurIntensity Int      @default(0)
+  items         Json     // [{ text: string, status: "done" | "pending" }]
+  order         Int      @default(0)
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  @@index([order])
+}
+

@@ -1,151 +1,232 @@
-'use client';
+'use client'
 
-import { useEffect, useState } from 'react';
-import Link from 'next/link';
-import { Card, Button, Skeleton } from '@/components/ui';
-import { useToastContext } from '@/lib/providers/ToastProvider';
+import React, { useEffect, useState, useMemo } from 'react'
+import Link from 'next/link'
+import {
+  Card,
+  CardHeader,
+  CardTitle,
+  CardDescription,
+  CardContent,
+  Button,
+  Badge,
+} from '@/components/admin/ui'
+import { useToastContext } from '@/lib/providers/ToastProvider'
+import {
+  Network,
+  Plus,
+  Search,
+  Trash2,
+  Edit,
+  ExternalLink,
+  Globe,
+} from 'lucide-react'
 
 interface Project {
-  id: string;
-  title: string;
-  slug: string;
-  description: string | null;
-  status: string | null;
-  link: string | null;
-  createdAt: string;
+  id: string
+  title: string
+  slug: string
+  description: string | null
+  status: string | null
+  link: string | null
+  hostedUrl: string | null
+  imageUrl: string | null
+  createdAt: string
 }
 
 export default function AdminEcosystemPage() {
-  const [projects, setProjects] = useState<Project[]>([]);
-  const [isLoading, setIsLoading] = useState(true);
-  const { success, error } = useToastContext();
+  const [projects, setProjects] = useState<Project[]>([])
+  const [isLoading, setIsLoading] = useState(true)
+  const [searchQuery, setSearchQuery] = useState('')
+  const { success, error } = useToastContext()
 
   useEffect(() => {
-    fetchProjects();
-  }, []);
+    fetchProjects()
+  }, [])
 
   const fetchProjects = async () => {
     try {
-      const res = await fetch('/api/admin/ecosystem');
+      const res = await fetch('/api/admin/ecosystem')
       if (res.ok) {
-        setProjects(await res.json());
+        setProjects(await res.json())
       } else {
-        error('Failed to load projects');
+        error('Failed to load ecosystem projects')
       }
     } catch (err) {
-      error('An error occurred');
+      error('An error occurred while loading projects')
     } finally {
-      setIsLoading(false);
+      setIsLoading(false)
     }
-  };
+  }
 
-  const handleDelete = async (id: string) => {
-    if (!confirm('Delete this project?')) return;
+  const handleDelete = async (id: string, title: string) => {
+    if (!confirm(`Are you sure you want to delete project node "${title}"?`)) return
 
     try {
-      const res = await fetch(`/api/admin/ecosystem/${id}`, { method: 'DELETE' });
+      const res = await fetch(`/api/admin/ecosystem/${id}`, { method: 'DELETE' })
       if (res.ok) {
-        success('Project deleted');
-        setProjects(projects.filter(p => p.id !== id));
+        success('Project node deleted')
+        setProjects((prev) => prev.filter((p) => p.id !== id))
       } else {
-        error('Failed to delete project');
+        error('Failed to delete project')
       }
     } catch (err) {
-      error('An error occurred');
+      error('An error occurred')
     }
-  };
+  }
+
+  const filteredProjects = useMemo(() => {
+    return projects.filter((project) => {
+      return (
+        project.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        project.slug.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        (project.description && project.description.toLowerCase().includes(searchQuery.toLowerCase()))
+      )
+    })
+  }, [projects, searchQuery])
 
   return (
-    <div className="p-8">
-      <div className="flex items-center justify-between mb-8">
+    <div className="p-6 sm:p-8 max-w-7xl mx-auto space-y-6">
+      {/* Header */}
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
-          <h1 className="text-3xl font-bold text-white mb-2 font-display">Ecosystem Projects</h1>
-          <p className="text-dark-400">Manage the nodes of the oxiverse ecosystem</p>
+          <h1 className="text-2xl sm:text-3xl font-extrabold text-white tracking-tight">
+            Ecosystem Projects & Nodes
+          </h1>
+          <p className="text-xs sm:text-sm text-zinc-400 mt-1">
+            Manage live nodes, protocol implementations, and connected services.
+          </p>
         </div>
+
         <Link href="/admin/ecosystem/new">
-          <Button variant="primary" className="shadow-lg shadow-primary-500/20">Add Project</Button>
+          <Button variant="default" size="sm" className="font-bold">
+            <Plus className="w-3.5 h-3.5 mr-1.5" />
+            Add Project Node
+          </Button>
         </Link>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        {isLoading ? (
-          Array.from({ length: 6 }).map((_, i) => (
-            <Card key={i} className="bg-dark-900/40 border-white/5 p-6">
-              <div className="flex items-start justify-between mb-4">
-                <div className="flex-1 space-y-2">
-                  <Skeleton className="h-6 w-3/4" />
-                  <Skeleton className="h-4 w-1/2" />
-                </div>
-                <Skeleton className="h-5 w-16 rounded-full" />
-              </div>
-              <div className="space-y-2 mb-6">
-                <Skeleton className="h-4 w-full" />
-                <Skeleton className="h-4 w-full" />
-                <Skeleton className="h-4 w-2/3" />
-              </div>
-              <div className="flex items-center justify-between pt-4 border-t border-white/5">
-                <div className="flex gap-2">
-                  <Skeleton className="h-7 w-12" />
-                  <Skeleton className="h-7 w-12" />
-                </div>
-                <Skeleton className="h-4 w-4" />
-              </div>
-            </Card>
-          ))
-        ) : projects.length === 0 ? (
-          <div className="col-span-full py-12 text-center text-dark-500 italic">
-            No projects found. Add your first ecosystem node.
+      {/* Search Filter */}
+      <div className="relative bg-zinc-900/50 p-2.5 rounded-xl border border-zinc-800/80">
+        <Search className="absolute left-5 top-4 w-4 h-4 text-zinc-500" />
+        <input
+          type="text"
+          placeholder="Search ecosystem nodes by title, description, or slug..."
+          value={searchQuery}
+          onChange={(e) => setSearchQuery(e.target.value)}
+          className="w-full bg-zinc-950/80 border border-zinc-800 rounded-lg pl-9 pr-4 py-1.5 text-xs text-zinc-100 placeholder:text-zinc-500 focus:outline-none focus:ring-1 focus:ring-sky-500"
+        />
+      </div>
+
+      {/* Projects Grid */}
+      {isLoading ? (
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+          {[1, 2, 3].map((i) => (
+            <div key={i} className="h-44 rounded-xl bg-zinc-900/40 border border-zinc-800 animate-pulse" />
+          ))}
+        </div>
+      ) : filteredProjects.length === 0 ? (
+        <Card className="text-center py-16 border-zinc-800/80 bg-zinc-950/40">
+          <div className="w-12 h-12 rounded-2xl bg-zinc-900 border border-zinc-800 flex items-center justify-center mx-auto mb-4 text-zinc-500 shadow-inner">
+            <Network className="w-6 h-6" />
           </div>
-        ) : (
-          projects.map((project) => (
-            <Card key={project.id} variant="glass" className="group relative overflow-hidden bg-dark-900/40 border-white/5 hover:border-primary-500/30 transition-all duration-300 p-6">
-              <div className="flex items-start justify-between mb-4">
-                <div className="flex-1 min-w-0 pr-4">
-                  <h3 className="text-lg font-bold text-white group-hover:text-primary-400 transition-colors truncate">
-                    {project.title}
-                  </h3>
-                  <p className="text-xs text-dark-500 mt-1 font-mono uppercase tracking-tighter">
-                    {project.slug}
-                  </p>
+          <h3 className="text-sm font-bold text-white mb-1">No ecosystem nodes found</h3>
+          <p className="text-xs text-zinc-400 max-w-sm mx-auto mb-6">
+            Register your first ecosystem project to display in the network map.
+          </p>
+          <Link href="/admin/ecosystem/new">
+            <Button variant="outline" size="sm">
+              <Plus className="w-3.5 h-3.5 mr-1.5" />
+              Add First Node
+            </Button>
+          </Link>
+        </Card>
+      ) : (
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+          {filteredProjects.map((project) => (
+            <Card
+              key={project.id}
+              className="p-5 border-zinc-800/80 bg-zinc-950/60 hover:border-zinc-700/80 hover:bg-zinc-900/30 transition-all flex flex-col justify-between group"
+            >
+              <div className="space-y-3">
+                <div className="flex items-start justify-between gap-3">
+                  <div className="flex items-center gap-3">
+                    {project.imageUrl ? (
+                      <div className="w-9 h-9 rounded-lg bg-zinc-900 border border-zinc-800 p-1 flex items-center justify-center flex-shrink-0">
+                        <img src={project.imageUrl} alt={project.title} className="w-full h-full object-contain" />
+                      </div>
+                    ) : (
+                      <div className="w-9 h-9 rounded-lg bg-zinc-900 border border-zinc-800 flex items-center justify-center text-zinc-500 flex-shrink-0">
+                        <Network className="w-4 h-4" />
+                      </div>
+                    )}
+                    <div>
+                      <h3 className="text-sm font-bold text-white group-hover:text-sky-400 transition-colors">
+                        {project.title}
+                      </h3>
+                      <p className="font-mono text-[10px] text-zinc-500">{project.slug}</p>
+                    </div>
+                  </div>
+
+                  <Badge
+                    variant={
+                      project.status === 'current'
+                        ? 'success'
+                        : project.status === 'upcoming'
+                        ? 'warning'
+                        : 'sky'
+                    }
+                    dot
+                  >
+                    {project.status || 'Active'}
+                  </Badge>
                 </div>
-                <span className={`px-2 py-0.5 rounded-full text-[10px] font-black uppercase tracking-widest ${project.status === 'current' ? 'bg-green-500/10 text-green-400' :
-                    project.status === 'upcoming' ? 'bg-yellow-500/10 text-yellow-500' :
-                      'bg-blue-500/10 text-blue-400'
-                  }`}>
-                  {project.status || 'Planned'}
-                </span>
+
+                <p className="text-xs text-zinc-400 line-clamp-3 leading-relaxed">
+                  {project.description || 'No description specified for this ecosystem node.'}
+                </p>
               </div>
 
-              <p className="text-sm text-dark-400 line-clamp-3 mb-6 min-h-[60px]">
-                {project.description || 'No description provided.'}
-              </p>
-
-              <div className="flex items-center justify-between pt-4 border-t border-white/5">
-                <div className="flex gap-2">
+              <div className="pt-4 mt-4 border-t border-zinc-800/60 flex items-center justify-between">
+                <div className="flex items-center gap-2">
                   <Link href={`/admin/ecosystem/${project.id}`}>
-                    <Button size="sm" variant="ghost" className="text-xs h-7">Edit</Button>
+                    <Button variant="outline" size="sm" className="h-7 text-[11px]">
+                      <Edit className="w-3 h-3 mr-1" />
+                      Edit
+                    </Button>
                   </Link>
+
                   <Button
-                    size="sm"
                     variant="ghost"
-                    className="text-xs h-7 text-red-400 hover:text-red-300 hover:bg-red-500/5"
-                    onClick={() => handleDelete(project.id)}
+                    size="icon"
+                    className="h-7 w-7 text-rose-400 hover:text-rose-300 hover:bg-rose-500/10"
+                    onClick={() => handleDelete(project.id, project.title)}
                   >
-                    Delete
+                    <Trash2 className="w-3.5 h-3.5" />
                   </Button>
                 </div>
-                {project.link && (
-                  <Link href={project.link} target="_blank">
-                    <svg className="w-4 h-4 text-dark-500 hover:text-white transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
-                    </svg>
-                  </Link>
-                )}
+
+                <div className="flex items-center gap-1.5">
+                  {project.hostedUrl && (
+                    <Link href={project.hostedUrl} target="_blank" title="Hosted App">
+                      <Button variant="ghost" size="icon" className="h-7 w-7">
+                        <Globe className="w-3.5 h-3.5 text-zinc-400 hover:text-white" />
+                      </Button>
+                    </Link>
+                  )}
+                  {project.link && (
+                    <Link href={project.link} target="_blank" title="Repository / Source">
+                      <Button variant="ghost" size="icon" className="h-7 w-7">
+                        <ExternalLink className="w-3.5 h-3.5 text-zinc-400 hover:text-white" />
+                      </Button>
+                    </Link>
+                  )}
+                </div>
               </div>
             </Card>
-          ))
-        )}
-      </div>
+          ))}
+        </div>
+      )}
     </div>
-  );
+  )
 }

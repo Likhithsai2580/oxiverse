@@ -315,7 +315,7 @@ You now have a production-ready full-stack application with:
 
 ### 🌐 Repository Info
 - **Primary Repo:** [codeberg.org/oxiverse](https://codeberg.org/oxiverse) (Use for Issues/PRs)
-- **Mirror:** [github.com/oxiverse-ecosystem](https://github.com/oxiverse-ecosystem)
+- **Documentation:** [docs.oxiverse.com](https://docs.oxiverse.com)
 
 ---
 

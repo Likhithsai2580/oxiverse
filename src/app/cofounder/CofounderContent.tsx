@@ -69,17 +69,17 @@ export default function CofounderContent() {
               <div className="flex-1">
                 <span className="block text-[10px] uppercase text-primary-400 font-bold tracking-widest mb-1">Revenue Distribution</span>
                 <span className="text-3xl font-black text-accent-300">70%</span>
-                <span className="text-xs text-primary-200 ml-2">to the whole team</span>
+                <span className="text-xs text-primary-200 ml-2">to the whole team via ORDP</span>
               </div>
               <div className="w-px h-12 bg-primary-800 hidden md:block" />
               <div className="flex-1">
                 <span className="block text-[10px] uppercase text-primary-400 font-bold tracking-widest mb-1">Founder Share</span>
                 <span className="text-3xl font-black text-primary-100">30%</span>
-                <span className="text-xs text-primary-300 ml-2">retained by creator</span>
+                <span className="text-xs text-primary-300 ml-2">retained by Oxiverse</span>
               </div>
             </div>
             <p className="text-primary-300 leading-relaxed text-sm mt-4">
-              The split is calculated on <strong>Net Revenue</strong> = Gross Revenue minus <strong>Operating Costs</strong> (infrastructure, hosting, tooling, and any direct operational spend). Costs are deducted first, then the net is divided 70/30.
+              The split is calculated on <strong>Net Revenue</strong> = Gross Revenue minus <strong>Operating Costs</strong> (infrastructure, hosting, tooling, and any direct operational spend). Costs are deducted first, then <strong>30% is retained by Oxiverse</strong> for core R&D and non-monetized services. The <strong>ORDP (Oxiverse Revenue Distribution Protocol)</strong> is then applied to the remaining <strong>70%</strong> to distribute it among the team.
             </p>
             <div className="mt-4 p-4 border border-accent-300/30 bg-primary-950/40 rounded">
               <span className="block text-[10px] uppercase text-accent-300 font-bold tracking-widest mb-2">Performance Check</span>
@@ -187,7 +187,7 @@ export default function CofounderContent() {
               <a href="/revenue" className="p-4 border-2 border-primary-700 bg-primary-950/40 rounded hover:border-accent-300/50 transition-all group/link">
                 <span className="block text-[10px] uppercase text-primary-400 font-bold tracking-widest mb-2">03 · Math</span>
                 <span className="text-primary-50 font-bold font-display uppercase text-sm group-hover/link:text-accent-300 transition-colors">Revenue Protocol</span>
-                <p className="text-primary-400 text-xs leading-relaxed mt-2">The deterministic 4-layer formula behind the 70/30 split.</p>
+                <p className="text-primary-400 text-xs leading-relaxed mt-2">The deterministic 4-layer formula that distributes the 70% team share after Oxiverse&apos;s 30%.</p>
               </a>
             </div>
           </section>
@@ -203,9 +203,9 @@ export default function CofounderContent() {
                 </a> (Primary development hub)
               </li>
               <li>
-                <a href="https://github.com/oxiverse-ecosystem" target="_blank" rel="noopener noreferrer" className="text-accent-300 hover:text-primary-50 font-bold underline decoration-dashed">
-                  Github.com/oxiverse-ecosystem
-                </a> (Ecosystem mirrors)
+                <a href="https://docs.oxiverse.com" target="_blank" rel="noopener noreferrer" className="text-accent-300 hover:text-primary-50 font-bold underline decoration-dashed">
+                  Docs.oxiverse.com
+                </a> (Published documentation)
               </li>
             </ul>
           </section>

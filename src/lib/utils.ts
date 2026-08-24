@@ -1,4 +1,12 @@
-import { ClassValue } from 'clsx'
+import { clsx, type ClassValue } from 'clsx'
+import { twMerge } from 'tailwind-merge'
+
+/**
+ * Combine class names conditionally with Tailwind merge
+ */
+export function cn(...inputs: ClassValue[]) {
+  return twMerge(clsx(inputs))
+}
 
 /**
  * Convert a string to a URL-friendly slug
@@ -17,6 +25,7 @@ export function slugify(text: string): string {
  * Format a date string for display
  */
 export function formatDate(date: Date | string): string {
+  if (!date) return ''
   return new Date(date).toLocaleDateString('en-US', {
     year: 'numeric',
     month: 'long',
@@ -28,6 +37,7 @@ export function formatDate(date: Date | string): string {
  * Format a date with relative time (e.g., "2 hours ago")
  */
 export function formatRelativeTime(date: Date | string): string {
+  if (!date) return ''
   const now = new Date()
   const then = new Date(date)
   const diffInSeconds = Math.floor((now.getTime() - then.getTime()) / 1000)
@@ -44,21 +54,16 @@ export function formatRelativeTime(date: Date | string): string {
  * Truncate text to a specified length
  */
 export function truncate(text: string, length: number): string {
+  if (!text) return ''
   if (text.length <= length) return text
   return text.slice(0, length).trim() + '...'
-}
-
-/**
- * Combine class names conditionally
- */
-export function cn(...inputs: ClassValue[]) {
-  return inputs.filter(Boolean).join(' ')
 }
 
 /**
  * Calculate estimated reading time for a string
  */
 export function calculateReadingTime(content: string): string {
+  if (!content) return '1 min read'
   const wordsPerMinute = 200
   const noOfWords = content.split(/\s/g).length
   const minutes = noOfWords / wordsPerMinute

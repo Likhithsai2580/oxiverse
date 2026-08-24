@@ -15,7 +15,11 @@ const faqs = [
   },
   {
     question: "Where is the Oxiverse source code hosted?",
-    answer: "The primary development repository for Oxiverse is hosted on Codeberg (codeberg.org/oxiverse). An official mirror is maintained on GitHub (github.com/oxiverse-ecosystem). All active development, issues, and pull requests are managed through the Codeberg organization. Documentation lives in the repo under /docs and is published at docs.oxiverse.com."
+    answer: "The primary development repository for Oxiverse is hosted on Codeberg (codeberg.org/oxiverse). All active development, issues, and pull requests are managed through the Codeberg organization. Documentation lives in the repo under /docs and is published at docs.oxiverse.com."
+  },
+  {
+    question: "Why switch from a convenient service?",
+    answer: "We know privacy alone is not a proper reason to switch from a service that is convenient, and switching ecosystems has real friction. So we think from first principles: our search engine, IntentForge, understands your intent from the query itself instead of profiling you around it. We are building for the new generation of users who expect tools that work for them, on their terms."
   },
   {
     question: "Is Oxiverse free to use?",

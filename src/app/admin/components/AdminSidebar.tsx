@@ -1,169 +1,163 @@
 'use client'
 
+import React from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
 import { usePathname } from 'next/navigation'
-import { signOut } from 'next-auth/react'
+import { signOut, useSession } from 'next-auth/react'
+import {
+  LayoutDashboard,
+  BookOpen,
+  GraduationCap,
+  Files,
+  Megaphone,
+  Sparkles,
+  Network,
+  Image as ImageIcon,
+  Milestone,
+  Sliders,
+  LogOut,
+  X,
+  ExternalLink,
+  ShieldAlert,
+} from 'lucide-react'
 
-const navItems = [
-  { 
-    name: 'Dashboard', 
-    href: '/admin/dashboard', 
-    icon: (
-      <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
-      </svg>
-    )
+const navGroups = [
+  {
+    label: 'Overview',
+    items: [
+      { name: 'Dashboard', href: '/admin/dashboard', icon: LayoutDashboard },
+    ],
   },
   {
-    name: 'Announcements',
-    href: '/admin/announcements',
-    icon: (
-      <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11 5.882V19.24a1.76 1.76 0 01-3.417.592l-2.147-6.15M18 13a3 3 0 100-6M5.436 13.683A4.001 4.001 0 017 6h1.832c4.1 0 7.625-1.234 9.168-3v14c-1.543-1.766-5.067-3-9.168-3H7a3.988 3.988 0 01-1.564-.317z" />
-      </svg>
-    )
+    label: 'Content Engine',
+    items: [
+      { name: 'Blog Posts', href: '/admin/blog', icon: BookOpen },
+      { name: 'Research Papers', href: '/admin/research', icon: GraduationCap },
+      { name: 'Pages', href: '/admin/pages', icon: Files },
+      { name: 'Banners', href: '/admin/banners', icon: Megaphone },
+      { name: 'Posters', href: '/admin/posters', icon: Sparkles },
+    ],
   },
-  { 
-    name: 'Blog Posts', 
-    href: '/admin/blog', 
-    icon: (
-      <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10l4 4v12a2 2 0 01-2 2z" />
-        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 2v6h6" />
-        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 11h10M7 15h10" />
-      </svg>
-    )
+  {
+    label: 'Ecosystem & Media',
+    items: [
+      { name: 'Ecosystem', href: '/admin/ecosystem', icon: Network },
+      { name: 'Media Assets', href: '/admin/assets', icon: ImageIcon },
+      { name: 'Roadmap', href: '/admin/roadmap', icon: Milestone },
+    ],
   },
-  { 
-    name: 'Research', 
-    href: '/admin/research', 
-    icon: (
-      <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
-      </svg>
-    )
-  },
-  { 
-    name: 'Posters', 
-    href: '/admin/posters', 
-    icon: (
-      <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
-      </svg>
-    )
-  },
-  { 
-    name: 'Ecosystem', 
-    href: '/admin/ecosystem', 
-    icon: (
-      <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9" />
-      </svg>
-    )
-  },
-  { 
-    name: 'Media Assets', 
-    href: '/admin/assets', 
-    icon: (
-      <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
-      </svg>
-    )
-  },
-  { 
-    name: 'Roadmap', 
-    href: '/admin/roadmap', 
-    icon: (
-      <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01" />
-      </svg>
-    )
-  },
-  { 
-    name: 'Settings', 
-    href: '/admin/settings', 
-    icon: (
-      <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
-        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
-      </svg>
-    )
+  {
+    label: 'Preferences',
+    items: [
+      { name: 'Settings', href: '/admin/settings', icon: Sliders },
+    ],
   },
 ]
 
 export default function AdminSidebar({ onClose }: { onClose?: () => void }) {
   const pathname = usePathname()
+  const { data: session } = useSession()
 
   return (
-    <div className="flex flex-col w-64 h-screen bg-dark-950/95 backdrop-blur-2xl border-r border-white/5 overflow-y-auto">
-      <div className="flex items-center px-6 h-20 border-b border-white/5">
-        <Link href="/" className="flex items-center gap-3 group">
-          <div className="relative w-8 h-8 group-hover:scale-110 transition-transform">
-            <Image 
-              src="/oxiverse-logo.svg" 
-              alt="Oxiverse Logo" 
-              fill 
-              priority
+    <aside className="flex flex-col w-64 h-screen bg-zinc-950 border-r border-zinc-800/80 select-none">
+      {/* Brand Header */}
+      <div className="flex items-center justify-between px-5 h-16 border-b border-zinc-800/80 flex-shrink-0">
+        <Link href="/admin/dashboard" className="flex items-center gap-2.5 group">
+          <div className="relative w-8 h-8 rounded-lg bg-zinc-900 border border-zinc-800 flex items-center justify-center p-1 group-hover:border-zinc-700 transition-all shadow-inner">
+            <Image
+              src="/oxiverse-logo.svg"
+              alt="Oxiverse Logo"
+              width={22}
+              height={22}
               className="object-contain"
             />
           </div>
-          <span className="text-xl font-black text-white tracking-tighter uppercase italic">
-            Oxi<span className="text-primary-500 not-italic">verse</span>
-          </span>
+          <div>
+            <div className="flex items-center gap-1.5">
+              <span className="text-sm font-black tracking-tight text-white uppercase">
+                Oxi<span className="text-sky-400">verse</span>
+              </span>
+              <span className="text-[9px] font-bold px-1.5 py-0.2 rounded bg-sky-500/10 text-sky-400 border border-sky-500/20">
+                PRO
+              </span>
+            </div>
+            <p className="text-[10px] text-zinc-500 font-medium">Control Plane</p>
+          </div>
         </Link>
         {onClose && (
-          <button 
+          <button
             onClick={onClose}
-            className="lg:hidden ml-auto p-2 text-dark-400 hover:text-white"
+            className="lg:hidden p-1.5 rounded-lg text-zinc-400 hover:text-white hover:bg-zinc-900 transition-colors"
+            aria-label="Close menu"
           >
-            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-            </svg>
+            <X className="w-4 h-4" />
           </button>
         )}
       </div>
 
-      <nav className="flex-1 px-4 py-8 space-y-2">
-        <div className="px-4 mb-4">
-            <p className="text-[10px] font-black text-dark-500 uppercase tracking-[0.2em]">Management</p>
-        </div>
-        {navItems.map((item) => {
-          const isActive = pathname.startsWith(item.href)
-          return (
-            <Link
-              key={item.name}
-              href={item.href}
-              onClick={() => onClose?.()}
-              className={`flex items-center px-4 py-3 text-sm font-bold rounded-xl transition-all duration-300 group ${
-                isActive
-                  ? 'bg-primary-500/10 text-primary-400 border border-primary-500/20 shadow-[0_0_20px_-5px_rgba(var(--primary-500),0.1)]'
-                  : 'text-dark-400 hover:bg-white/[0.03] hover:text-white border border-transparent'
-              }`}
-            >
-              <div className={`${isActive ? 'text-primary-400' : 'text-dark-500 group-hover:text-white'} mr-3 transition-colors`}>
-                {item.icon}
-              </div>
-              {item.name}
-              {isActive && (
-                <div className="ml-auto w-1.5 h-1.5 rounded-full bg-primary-400 shadow-[0_0_8px_rgba(var(--primary-400),0.5)]" />
-              )}
-            </Link>
-          )
-        })}
+      {/* Navigation Links */}
+      <nav className="flex-1 px-3 py-4 space-y-6 overflow-y-auto scrollbar-thin scrollbar-thumb-zinc-800">
+        {navGroups.map((group) => (
+          <div key={group.label} className="space-y-1">
+            <p className="px-3 text-[10px] font-bold uppercase tracking-wider text-zinc-500 mb-1.5">
+              {group.label}
+            </p>
+            {group.items.map((item) => {
+              const Icon = item.icon
+              const isActive = pathname === item.href || (item.href !== '/admin/dashboard' && pathname.startsWith(item.href))
+
+              return (
+                <Link
+                  key={item.name}
+                  href={item.href}
+                  onClick={() => onClose?.()}
+                  className={`flex items-center gap-3 px-3 py-2 text-xs font-semibold rounded-lg transition-all group ${
+                    isActive
+                      ? 'bg-zinc-800/90 text-white shadow-sm border border-zinc-700/60 font-bold'
+                      : 'text-zinc-400 hover:text-zinc-100 hover:bg-zinc-900/60'
+                  }`}
+                >
+                  <Icon
+                    className={`w-4 h-4 transition-colors ${
+                      isActive ? 'text-sky-400' : 'text-zinc-500 group-hover:text-zinc-300'
+                    }`}
+                  />
+                  <span>{item.name}</span>
+                  {isActive && (
+                    <span className="ml-auto w-1.5 h-1.5 rounded-full bg-sky-400 shadow-sm shadow-sky-400/80" />
+                  )}
+                </Link>
+              )
+            })}
+          </div>
+        ))}
       </nav>
 
-      <div className="p-4 border-t border-white/5 bg-dark-950/40">
+      {/* User Footer Profile */}
+      <div className="p-3 border-t border-zinc-800/80 bg-zinc-950/40">
+        <div className="flex items-center gap-3 p-2 rounded-lg bg-zinc-900/60 border border-zinc-800/60 mb-2">
+          <div className="w-8 h-8 rounded-md bg-gradient-to-br from-sky-500/20 to-purple-500/20 border border-zinc-700/80 flex items-center justify-center text-xs font-bold text-sky-300 uppercase">
+            {session?.user?.name?.[0] || session?.user?.email?.[0] || 'A'}
+          </div>
+          <div className="flex-1 min-w-0">
+            <p className="text-xs font-bold text-white truncate">
+              {session?.user?.name || 'Administrator'}
+            </p>
+            <p className="text-[10px] text-zinc-500 truncate">
+              {session?.user?.email || 'admin@oxiverse.com'}
+            </p>
+          </div>
+        </div>
+
         <button
-          onClick={() => signOut({ callbackUrl: '/' })}
-          className="flex items-center w-full px-4 py-3 text-sm font-bold text-dark-400 rounded-xl hover:bg-red-500/5 hover:text-red-400 transition-all duration-300 group"
+          onClick={() => signOut({ callbackUrl: '/admin/login' })}
+          className="flex items-center justify-center gap-2 w-full px-3 py-1.5 text-xs font-medium text-zinc-400 rounded-md hover:bg-rose-500/10 hover:text-rose-400 hover:border-rose-500/20 border border-transparent transition-all cursor-pointer"
         >
-          <svg className="w-5 h-5 mr-3 text-dark-500 group-hover:text-red-400 transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
-          </svg>
+          <LogOut className="w-3.5 h-3.5" />
           Sign Out
         </button>
       </div>
-    </div>
+    </aside>
   )
 }

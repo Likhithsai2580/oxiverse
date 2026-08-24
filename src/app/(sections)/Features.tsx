@@ -48,7 +48,7 @@ export default function Features() {
           <div className="bg-primary-950/50 p-4 border border-primary-700 rounded-sm">
             <h3 className="text-[10px] font-mono font-bold text-accent-300 uppercase mb-2 tracking-widest">Protocol Summary</h3>
             <p className="text-xs text-primary-200 leading-relaxed font-medium">
-              Oxiverse is a privacy-first ecosystem built on IntentForge — an autonomous discovery engine using intent extraction and self-healing search for tracking-free results. The stack is fully open-source (Codeberg/GitHub mirror) under the Oxiverse Community License (OCL) v1.0. No ads, no tracking, ever.
+              Oxiverse is a privacy-first ecosystem built on IntentForge — an autonomous discovery engine using intent extraction and self-healing search for tracking-free results. The stack is fully open-source (Codeberg) under the Oxiverse Community License (OCL) v1.0. No ads, no tracking, ever.
             </p>
           </div>
         </div>
@@ -56,37 +56,12 @@ export default function Features() {
 
       <div className="max-w-7xl mx-auto px-4 md:px-8 grid grid-cols-1 lg:grid-cols-12 gap-4">
 
-        {/* Large Feature / Image */}
-        <motion.div
-          initial={{ opacity: 0, scale: 0.98 }}
-          whileInView={{ opacity: 1, scale: 1 }}
-          viewport={{ once: true, margin: "-100px" }}
-          className="lg:col-span-8 retro-box relative h-[500px] group flex flex-col justify-between p-0 overflow-hidden"
-        >
-          <div className="retro-header-bar">
-            <span>ECOSYSTEM_MAP.BMP</span>
-            <div className="flex gap-1">
-              <div className="w-2 h-2 bg-primary-950" />
-              <div className="w-2 h-2 bg-primary-950" />
-            </div>
-          </div>
-          <div className="relative flex-1 bg-primary-900">
-            <div className="absolute inset-0 z-10 bg-gradient-to-t from-primary-950 via-transparent to-transparent" />
-            <div className="absolute bottom-0 left-0 right-0 p-8 z-20">
-              <span className="block text-accent-300 font-mono text-xs uppercase tracking-widest mb-3">Live Environment</span>
-              <h3 className="font-display text-3xl md:text-4xl text-primary-50 font-bold uppercase tracking-tight max-w-lg">
-                Visualize the global node network.
-              </h3>
-            </div>
-          </div>
-        </motion.div>
-
         {/* Feature 01 */}
         <motion.div
           initial={{ opacity: 0, x: 20 }}
           whileInView={{ opacity: 1, x: 0 }}
           viewport={{ once: true }}
-          className="lg:col-span-4 retro-box p-0 flex flex-col justify-between group"
+          className="lg:col-span-3 retro-box p-0 flex flex-col justify-between group"
         >
           <div className="retro-header-bar">
             <span>MODULE_{features[0].id}</span>
@@ -111,7 +86,7 @@ export default function Features() {
           initial="hidden"
           whileInView="show"
           viewport={{ once: true, margin: "-50px" }}
-          className="lg:col-span-12 grid grid-cols-1 md:grid-cols-3 gap-4"
+          className="lg:col-span-9 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4"
         >
           {features.slice(1).map((feature) => (
             <motion.div key={feature.id} variants={item} className="retro-box p-0 flex flex-col group">

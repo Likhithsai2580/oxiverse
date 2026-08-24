@@ -176,6 +176,37 @@ a {
   z-index: 1000;
 }
 
+/* Admin shell: modern zinc-950 flat workspace with fast performance and refined scrollbars */
+body.admin-shell {
+  background: #09090b;
+  background-image: none;
+  scroll-behavior: auto;
+  scroll-padding-top: 0;
+  color: #f4f4f5;
+}
+body.admin-shell ::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+body.admin-shell ::-webkit-scrollbar-track {
+  background: transparent;
+  border: none;
+}
+body.admin-shell ::-webkit-scrollbar-thumb {
+  background: #27272a;
+  border-radius: 9999px;
+  border: none;
+}
+body.admin-shell ::-webkit-scrollbar-thumb:hover {
+  background: #3f3f46;
+}
+body.admin-shell #content-fallback {
+  display: none;
+}
+body.admin-shell::before {
+  display: none;
+}
+
 @media (prefers-reduced-motion: reduce) {
   *, ::before, ::after {
     animation-delay: -1ms !important;
