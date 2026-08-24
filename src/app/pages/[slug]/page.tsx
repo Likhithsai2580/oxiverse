@@ -1,8 +1,11 @@
 import { prisma } from '@/lib/prisma'
 import { Metadata } from 'next'
 import { notFound } from 'next/navigation'
+import { redirect } from 'next/navigation'
 import ReactMarkdown from 'react-markdown'
 import remarkGfm from 'remark-gfm'
+import { getServerSession } from 'next-auth'
+import { authOptions } from '@/lib/authOptions'
 import Navigation from '@/components/Navigation'
 import Footer from '@/components/Footer'
 import Image from 'next/image'
@@ -15,6 +18,7 @@ export const revalidate = 60
 
 interface CmsPageProps {
   params: { slug: string }
+  searchParams?: { preview?: string }
 }
 
 export async function generateStaticParams() {
@@ -72,7 +76,17 @@ const MarkdownComponents = {
   },
 }
 
-export default async function CmsPageRenderer({ params }: CmsPageProps) {
+export default async function CmsPageRenderer({ params, searchParams }: CmsPageProps) {
+  const isPreview = searchParams?.preview === '1'
+
+  // Draft isolation: unpublished pages are invisible by default. Only an admin
+  // hitting ?preview=1 may view them. Drafts never reach the public by accident.
+  let allowUnpublished = false
+  if (isPreview) {
+    const session = await getServerSession(authOptions)
+    allowUnpublished = session?.user?.role === 'ADMIN'
+  }
+
   const page = await prisma.cmsPage.findUnique({
     where: { slug: params.slug },
     include: {
@@ -85,7 +99,14 @@ export default async function CmsPageRenderer({ params }: CmsPageProps) {
     },
   })
 
-  if (!page || !page.published) {
+  if (!page || (!page.published && !allowUnpublished)) {
+    // Check for a dynamic redirect (old slug → new slug) before 404
+    const slugRedirect = await prisma.slugRedirect.findUnique({
+      where: { oldPath: `/pages/${params.slug}` },
+    })
+    if (slugRedirect) {
+      redirect(slugRedirect.newPath)
+    }
     notFound()
   }
 

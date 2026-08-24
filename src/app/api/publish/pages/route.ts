@@ -1,13 +1,21 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { prisma } from '@/lib/prisma'
+import { requireAdmin } from '@/lib/auth'
 
 export const dynamic = 'force-dynamic'
 
 // GET /api/publish/pages — list published CMS pages (for nav, footer, sitemap)
+// Default returns ONLY published pages. `?all=true` returns every page (including
+// drafts) but requires an admin session, so drafts are never exposed by default.
 export async function GET(request: NextRequest) {
   try {
     const { searchParams } = new URL(request.url)
     const includeUnpublished = searchParams.get('all') === 'true'
+
+    if (includeUnpublished) {
+      const guard = await requireAdmin()
+      if (guard) return guard
+    }
 
     const pages = await prisma.cmsPage.findMany({
       where: includeUnpublished ? {} : { published: true },

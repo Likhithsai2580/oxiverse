@@ -39,6 +39,17 @@ export async function PUT(request: NextRequest, { params }: { params: { id: stri
       if (slugExists) {
         return NextResponse.json({ error: 'A page with this slug already exists' }, { status: 400 })
       }
+      // Preserve the old URL: redirect /pages/<oldSlug> -> /pages/<newSlug> forever.
+      // Upsert so re-saving the same slug change is idempotent.
+      await prisma.slugRedirect.upsert({
+        where: { oldPath: `/pages/${existing.slug}` },
+        update: { newPath: `/pages/${body.slug}`, type: 'page' },
+        create: {
+          oldPath: `/pages/${existing.slug}`,
+          newPath: `/pages/${body.slug}`,
+          type: 'page',
+        },
+      })
     }
 
     if (body.parentId === params.id) {
