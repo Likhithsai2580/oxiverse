@@ -61,7 +61,7 @@ export default function Footer() {
               <div className="relative w-9 h-9">
                 <Image src="/oxiverse-logo.svg" alt="Oxiverse Logo" fill sizes="36px" className="object-contain" />
               </div>
-              <span className="text-lg font-bold font-display text-primary-50 uppercase">Oxiverse</span>
+              <Image src="/oxiverse-wordmark.svg" alt="Oxiverse" width={120} height={30} sizes="120px" className="h-6 md:h-7 w-auto object-contain" />
             </Link>
             <p className="text-primary-400 text-sm mb-6 max-w-xs leading-relaxed">
               Explore &bull; Connect &bull; Create<br />

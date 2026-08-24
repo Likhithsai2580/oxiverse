@@ -61,9 +61,7 @@ export default function Navigation() {
             <div className="relative w-8 h-8 md:w-9 md:h-9">
               <Image src="/oxiverse-logo.svg" alt="Oxiverse Logo" fill priority sizes="36px" className="object-contain" />
             </div>
-            <span className="text-base md:text-lg font-black font-display tracking-tight text-primary-50 group-hover:text-accent-300 transition-colors uppercase">
-              Oxiverse
-            </span>
+            <Image src="/oxiverse-wordmark.svg" alt="Oxiverse" width={110} height={28} priority sizes="120px" className="h-6 md:h-7 w-auto object-contain" />
           </Link>
 
           <div className="hidden lg:flex items-center space-x-0.5 xl:space-x-1">
