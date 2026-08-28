@@ -3,6 +3,7 @@ import { Metadata } from 'next'
 import Navigation from '@/components/Navigation'
 import Footer from '@/components/Footer'
 import Section from '@/components/ui/Section'
+import { getOclVersionLabel } from '@/lib/license'
 
 export const metadata: Metadata = {
   title: 'Contributing Guide | Oxiverse',
@@ -12,7 +13,8 @@ export const metadata: Metadata = {
   },
 }
 
-export default function ContributingPage() {
+export default async function ContributingPage() {
+  const version = await getOclVersionLabel()
   return (
     <main className="min-h-screen bg-primary-800 retro-bg selection:bg-accent-300 selection:text-primary-950">
       <Navigation />
@@ -39,7 +41,7 @@ export default function ContributingPage() {
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6 text-left mt-8">
               <div className="p-4 bg-primary-800/50 border border-primary-700">
                 <h3 className="font-display text-lg font-bold text-primary-50 mb-2 uppercase">No CLA</h3>
-                <p className="text-primary-900 text-sm">Contributions stay under OCL v1.0. You keep copyright; we get a license. No rights grabs.</p>
+                <p className="text-primary-900 text-sm">Contributions stay under {version}. You keep copyright; we get a license. No rights grabs.</p>
               </div>
               <div className="p-4 bg-primary-800/50 border border-primary-700">
                 <h3 className="font-display text-lg font-bold text-primary-50 mb-2 uppercase">Privacy First</h3>

@@ -16,6 +16,7 @@ All notable changes to the Oxiverse project will be documented in this file.
 - Added a high-density `AISpecs` section to the homepage to provide structured data for generative AI and search summaries.
 - Migrated primary development and contribution workflow to Codeberg; GitHub is now officially a mirror. Added mirror notices to `README.md` and `Footer`.
 - Migrated project license from IECL v1.0 to **Oxiverse Community License (OCL) v1.0**, introducing strict Privacy-by-Design requirements and updated commercial terms.
+- Updated license to **OCL v1.2**: Oxiverse API is a paid subscription service (free tier for personal/research) — using it commercially requires NO separate OCL Commercial License and creates no derivative work (Section 2A(a)); self-hosted commercial use of RAVANA/IntentForge is permitted ONLY under full-OSS terms with no open-washing (Sections 2A(b) & 3A); Licensor is legally barred from ever granting a closed-source/proprietary self-hosting commercial license, free or paid (Sections 2A(b), 3, 3A). Added explicit "free written confirmation of compliance" (Section 2A(d)) and Open-Washing Prohibition (Section 3A).
 
 ### Optimized
 - Enhanced Admin Portal performance by enabling Next.js prefetching for all sidebar navigation links, ensuring instantaneous page transitions.

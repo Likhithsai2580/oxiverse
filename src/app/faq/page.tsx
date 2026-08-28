@@ -3,6 +3,7 @@ import { Metadata } from 'next'
 import Navigation from '@/components/Navigation'
 import Footer from '@/components/Footer'
 import FaqContent from './FaqContent'
+import { getOclVersionLabel } from '@/lib/license'
 
 export const metadata: Metadata = {
   title: 'System FAQ | Oxiverse',
@@ -12,11 +13,12 @@ export const metadata: Metadata = {
   },
 }
 
-export default function FaqPage() {
+export default async function FaqPage() {
+  const version = await getOclVersionLabel()
   return (
     <main className="min-h-screen bg-primary-800 retro-bg selection:bg-accent-300 selection:text-primary-950">
       <Navigation />
-      <FaqContent />
+      <FaqContent version={version} />
       <Footer />
     </main>
   )

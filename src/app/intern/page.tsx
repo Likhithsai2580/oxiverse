@@ -2,6 +2,7 @@ import React from 'react'
 import Navigation from '@/components/Navigation'
 import Footer from '@/components/Footer'
 import InternContent from './InternContent'
+import { getOclVersionLabel } from '@/lib/license'
 
 import { Metadata } from 'next'
 
@@ -13,12 +14,13 @@ export const metadata: Metadata = {
   },
 }
 
-export default function InternPage() {
+export default async function InternPage() {
+  const version = await getOclVersionLabel()
   return (
     <main className="min-h-screen bg-transparent flex flex-col">
       <Navigation />
       <div className="flex-grow pt-24">
-        <InternContent />
+        <InternContent version={version} />
       </div>
       <Footer />
     </main>

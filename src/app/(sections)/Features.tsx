@@ -22,10 +22,14 @@ const features = [
   { id: '01', name: 'Privacy Search', description: 'Intent-driven search engine devoid of tracking, targeting, or profiling.', linkText: 'Discover Search', href: 'https://search.oxiverse.com' },
   { id: '02', name: 'Monetization', description: 'No ads. No tracking. Revenue through sovereign commerce affiliates, developer APIs, and commercial licensing — all privacy-preserving.', linkText: 'How We Sustain', href: '/monetization' },
   { id: '03', name: 'Data Autonomy', description: 'Total consent management with zero-retention policies. Your data remains yours.', linkText: 'Our Privacy Policy', href: '/privacy' },
-  { id: '04', name: 'Open Stack', description: 'Cognitive architectures, autonomous search, and privacy-first applications — all decoder-first, locally trainable, and source-available under OCL v1.0.', linkText: 'Audit Source Code', href: 'https://codeberg.org/oxiverse' },
+  { id: '04', name: 'Open Stack', description: 'Cognitive architectures, autonomous search, and privacy-first applications — all decoder-first, locally trainable, and source-available under OCL __OCL_VERSION__.', linkText: 'Audit Source Code', href: 'https://codeberg.org/oxiverse' },
 ]
 
-export default function Features() {
+export default function Features({ version }: { version: string }) {
+  const vFeatures = features.map((f) => ({
+    ...f,
+    description: f.description.replaceAll('__OCL_VERSION__', version),
+  }))
   return (
     <Section id="products" className="pt-32 pb-24 bg-primary-800 relative z-10">
 
@@ -48,7 +52,7 @@ export default function Features() {
           <div className="bg-primary-950/50 p-4 border border-primary-700 rounded-sm">
             <h3 className="text-[10px] font-mono font-bold text-accent-300 uppercase mb-2 tracking-widest">Protocol Summary</h3>
             <p className="text-xs text-primary-200 leading-relaxed font-medium">
-              Oxiverse is a privacy-first ecosystem built on IntentForge — an autonomous discovery engine using intent extraction and self-healing search for tracking-free results. The stack is fully open-source (Codeberg) under the Oxiverse Community License (OCL) v1.0. No ads, no tracking, ever.
+              Oxiverse is a privacy-first ecosystem built on IntentForge — an autonomous discovery engine using intent extraction and self-healing search for tracking-free results. The stack is fully open-source (Codeberg) under the Oxiverse Community License (OCL) {version}. No ads, no tracking, ever.
             </p>
           </div>
         </div>
@@ -64,18 +68,18 @@ export default function Features() {
           className="lg:col-span-3 retro-box p-0 flex flex-col justify-between group"
         >
           <div className="retro-header-bar">
-            <span>MODULE_{features[0].id}</span>
+            <span>MODULE_{vFeatures[0].id}</span>
           </div>
           <div className="p-8 flex flex-col justify-between flex-1 bg-primary-800">
             <div>
               <span className="text-accent-300 font-mono text-4xl tracking-tighter mb-4 block font-bold">
-                {features[0].id}
+                {vFeatures[0].id}
               </span>
-              <h4 className="font-display text-xl font-bold text-primary-50 mb-3 uppercase">{features[0].name}</h4>
-              <p className="text-primary-300 leading-relaxed text-sm">{features[0].description}</p>
+              <h4 className="font-display text-xl font-bold text-primary-50 mb-3 uppercase">{vFeatures[0].name}</h4>
+              <p className="text-primary-300 leading-relaxed text-sm">{vFeatures[0].description}</p>
             </div>
-            <Link href={features[0].href || '#'} target={features[0].href?.startsWith('http') ? '_blank' : undefined} className="mt-8 text-xs text-primary-400 font-bold uppercase tracking-widest group-hover:text-accent-300 flex items-center gap-2 font-mono">
-              {features[0].linkText} <span className="text-accent-300 transform group-hover:translate-x-2 transition-transform">→</span>
+            <Link href={vFeatures[0].href || '#'} target={vFeatures[0].href?.startsWith('http') ? '_blank' : undefined} className="mt-8 text-xs text-primary-400 font-bold uppercase tracking-widest group-hover:text-accent-300 flex items-center gap-2 font-mono">
+              {vFeatures[0].linkText} <span className="text-accent-300 transform group-hover:translate-x-2 transition-transform">→</span>
             </Link>
           </div>
         </motion.div>
@@ -88,7 +92,7 @@ export default function Features() {
           viewport={{ once: true, margin: "-50px" }}
           className="lg:col-span-9 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4"
         >
-          {features.slice(1).map((feature) => (
+          {vFeatures.slice(1).map((feature) => (
             <motion.div key={feature.id} variants={item} className="retro-box p-0 flex flex-col group">
               <div className="retro-header-bar">
                 <span>MODULE_{feature.id}</span>

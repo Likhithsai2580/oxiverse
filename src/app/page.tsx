@@ -18,6 +18,7 @@ const Contact = lazyLoad(() => import('@/app/(sections)/Contact'), { loading: Se
 const FAQ = lazyLoad(() => import('@/app/(sections)/FAQ'), { loading: SectionSkeleton })
 import Footer from '@/components/Footer'
 import BannerDisplay from '@/components/BannerDisplay'
+import { getOclVersionLabel } from '@/lib/license'
 
 export const metadata: Metadata = {
   alternates: {
@@ -27,20 +28,21 @@ export const metadata: Metadata = {
 
 export const revalidate = 3600 // Revalidate every hour
 
-export default function Home() {
+export default async function Home() {
+  const version = await getOclVersionLabel()
   return (
     <main className="min-h-screen bg-transparent">
       <BannerDisplay placement="announcement" />
       <Navigation />
-      <Hero />
-      <Features />
+      <Hero version={version} />
+      <Features version={version} />
       <UseCases />
       <Roadmap />
       <Ecosystem />
       <Research />
       <Blog />
       <About />
-      <FAQ />
+      <FAQ version={version} />
       <Newsletter />
       <Contact />
       <Footer />

@@ -5,7 +5,7 @@ import Button from '@/components/ui/Button'
 import { siteConfig } from '@/config/site'
 import { useEffect, useState } from 'react'
 
-export default function Hero() {
+export default function Hero({ version }: { version: string }) {
   const prefersReducedMotion = useReducedMotion()
   const [mounted, setMounted] = useState(false)
 
@@ -117,7 +117,7 @@ export default function Hero() {
                     </div>
                     <div className="flex justify-between items-center border-b-2 border-primary-800/50 pb-2">
                       <span className="text-primary-400">LICENSE</span>
-                      <span className="text-primary-50 font-black whitespace-nowrap">OCL v1.0</span>
+                      <span className="text-primary-50 font-black whitespace-nowrap">OCL {version}</span>
                     </div>
                     
                     {/* Blinking Prompt */}

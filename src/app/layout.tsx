@@ -6,6 +6,7 @@ import { AuthProvider } from '@/lib/providers/AuthProvider'
 import ScrollProgressBar from '@/components/ui/ScrollProgressBar'
 import { SmoothScrollProvider } from '@/lib/providers/SmoothScrollProvider'
 import { SpeedInsights } from '@vercel/speed-insights/next'
+import { getOclVersionLabel } from '@/lib/license'
 
 const archivo = Archivo({
   subsets: ['latin'],
@@ -76,11 +77,12 @@ export const metadata: Metadata = {
   }
 }
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: {
   children: React.ReactNode
 }) {
+  const oclVersion = await getOclVersionLabel()
   const jsonLd = [
     {
       '@context': 'https://schema.org',
@@ -199,7 +201,7 @@ export default function RootLayout({
           name: 'What does "Open Source" mean for me as a user?',
           acceptedAnswer: {
             '@type': 'Answer',
-            text: 'All our applications operate under the Oxiverse Community License (OCL) v1.0. This ensures our tools remain transparent, auditable, and committed to your digital footprint, serving as a private, human-centric alternative to tracking-heavy infrastructure.'
+            text: `All our applications operate under the ${oclVersion}. This ensures our tools remain transparent, auditable, and committed to your digital footprint, serving as a private, human-centric alternative to tracking-heavy infrastructure.`
           }
         },
         {

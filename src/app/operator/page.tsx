@@ -2,6 +2,7 @@ import React from 'react'
 import Navigation from '@/components/Navigation'
 import Footer from '@/components/Footer'
 import OperatorContent from './OperatorContent'
+import { getOclVersionLabel } from '@/lib/license'
 
 import { Metadata } from 'next'
 
@@ -13,12 +14,13 @@ export const metadata: Metadata = {
   },
 }
 
-export default function OperatorPage() {
+export default async function OperatorPage() {
+  const version = await getOclVersionLabel()
   return (
     <main className="min-h-screen bg-transparent flex flex-col">
       <Navigation />
       <div className="flex-grow pt-24">
-        <OperatorContent />
+        <OperatorContent version={version} />
       </div>
       <Footer />
     </main>

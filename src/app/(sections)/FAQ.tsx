@@ -23,11 +23,15 @@ const faqs = [
   },
   {
     question: "Is Oxiverse free to use?",
-    answer: "Yes, the Oxiverse ecosystem is free for users. It is licensed under the Oxiverse Community License (OCL) v1.0, which ensures the source remains available while protecting the project's privacy-first mission and community contributions."
+    answer: "Yes, the Oxiverse ecosystem is free for users. It is licensed under the Oxiverse Community License (OCL) __OCL_VERSION__, which ensures the source remains available while protecting the project's privacy-first mission and community contributions."
   }
 ]
 
-export default function FAQ() {
+export default function FAQ({ version }: { version: string }) {
+  const vFaqs = faqs.map((f) => ({
+    ...f,
+    answer: f.answer.replaceAll('__OCL_VERSION__', version),
+  }))
   return (
     <Section id="faq" className="py-24 bg-primary-900/30 border-y-2 border-primary-50/5 relative z-10">
       <div className="max-w-4xl mx-auto px-4 md:px-8">
@@ -44,7 +48,7 @@ export default function FAQ() {
         </div>
 
         <div className="space-y-4">
-          {faqs.map((faq, index) => (
+          {vFaqs.map((faq, index) => (
             <motion.div 
               key={index}
               initial={{ opacity: 0, y: 10 }}

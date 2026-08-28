@@ -8,7 +8,8 @@ interface FaqItem {
   answer: React.ReactNode
 }
 
-const faqData: FaqItem[] = [
+export default function FaqContent({ version }: { version: string }) {
+  const faqData: FaqItem[] = [
   {
     question: "What is Oxiverse?",
     answer: "Oxiverse is a comprehensive, privacy-first ecosystem designed as a principled alternative to Big Tech platforms. We provide a suite of tools—including search, browser, email, docs, and cloud storage—built with zero tracking, full data sovereignty, and ethical design at the core."
@@ -21,7 +22,7 @@ const faqData: FaqItem[] = [
     question: "What does \"Open Source\" mean for me as a user?",
     answer: (
       <span>
-        All our applications operate under the Oxiverse Community License (OCL) v1.0. This ensures our tools remain transparent, auditable, and committed to your digital footprint, serving as a private, human-centric alternative to tracking-heavy infrastructure.
+        All our applications operate under the Oxiverse Community License (OCL) {version}. This ensures our tools remain transparent, auditable, and committed to your digital footprint, serving as a private, human-centric alternative to tracking-heavy infrastructure.
       </span>
     )
   },
@@ -103,7 +104,6 @@ const faqData: FaqItem[] = [
   }
 ]
 
-export default function FaqContent() {
   const [activeIndex, setActiveIndex] = useState<number | null>(null)
 
   const toggleAccordion = (index: number) => {
@@ -138,7 +138,7 @@ export default function FaqContent() {
                 <span className="w-2 h-2 rounded-full bg-accent-300 animate-pulse" />
                 SYSTEM_SHELL_OUTPUT.LOG
               </span>
-              <span className="text-[9px] font-mono text-primary-400">v1.0.0</span>
+              <span className="text-[9px] font-mono text-primary-400">{version}</span>
             </div>
             <div className="p-4 bg-primary-950 font-mono text-xs md:text-sm text-accent-300 leading-relaxed border-t border-primary-900">
               STATUS: FREQUENTLY ASKED QUESTIONS_ACCESSING_DATA...

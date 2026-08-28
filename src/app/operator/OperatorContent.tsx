@@ -41,7 +41,7 @@ const sections = [
     id: '05_THE_IP',
     title: 'Licensing & Intellectual Property',
     body: [
-      'All Oxiverse services are governed by the Oxiverse Community License (OCL) v1.0. Core logic — including the core engine, RAVANA architecture, and search ranking — must remain under OCL v1.0.',
+      'All Oxiverse services are governed by the Oxiverse Community License (OCL) __OCL_VERSION__. Core logic — including the core engine, RAVANA architecture, and search ranking — must remain under OCL __OCL_VERSION__.',
       'The core software remains the property of Oxiverse Systems LLP. Derivatives and extensions created by the team are subject to Section 6 of the OCL (Contributions).',
     ],
   },
@@ -57,7 +57,11 @@ const sections = [
   },
 ]
 
-export default function OperatorContent() {
+export default function OperatorContent({ version }: { version: string }) {
+  const vSections = sections.map((s) => ({
+    ...s,
+    body: s.body.map((line) => line.replaceAll('__OCL_VERSION__', version)),
+  }))
   const fadeIn = {
     initial: { opacity: 0, y: 20 },
     animate: { opacity: 1, y: 0 },
@@ -98,7 +102,7 @@ export default function OperatorContent() {
           transition={{ delay: 0.3, duration: 0.8 }}
           className="space-y-12 font-mono text-primary-100"
         >
-          {sections.map((section) => (
+          {vSections.map((section) => (
             <section
               key={section.id}
               className="p-8 border-2 border-primary-700 bg-primary-900/30 rounded-lg shadow-retro-sm relative overflow-hidden group hover:border-accent-300/30 transition-all duration-300"

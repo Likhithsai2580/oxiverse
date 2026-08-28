@@ -3,6 +3,7 @@ import { Metadata } from 'next'
 import Navigation from '@/components/Navigation'
 import Footer from '@/components/Footer'
 import Section from '@/components/ui/Section'
+import { getOclVersionLabel } from '@/lib/license'
 
 export const metadata: Metadata = {
   title: 'Monetization & Sustainability | Oxiverse',
@@ -12,7 +13,8 @@ export const metadata: Metadata = {
   },
 }
 
-export default function MonetizationPage() {
+export default async function MonetizationPage() {
+  const version = await getOclVersionLabel()
   return (
     <main className="min-h-screen bg-primary-800 retro-bg selection:bg-accent-300 selection:text-primary-950">
       <Navigation />
@@ -135,13 +137,14 @@ export default function MonetizationPage() {
                     <h3 className="font-display text-xl font-bold text-primary-50 uppercase">Commercial Licensing</h3>
                   </div>
                   <p className="text-primary-300 leading-relaxed text-sm mb-4 flex-1">
-                    Companies building proprietary products on Oxiverse tech can license under the Proprietary Commercial License (OCL v1.0 §3). Includes white-label rights, SLA, support, and custom integration. Revenue funds core R&D that benefits the entire ecosystem.
+                    Companies can <strong>buy a Commercial License</strong> to self-host RAVANA/IntentForge commercially in <strong>closed-source</strong> form — that closed-source self-hosting license is the commercial product Oxiverse sells (Section 2A(b-i)). It also covers enhanced hosted-service use (white-label, redistribution, SLA, support). Your deployment stays closed-source; no open-washing required. The free alternative is to open-source the ENTIRE stack under OCL (Section 2A(b-ii) &amp; 3A) — then no paid license is needed.
                   </p>
                   <ul className="space-y-2 text-xs text-primary-400 font-mono">
-                    <li className="flex items-center gap-2">✓ Closed-source deployment rights</li>
-                    <li className="flex items-center gap-2">✓ White-label & redistribution</li>
-                    <li className="flex items-center gap-2">✓ SLA & priority support</li>
-                    <li className="flex items-center gap-2">✓ Custom feature development</li>
+                    <li className="flex items-center gap-2">✓ Closed-source self-hosting license (the paid product)</li>
+                    <li className="flex items-center gap-2">✓ White-label &amp; redistribution of hosted service</li>
+                    <li className="flex items-center gap-2">✓ SLA &amp; priority support</li>
+                    <li className="flex items-center gap-2">✓ Custom feature development &amp; integration</li>
+                    <li className="flex items-center gap-2">✓ Free open-source self-hosting alternative (full-OSS under OCL)</li>
                   </ul>
                 </div>
               </div>
@@ -247,7 +250,7 @@ export default function MonetizationPage() {
                     <li className="flex items-center gap-2">• All code on <a href="https://codeberg.org/oxiverse" className="text-accent-300 hover:underline" target="_blank" rel="noopener noreferrer">Codeberg</a></li>
                     <li className="flex items-center gap-2">• Affiliate link logic auditable in source</li>
                     <li className="flex items-center gap-2">• API contracts versioned & documented</li>
-                    <li className="flex items-center gap-2">• License terms in plain language (OCL v1.0)</li>
+                    <li className="flex items-center gap-2">• License terms in plain language ({version})</li>
                   </ul>
                 </div>
               </div>
@@ -260,7 +263,7 @@ export default function MonetizationPage() {
               Build With Us
             </h2>
             <p className="text-primary-300 mb-8 max-w-xl mx-auto">
-              Use the APIs. Contribute code. License commercially. Every path strengthens the privacy-first ecosystem.
+              Use the APIs. Contribute code. Build commercially. Every path strengthens the privacy-first ecosystem.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <a href="/docs/api" className="bg-accent-300 text-primary-950 font-bold text-xs uppercase tracking-widest py-3 px-8 hover:bg-accent-200 transition-colors">

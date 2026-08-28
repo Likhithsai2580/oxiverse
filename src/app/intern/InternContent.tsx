@@ -10,7 +10,7 @@ const sections = [
     body: [
       'The Oxiverse Internship is a high-intensity, "real-world" startup environment focused on service maintenance, infrastructure stability, and autonomous project management.',
       'Mission Alignment — all work performed must strictly adhere to the Oxiverse Constitution, including the prohibition of display advertising, user data sales, and surveillance capitalism.',
-      'Interns contribute to production-grade systems used within the Oxiverse ecosystem rather than simulated training projects, gaining hands-on experience maintaining live startup services governed by the Oxiverse Community License (OCL) v1.0.',
+      'Interns contribute to production-grade systems used within the Oxiverse ecosystem rather than simulated training projects, gaining hands-on experience maintaining live startup services governed by the Oxiverse Community License (OCL) __OCL_VERSION__.',
     ],
   },
   {
@@ -54,7 +54,11 @@ const sections = [
   },
 ]
 
-export default function InternContent() {
+export default function InternContent({ version }: { version: string }) {
+  const vSections = sections.map((s) => ({
+    ...s,
+    body: s.body.map((line) => line.replaceAll('__OCL_VERSION__', version)),
+  }))
   const fadeIn = {
     initial: { opacity: 0, y: 20 },
     animate: { opacity: 1, y: 0 },
@@ -95,7 +99,7 @@ export default function InternContent() {
           transition={{ delay: 0.3, duration: 0.8 }}
           className="space-y-12 font-mono text-primary-100"
         >
-          {sections.map((section) => (
+          {vSections.map((section) => (
             <section
               key={section.id}
               className="p-8 border-2 border-primary-700 bg-primary-900/30 rounded-lg shadow-retro-sm relative overflow-hidden group hover:border-accent-300/30 transition-all duration-300"
