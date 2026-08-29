@@ -201,7 +201,7 @@ export default async function RootLayout({
           name: 'What does "Open Source" mean for me as a user?',
           acceptedAnswer: {
             '@type': 'Answer',
-            text: `All our applications operate under the ${oclVersion}. This ensures our tools remain transparent, auditable, and committed to your digital footprint, serving as a private, human-centric alternative to tracking-heavy infrastructure.`
+            text: `All our applications operate under the ${oclVersion}. OCL is source-available — not an OSI-approved open source license. Our tools stay transparent and auditable, and you can self-host for free only if you release the full stack under OCL or an OSI-approved open source license; closed-source self-hosting commercially requires a paid Commercial License. Privacy-by-design is non-negotiable.`
           }
         },
         {

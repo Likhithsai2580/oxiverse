@@ -9,7 +9,7 @@ import remarkGfm from 'remark-gfm'
 
 export const metadata: Metadata = {
   title: 'OCL License | Oxiverse',
-  description: 'Oxiverse Community License (OCL). Source-available, privacy-by-design, with paid closed-source self-hosting and free open-source self-hosting paths.',
+  description: 'Oxiverse Community License (OCL). Source-available, privacy-by-design, with paid closed-source self-hosting and free full-source self-hosting paths (OCL or OSI-approved open source).',
   alternates: {
     canonical: '/license',
   },

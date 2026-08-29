@@ -19,10 +19,10 @@ export default function FaqContent({ version }: { version: string }) {
     answer: "At our core is IntentForge, an autonomous discovery engine utilizing \"self-healing\" search technology to provide high-utility results, such as code snippets, without user profiling or ad-clutter. Your \"intent\" is served, but it is never stored."
   },
   {
-    question: "What does \"Open Source\" mean for me as a user?",
+    question: "What does Open Source mean for me as a user?",
     answer: (
       <span>
-        All our applications operate under the Oxiverse Community License (OCL) {version}. This ensures our tools remain transparent, auditable, and committed to your digital footprint, serving as a private, human-centric alternative to tracking-heavy infrastructure.
+        All our applications operate under the Oxiverse Community License (OCL) {version}. OCL is <strong>source-available</strong> — not an OSI-approved open source license. It means our tools stay transparent and auditable, and you can self-host for free only if you release the full stack under OCL or an OSI-approved open source license; closed-source self-hosting commercially requires a paid Commercial License. Either way, privacy-by-design is non-negotiable.
       </span>
     )
   },

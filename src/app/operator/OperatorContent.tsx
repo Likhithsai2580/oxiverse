@@ -41,7 +41,7 @@ const sections = [
     id: '05_THE_IP',
     title: 'Licensing & Intellectual Property',
     body: [
-      'All Oxiverse services are governed by the Oxiverse Community License (OCL) __OCL_VERSION__. Core logic — including the core engine, RAVANA architecture, and search ranking — must remain under OCL __OCL_VERSION__.',
+      'All Oxiverse services are governed by the Oxiverse Community License (OCL) __OCL_VERSION__. Core Oxiverse logic — including the cognitive architecture and core engines — must remain under OCL __OCL_VERSION__.',
       'The core software remains the property of Oxiverse Systems LLP. Derivatives and extensions created by the team are subject to Section 6 of the OCL (Contributions).',
     ],
   },

@@ -137,14 +137,14 @@ export default async function MonetizationPage() {
                     <h3 className="font-display text-xl font-bold text-primary-50 uppercase">Commercial Licensing</h3>
                   </div>
                   <p className="text-primary-300 leading-relaxed text-sm mb-4 flex-1">
-                    Companies can <strong>buy a Commercial License</strong> to self-host RAVANA/IntentForge commercially in <strong>closed-source</strong> form — that closed-source self-hosting license is the commercial product Oxiverse sells (Section 2A(b-i)). It also covers enhanced hosted-service use (white-label, redistribution, SLA, support). Your deployment stays closed-source; no open-washing required. The free alternative is to open-source the ENTIRE stack under OCL (Section 2A(b-ii) &amp; 3A) — then no paid license is needed.
+                    Companies can <strong>buy a Commercial License</strong> to self-host the Oxiverse Software (any Oxiverse service) commercially in <strong>closed-source</strong> form — that closed-source self-hosting license is the commercial product Oxiverse sells (Section 2A(b-i)). It also covers enhanced hosted-service use (white-label, redistribution, SLA, support). Your deployment stays closed-source; no open-washing required. The free alternative is to release the ENTIRE stack under OCL or an OSI-approved open source license (Section 2A(b-ii) &amp; 3A) — then no paid license is needed.
                   </p>
                   <ul className="space-y-2 text-xs text-primary-400 font-mono">
                     <li className="flex items-center gap-2">✓ Closed-source self-hosting license (the paid product)</li>
                     <li className="flex items-center gap-2">✓ White-label &amp; redistribution of hosted service</li>
                     <li className="flex items-center gap-2">✓ SLA &amp; priority support</li>
                     <li className="flex items-center gap-2">✓ Custom feature development &amp; integration</li>
-                    <li className="flex items-center gap-2">✓ Free open-source self-hosting alternative (full-OSS under OCL)</li>
+                    <li className="flex items-center gap-2">✓ Free full-source self-hosting alternative (OCL or OSI-approved OSS)</li>
                   </ul>
                 </div>
               </div>

@@ -41,7 +41,7 @@ export default async function ContributingPage() {
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6 text-left mt-8">
               <div className="p-4 bg-primary-800/50 border border-primary-700">
                 <h3 className="font-display text-lg font-bold text-primary-50 mb-2 uppercase">No CLA</h3>
-                <p className="text-primary-900 text-sm">Contributions stay under {version}. You keep copyright; we get a license. No rights grabs.</p>
+                <p className="text-primary-900 text-sm">Contributions stay under {version}. You keep copyright; we get a license. No rights grabs. We never place your contributed code into a closed-source deployment — it is used only under OCL or an OSI-approved open source license (see LICENSE §6).</p>
               </div>
               <div className="p-4 bg-primary-800/50 border border-primary-700">
                 <h3 className="font-display text-lg font-bold text-primary-50 mb-2 uppercase">Privacy First</h3>

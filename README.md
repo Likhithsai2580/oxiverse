@@ -304,9 +304,9 @@ Oxiverse Community License (OCL) **v1.2** — see [LICENSE](LICENSE) for the ful
 **Two commercial paths, one key rule:**
 
 1. **Use the Oxiverse API to build a commercial product — paid subscription; a paid Commercial License is also available for white-label/resale.** The API is a paid subscription service (free tier for personal/research use). Anyone can build and monetize an independent app on top of it under any license they choose; you just pay the API subscription. For white-label or redistribution of the hosted service, a paid Commercial License is available from Oxiverse (OCL §2A(d)).
-2. **Self-host RAVANA / IntentForge and sell access — two ways:** (a) **Closed-source (PAID):** buy a Commercial License from Oxiverse — this is the commercial license we sell (OCL §2A(b-i)); or (b) **Open-source (FREE):** release the ENTIRE stack under OCL, no open-washing (OCL §2A(b-ii) & 3A).
+2. **Self-host an Oxiverse service (e.g. RAVANA / IntentForge) and sell access — two ways:** (a) **Closed-source (PAID):** buy a Commercial License from Oxiverse — this is the commercial license we sell (OCL §2A(b-i)); or (b) **Full-source (FREE):** release the ENTIRE stack under OCL or an OSI-approved open source license, no open-washing (OCL §2A(b-ii) & 3A).
 
-⚠️ There is **no free closed-source self-hosting license** — if you want to keep your deployment closed-source, you pay for the Commercial License. The open-source self-hosting path is the free alternative. Open-washing (hiding parts while calling it open) is a breach (OCL §3A).
+⚠️ There is **no free closed-source self-hosting license** — if you want to keep your deployment closed-source, you pay for the Commercial License. The full-source self-hosting path is the free alternative. Open-washing (hiding parts while calling it open) is a breach (OCL §3A).
 
 ---
 
