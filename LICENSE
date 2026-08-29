@@ -83,14 +83,31 @@ To confirm compliance for an open-source project, contact: **[likhith@oxiverse.c
 
 **Definition — "ENTIRE stack."** For the full-source self-hosting path (Section 2A(b-ii)) and this open-washing prohibition, "ENTIRE stack" means **all software components authored by, derived from, or incorporating the Oxiverse Software that are necessary to operate the Oxiverse-based service** — including all Oxiverse services (such as RAVANA and IntentForge), your modifications, extensions, and any glue code required to make the service function.
 
-It does **NOT** require you to open-source independent third-party components that are not derived from the Software, such as: operating systems; databases and datastores (e.g., PostgreSQL, Redis); web servers and reverse proxies (e.g., Nginx); hosting providers and infrastructure (e.g., AWS, Cloudflare); external APIs and services (e.g., OpenAI, Stripe, S3); and general-purpose libraries or frameworks merely used by — but not modified from — the Software. You may deploy the Oxiverse-based service alongside such components in their normal proprietary or separately-licensed form.
+**Safe Harbor — components that are NOT part of the "ENTIRE stack" (do not need to be open-sourced).** The following are explicitly outside the scope of the ENTIRE stack and may remain in their normal proprietary or separately-licensed form:
+
+* Deployment scripts, CI/CD pipelines, and configuration files that merely deploy or configure the service without modifying its runtime behavior;
+* Authentication / authorization proxies that sit in front of Oxiverse and do not modify its source code;
+* Monitoring, logging, and alerting systems that are not tightly coupled to Oxiverse's internal state;
+* Custom business logic that calls Oxiverse APIs but does not embed Oxiverse code (such use is an independent API-consumer product under Section 2A(a));
+* Any code that would continue to function if Oxiverse were replaced by a different service;
+* Standard off-the-shelf infrastructure (operating systems; databases/datastores such as PostgreSQL, Redis; web servers/reverse proxies such as Nginx; hosting/infra such as AWS, Cloudflare; external APIs such as OpenAI, Stripe, S3); general-purpose libraries/frameworks merely used; and general-purpose configuration-management or IaC tools (e.g., Ansible, Terraform) reused across multiple projects.
+
+**Examples — what IS part of the "ENTIRE stack" and MUST be open-sourced under the free path.** For clarity:
+
+* Orchestration scripts, deployment automation, and infrastructure-as-code specifically tailored to operate *this* Oxiverse deployment;
+* Authentication / authorization middleware that directly interfaces with Oxiverse to control access;
+* Custom API gateways or proxies that transform, route, or augment Oxiverse's core functionality;
+* Monitoring agents or logging pipelines tightly coupled to Oxiverse's internal state;
+* Any code that would need to be modified or replaced if Oxiverse were upgraded to a new version.
+
+It does **NOT** require you to open-source independent third-party components that are not derived from the Software (see the Safe Harbor list above). You may deploy the Oxiverse-based service alongside such components in their normal proprietary or separately-licensed form.
 
 * (a) **Open-Core:** publishing some components as open source while keeping other components required to run or meaningfully use the service under proprietary or closed terms;
 * (b) **Source-Available-but-Restricted:** releasing code that cannot be freely used, modified, and redistributed under OCL or an OSI-approved open source license (such as MIT, Apache 2.0, or GPL);
 * (c) **Premium/Closed Tiers:** offering a "community" open edition alongside a proprietary paid edition that contains functionality necessary to operate the service;
 * (d) **Hidden Proprietary Dependencies:** requiring proprietary binaries, keys, services, or APIs that are not themselves available under OCL to operate the deployment.
 
-Any deployment offered under the self-hosted commercial permission of Section 2A(b) MUST be genuinely, completely open: the **complete corresponding source of the ENTIRE stack** — including all modifications to the Oxiverse Software, all Oxiverse services, and every component that constitutes the service you operate — must be available under OCL or an OSI-approved open source license. Failure to do so is open-washing, constitutes a material breach of this License, and automatically terminates the commercial permission (and this License) under Section 9.
+Any deployment offered under the self-hosted commercial permission of Section 2A(b) MUST be genuinely, completely open: the **complete corresponding source of the ENTIRE stack** — including all modifications to the Oxiverse Software, all Oxiverse services, and every component that constitutes the service you operate — must be available under OCL or an OSI-approved open source license. Failure to do so is open-washing, constitutes a material breach of this License, and automatically terminates the commercial permission (and this License) under Section 9 — **except that**, in the case of a good-faith dispute over what constitutes the ENTIRE stack, Licensor will first provide written notice and the Licensee has thirty (30) days from receipt to remedy the disputed scope; this cure period applies only to scope disputes and does not apply to deliberate open-washing, privacy breaches, or other material breaches.
 
 ---
 
@@ -167,6 +184,8 @@ This License automatically terminates if you violate any of its terms. Upon term
 * (a) All rights granted to you cease immediately;
 * (b) You must cease all use, distribution, and development of the Software;
 * (c) Licensor reserves the right to pursue legal remedies for unauthorized commercial use or privacy violations.
+
+* **(d) Good-faith scope dispute cure period.** Notwithstanding the automatic-termination language above, where the dispute concerns only the scope of the "ENTIRE stack" under Section 3A (and not deliberate open-washing, privacy breaches, or other material breach), Licensor will first provide written notice identifying the disputed components, and the Licensee has thirty (30) days from receipt to remedy the disputed scope by bringing the deployment into compliance. Termination does not take effect for that dispute during the cure period. This subsection does not limit Licensor's right to terminate immediately for deliberate open-washing or privacy violations.
 
 A violation of Section 3A (open-washing) or Section 2A(b) (closed-source self-hosting) is a material breach that triggers immediate termination.
 
