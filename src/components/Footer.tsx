@@ -34,6 +34,7 @@ const community: FooterLink[] = [
   { name: 'Codeberg Issues', href: 'https://codeberg.org/oxiverse/intentforge/issues' },
   { name: 'Partnerships & Operators', href: '/cofounder' },
   { name: 'Operator Model', href: '/operator' },
+  { name: 'Intern Model', href: '/intern' },
   { name: 'Revenue Protocol', href: '/revenue' },
 ]
 
