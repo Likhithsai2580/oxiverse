@@ -8,48 +8,52 @@ const sections = [
     id: '01_THE_PROGRAM',
     title: 'Program Intent & Scope',
     body: [
-      'The Oxiverse Internship is a high-intensity, "real-world" startup environment focused on service maintenance, infrastructure stability, and autonomous project management.',
-      'Mission Alignment — all work performed must strictly adhere to the Oxiverse Constitution, including the prohibition of display advertising, user data sales, and surveillance capitalism.',
-      'Interns contribute to production-grade systems used within the Oxiverse ecosystem rather than simulated training projects, gaining hands-on experience maintaining live startup services governed by the Oxiverse Community License (OCL) __OCL_VERSION__.',
+      'The Oxiverse Internship is a professional development program focused on structured learning, research, experimentation, software contribution, product development, documentation, communication, and supervised exposure to real-world systems within the Oxiverse ecosystem.',
+      'This is vocational training. Interns are NOT assigned primary responsibility for production infrastructure or critical service maintenance. Contributions may be incorporated into live Oxiverse projects where appropriate and subject to review.',
+      'Four mission types structure the work: Explore (market research, competitor analysis, product reviews, technical investigations), Build (small features, bug fixes, prototypes, internal tools, documentation), Experiment (new concepts, usability testing, feasibility studies), and Communicate (technical writing, public docs, community work). All assignments are bounded, supervised, and tailored to the Intern\'s capabilities and learning objectives.',
     ],
   },
   {
     id: '02_THE_STATUS',
     title: 'Compensation & Status',
     body: [
-      'Internship is unpaid. The primary value is access to guidance, code review, documentation and feedback, real-world service maintenance experience, and a performance-based path to potential partnership.',
-      'The internship is not an employment relationship. It is a vocational training and validation period.',
+      'This is an unpaid professional development internship. The value to the Intern is supervised practical experience, technical mentorship, and the opportunity to contribute to selected Oxiverse projects. No stipend or financial compensation is promised.',
+      'It is a training relationship, not employment — this does not constitute an employment contract or an offer of permanent employment.',
+      'Interns receive beta access to selected Oxiverse services (subject to availability; beta services may change, be discontinued, or become public at any time), a documented contribution history, a verified Experience Certificate on successful completion, and portfolio rights for eligible work.',
     ],
   },
   {
     id: '03_THE_EVALUATION',
     title: 'Evaluation & Certification',
     body: [
-      'Oxiverse maintains an AI-assisted contribution history based on commits, pull requests, issues, documentation, operational logs, and project activity.',
-      'Based on the summarized activity, Oxiverse issues a formal Experience Certificate — a verified record of technical contributions and startup maintenance capabilities. It includes metrics such as internship duration, repositories contributed to, commits, issues resolved, features implemented, operational responsibilities, an AI-generated contribution summary, and Founder verification.',
-      'Promotion decisions consider technical ability, consistency, communication, ownership, reliability, and alignment with the Oxiverse Constitution.',
+      'Evaluation is based on the quality of reasoning, independent investigation, ability to turn findings into outputs, responsiveness to feedback, and alignment with the Oxiverse Constitution.',
+      'Oxiverse uses AI-assisted contribution analysis, subject to human verification, to track activity. Automated systems do NOT independently determine certification or performance ratings.',
+      'Eligible Interns receive a Verified Experience Certificate with a Unique ID and verification URL (https://verify.oxiverse.com/c/{certificate_id}) based on verified participation and demonstrated outputs. Promotion considers technical ability, consistency, communication, ownership, reliability, and Constitution alignment.',
     ],
   },
   {
     id: '04_THE_PATH',
     title: 'Path to Operator Status',
     body: [
-      'The internship serves as a vetting phase for the Oxiverse Operator model.',
-      'If the intern demonstrates exceptional autonomy, technical proficiency, and commitment to the Oxiverse Constitution, they may be invited to become an Operator. Completion of the internship does not guarantee promotion.',
+      'Participation does not equate to an Oxiverse Operator Agreement. Becoming an Operator is a separate advancement requiring a distinct contract and is not guaranteed upon completion of this program.',
+      'If the Intern demonstrates exceptional autonomy, technical proficiency, and commitment to the Oxiverse Constitution, they may be invited to enter the Oxiverse Operator Agreement. Completion of the internship does not guarantee promotion to Operator status.',
     ],
   },
   {
     id: '05_THE_IP',
-    title: 'Intellectual Property',
+    title: 'Intellectual Property & Portfolio Rights',
     body: [
-      'All contributions made as part of the internship become part of the projects and remain governed by the applicable Oxiverse Community License (OCL) or other project license where explicitly specified.',
+      'Background IP — works, inventions, code, materials, or other intellectual property created or owned by the Intern before participation — remains the Intern\'s. Nothing in this program transfers ownership of Background IP to Oxiverse.',
+      'Contributions to Oxiverse projects are governed by the applicable project license (the Oxiverse Community License (OCL) __OCL_VERSION__ or other specified license).',
+      'Interns may include publicly disclosed contributions and their certificate in professional portfolios and resumes, provided that such disclosure does not violate confidentiality requirements.',
     ],
   },
   {
     id: '06_THE_DISCLOSURE',
     title: 'Responsible Disclosure',
     body: [
-      'Oxiverse operates openly. Interns are encouraged to discuss public architecture, code, and development. However, security-sensitive information, credentials, private user data, and undisclosed vulnerabilities must be handled responsibly and not publicly disclosed until resolved.',
+      'Oxiverse operates openly. Interns are encouraged to discuss public architecture, code, and development. However, security-sensitive information, credentials, private user data, unpublished features, and internal infrastructure stay confidential.',
+      'Report security findings through security@oxiverse.com (or as Oxiverse\'s security procedures direct) and do not disclose them publicly without authorization. Portfolio rights do not authorize disclosure of any confidential information.',
     ],
   },
 ]
@@ -85,10 +89,10 @@ export default function InternContent({ version }: { version: string }) {
           </h1>
           <div className="h-2 w-24 bg-accent-300 shadow-retro-sm mb-8" />
           <p className="text-xl text-primary-300 font-mono leading-relaxed max-w-3xl border-l-4 border-primary-700 pl-6 mb-6">
-            A monitored pathways into the ecosystem: contributing to live production systems and validating skills before a move toward Operator status.
+            A professional development pathway into the ecosystem: structured learning, research, and supervised contribution before a potential move toward Operator status.
           </p>
           <p className="text-sm text-primary-400 font-mono leading-relaxed max-w-3xl border-l-4 border-primary-800 pl-6">
-            This is how the program works. It is not a contract to sign — it is the training and validation phase Oxiverse uses to grow future operators.
+            This describes how the program works. It is not a contract to sign — it is the training and validation phase Oxiverse uses to grow future operators.
           </p>
         </motion.div>
 
@@ -126,7 +130,7 @@ export default function InternContent({ version }: { version: string }) {
               Where It Leads
             </h3>
             <p className="text-sm text-primary-200 leading-loose mb-6">
-              The internship is the vetting ground for the Operator model. Interns who demonstrate exceptional autonomy and commitment to the Constitution are invited to partner as operators under a revenue-share model. Operators and interns are encouraged to introduce new monetization strategies — as long as they follow the OCL License and the Oxiverse Constitution.
+              The internship is the training ground for the Operator model. Interns who demonstrate exceptional autonomy and commitment to the Constitution may be invited to partner as operators under a revenue-share model. Operators and interns are encouraged to introduce new monetization strategies — as long as they follow the OCL License and the Oxiverse Constitution.
             </p>
             <div className="flex flex-col sm:flex-row gap-4">
               <a

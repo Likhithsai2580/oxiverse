@@ -8,7 +8,7 @@ import { Metadata } from 'next'
 
 export const metadata: Metadata = {
   title: 'The Intern Model | Oxiverse',
-  description: 'How the Oxiverse internship works: a pre-operator training and validation phase contributing to production-grade systems under the Oxiverse Constitution.',
+  description: 'How the Oxiverse internship works: a pre-operator professional development and training phase with structured learning, research, and supervised contribution under the Oxiverse Constitution.',
   alternates: {
     canonical: '/intern',
   },
